@@ -24,14 +24,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       <aside className="hidden md:flex flex-col w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 space-y-2 shrink-0 min-h-screen">
         {/* Brand Header */}
         <div className="flex items-center gap-3 px-3 py-4 mb-4">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-500 flex items-center justify-center text-white font-black text-xl shadow-md">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-lime-500 flex items-center justify-center text-white font-black text-xl shadow-lg ring-2 ring-emerald-200">
             🦉
           </div>
           <div>
-            <h1 className="font-extrabold text-xl text-slate-900 dark:text-slate-100 tracking-tight leading-none">
+            <h1 className="font-extrabold text-xl text-emerald-600 dark:text-emerald-400 tracking-tight leading-none">
               Duolingo
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">
+            <p className="text-xs text-emerald-600/80 dark:text-emerald-400/80 font-semibold mt-1">
               Learn languages with Duo
             </p>
           </div>
