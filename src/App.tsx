@@ -80,6 +80,10 @@ export default function App() {
     }
   }, [userState]);
 
+  useEffect(() => {
+    document.title = 'Duolingo';
+  }, []);
+
   // Language Change
   const handleSelectLanguage = (id: LanguageId) => {
     setUserState((prev) => ({ ...prev, currentLanguage: id }));

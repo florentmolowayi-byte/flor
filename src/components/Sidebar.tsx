@@ -29,10 +29,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
           </div>
           <div>
             <h1 className="font-extrabold text-xl text-slate-900 dark:text-slate-100 tracking-tight leading-none">
-              LingoPulse
+              Duolingo
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">
-              Gamified Language Learning
+              Learn languages with Duo
             </p>
           </div>
         </div>
