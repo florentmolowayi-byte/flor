@@ -21,7 +21,7 @@ const STORAGE_KEY = 'flor_app_user_state_v1';
 const DEFAULT_USER_STATE: UserState = {
   name: 'Language Learner',
   avatar: '🌍',
-  currentLanguage: 'es',
+  currentLanguage: 'tr',
   xp: 140,
   gems: 280,
   hearts: 5,
