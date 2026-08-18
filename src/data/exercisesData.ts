@@ -434,4 +434,63 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       audioText: '谢谢你',
     },
   ],
+
+  // TURKISH LESSON 1: Greetings & Introductions
+  'tr-1-1': [
+    {
+      id: 'ex-tr-1-1-1',
+      type: 'multiple_choice',
+      prompt: 'Select the correct translation for "Merhaba"',
+      audioText: 'Merhaba',
+      options: [
+        { id: 'tr-opt-1', text: 'Merhaba', translation: 'Hello', imageEmoji: '👋' },
+        { id: 'tr-opt-2', text: 'Teşekkür ederim', translation: 'Thank you', imageEmoji: '🙏' },
+        { id: 'tr-opt-3', text: 'Lütfen', translation: 'Please', imageEmoji: '✨' },
+        { id: 'tr-opt-4', text: 'Hoşça kalın', translation: 'Goodbye', imageEmoji: '🚶' },
+      ],
+      correctAnswerId: 'tr-opt-1',
+      hint: '"Merhaba" is the most common friendly hello in Turkish!',
+    },
+    {
+      id: 'ex-tr-1-1-2',
+      type: 'word_bank',
+      prompt: 'Translate this sentence: "Hello, my name is Duo"',
+      audioText: 'Merhaba, benim adım Duo',
+      correctSentence: ['Merhaba,', 'benim', 'adım', 'Duo.'],
+      wordBankPool: ['Merhaba,', 'benim', 'adım', 'Duo.', 'teşekkür', 'hoşça', 'lütfen', 'nasıl'],
+      hint: 'Turkish uses "benim adım" to mean "my name is".',
+    },
+    {
+      id: 'ex-tr-1-1-3',
+      type: 'match_pairs',
+      prompt: 'Tap the matching pairs',
+      pairs: [
+        { id: 'tr-p1', left: 'Merhaba', right: 'Hello' },
+        { id: 'tr-p2', left: 'Teşekkür ederim', right: 'Thank you' },
+        { id: 'tr-p3', left: 'Günaydın', right: 'Good morning' },
+        { id: 'tr-p4', left: 'Hoşça kalın', right: 'Goodbye' },
+      ],
+      hint: 'Match Turkish words on the left with English translations on the right.',
+    },
+    {
+      id: 'ex-tr-1-1-4',
+      type: 'listening',
+      prompt: 'Listen to the audio and select what you hear:',
+      audioText: 'Günaydın, nasılsınız?',
+      options: [
+        { id: 'tr-l1', text: 'Günaydın, nasılsınız?' },
+        { id: 'tr-l2', text: 'İyi akşamlar, hoşça kalın' },
+        { id: 'tr-l3', text: 'Çok teşekkür ederim, lütfen' },
+      ],
+      correctAnswerId: 'tr-l1',
+      hint: 'The phrase starts with "Günaydın" (Good morning).',
+    },
+    {
+      id: 'ex-tr-1-1-5',
+      type: 'speaking',
+      prompt: 'Repeat after Duo in Turkish: "Çok teşekkür ederim!"',
+      audioText: 'Çok teşekkür ederim',
+      hint: 'Press the microphone button and say "Çok teşekkür ederim" clearly!',
+    },
+  ],
 };
