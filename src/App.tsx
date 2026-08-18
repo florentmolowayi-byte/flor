@@ -16,7 +16,8 @@ import { StreakModal } from './components/StreakModal';
 import { RefillHeartsModal } from './components/RefillHeartsModal';
 import { LessonEngine } from './components/LessonEngine';
 
-const STORAGE_KEY = 'flor_app_user_state_v1';
+const STORAGE_KEY = 'flor_app_user_state_v2';
+const LEGACY_STORAGE_KEY = 'flor_app_user_state_v1';
 
 const DEFAULT_USER_STATE: UserState = {
   name: 'Language Learner',
@@ -32,7 +33,7 @@ const DEFAULT_USER_STATE: UserState = {
   hasActiveFreeze: true,
   activeOutfit: 'default',
   doubleXpTimer: 0,
-  completedNodes: { 'es-1-1': 3 },
+  completedNodes: { 'tr-1-1': 3 },
   dailyXpTarget: 30,
   dailyXpEarned: 20,
   claimedQuests: [],
@@ -54,8 +55,17 @@ const DEFAULT_USER_STATE: UserState = {
 export default function App() {
   const [userState, setUserState] = useState<UserState>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
+      const rawSaved = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (rawSaved) {
+        const parsed = JSON.parse(rawSaved) as Partial<UserState>;
+        const validLanguageIds = new Set(LANGUAGES.map((language) => language.id));
+        if (parsed && typeof parsed === 'object') {
+          const selectedLanguage = typeof parsed.currentLanguage === 'string' ? parsed.currentLanguage : null;
+          if (selectedLanguage && validLanguageIds.has(selectedLanguage as LanguageId)) {
+            return { ...DEFAULT_USER_STATE, ...parsed, currentLanguage: selectedLanguage as LanguageId };
+          }
+        }
+      }
     } catch {
       // fallback
     }
