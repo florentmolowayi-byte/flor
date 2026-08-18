@@ -4,7 +4,7 @@ import { Flame, Trophy, Gem, Award, Shield, BookOpen } from 'lucide-react';
 import { UserState } from '../types';
 import { LANGUAGES } from '../data/languages';
 import { LEAGUES } from '../data/leaderboardData';
-import { DuoMascot } from './DuoMascot';
+import { CoachMascot } from './CoachMascot';
 
 interface ProfileViewProps {
   userState: UserState;
@@ -20,7 +20,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ userState, onOpenShop 
       {/* Profile Card */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-md flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
         <div className="relative">
-          <DuoMascot mood="happy" outfit={userState.activeOutfit} size="lg" />
+          <CoachMascot mood="happy" outfit={userState.activeOutfit} size="lg" />
           <div className="absolute -bottom-2 -right-2 bg-emerald-500 text-white rounded-full p-2 border-2 border-white dark:border-slate-900 shadow-md">
             <Shield className="w-4 h-4" />
           </div>

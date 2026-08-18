@@ -10,7 +10,7 @@ import { PathView } from './components/PathView';
 import { LeaderboardView } from './components/LeaderboardView';
 import { ShopView } from './components/ShopView';
 import { QuestsAchievementsView } from './components/QuestsAchievementsView';
-import { DuoChatView } from './components/DuoChatView';
+import { LanguageCoachView } from './components/LanguageCoachView';
 import { ProfileView } from './components/ProfileView';
 import { StreakModal } from './components/StreakModal';
 import { RefillHeartsModal } from './components/RefillHeartsModal';
@@ -308,7 +308,7 @@ export default function App() {
           )}
 
           {activeTab === 'chat' && (
-            <DuoChatView userState={userState} onEarnXp={handleEarnXpFromChat} />
+            <LanguageCoachView userState={userState} onEarnXp={handleEarnXpFromChat} />
           )}
 
           {activeTab === 'profile' && (

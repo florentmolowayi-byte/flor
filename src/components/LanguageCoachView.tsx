@@ -3,11 +3,11 @@ import { motion } from 'motion/react';
 import { Send, Sparkles, Volume2, HelpCircle, CheckCircle } from 'lucide-react';
 import { LanguageId, UserState } from '../types';
 import { LANGUAGES } from '../data/languages';
-import { DuoMascot } from './DuoMascot';
+import { CoachMascot } from './CoachMascot';
 import { soundManager } from '../utils/audio';
 import { speakText } from '../utils/speech';
 
-interface DuoChatViewProps {
+interface LanguageCoachViewProps {
   userState: UserState;
   onEarnXp: (amount: number) => void;
 }
@@ -21,7 +21,7 @@ interface ChatMessage {
   timestamp: string;
 }
 
-export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp }) => {
+export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState, onEarnXp }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -133,7 +133,7 @@ export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp })
             className={`flex items-start gap-3 ${m.sender === 'user' ? 'flex-row-reverse' : ''}`}
           >
             {m.sender === 'duo' && (
-              <DuoMascot mood="happy" outfit={userState.activeOutfit} size="sm" className="shrink-0" />
+              <CoachMascot mood="happy" outfit={userState.activeOutfit} size="sm" className="shrink-0" />
             )}
 
             <div

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { DuoMascotMood } from '../types';
 
-interface DuoMascotProps {
+interface CoachMascotProps {
   mood?: DuoMascotMood;
   outfit?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -10,7 +10,7 @@ interface DuoMascotProps {
   className?: string;
 }
 
-export const DuoMascot: React.FC<DuoMascotProps> = ({
+export const CoachMascot: React.FC<CoachMascotProps> = ({
   mood = 'idle',
   outfit = 'default',
   size = 'md',

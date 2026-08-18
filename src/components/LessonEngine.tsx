@@ -16,7 +16,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Exercise, DuoMascotMood, UserState, LanguageId } from '../types';
-import { DuoMascot } from './DuoMascot';
+import { CoachMascot } from './CoachMascot';
 import { soundManager } from '../utils/audio';
 import { speakText } from '../utils/speech';
 
@@ -270,7 +270,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
             >
               {/* Mascot & Prompt Layout */}
               <div className="flex items-start gap-4">
-                <DuoMascot mood={duoMood} outfit={userState.activeOutfit} size="md" />
+                <CoachMascot mood={duoMood} outfit={userState.activeOutfit} size="md" />
 
                 <div className="flex-1 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-3xl p-5 shadow-xs relative">
                   <div className="flex items-center justify-between mb-1">
@@ -457,7 +457,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
                     {isRecording
                       ? 'Listening... Speak now!'
                       : recordedSuccess
-                      ? 'Great pronunciation! Duo understood you perfectly!'
+                      ? 'Great pronunciation! Your coach understood you perfectly!'
                       : 'Tap mic and pronounce the phrase above.'}
                   </p>
                 </div>
@@ -471,7 +471,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-col items-center text-center space-y-6 max-w-md"
           >
-            <DuoMascot mood="cheering" outfit={userState.activeOutfit} size="lg" />
+            <CoachMascot mood="cheering" outfit={userState.activeOutfit} size="lg" />
 
             <div>
               <h2 className="text-3xl font-black text-slate-900 dark:text-slate-100">

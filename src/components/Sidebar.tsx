@@ -14,7 +14,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'leaderboard', label: 'Leagues', icon: Trophy, color: 'text-amber-500' },
     { id: 'quests', label: 'Quests', icon: Target, color: 'text-blue-500' },
     { id: 'shop', label: 'Shop', icon: ShoppingBag, color: 'text-pink-500' },
-    { id: 'chat', label: 'Duo AI Chat', icon: Sparkles, color: 'text-purple-500' },
+    { id: 'chat', label: 'Language Coach', icon: Sparkles, color: 'text-purple-500' },
     { id: 'profile', label: 'Profile', icon: User, color: 'text-indigo-500' },
   ];
 
@@ -25,14 +25,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
         {/* Brand Header */}
         <div className="flex items-center gap-3 px-3 py-4 mb-4">
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-lime-500 flex items-center justify-center text-white font-black text-xl shadow-lg ring-2 ring-emerald-200">
-            🦉
+            🌍
           </div>
           <div>
             <h1 className="font-extrabold text-xl text-emerald-600 dark:text-emerald-400 tracking-tight leading-none">
-              Duolingo
+              Language
             </h1>
             <p className="text-xs text-emerald-600/80 dark:text-emerald-400/80 font-semibold mt-1">
-              Learn languages with Duo
+              Language gamification
             </p>
           </div>
         </div>
