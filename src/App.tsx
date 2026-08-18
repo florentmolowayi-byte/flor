@@ -81,7 +81,7 @@ export default function App() {
   }, [userState]);
 
   useEffect(() => {
-    document.title = 'Flor | Language gamification';
+    document.title = '';
   }, []);
 
   // Language Change
