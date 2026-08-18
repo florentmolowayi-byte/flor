@@ -493,4 +493,62 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       hint: 'Press the microphone button and say "Çok teşekkür ederim" clearly!',
     },
   ],
+
+  // TURKISH LESSON 2: Numbers & Shopping
+  'tr-1-2': [
+    {
+      id: 'ex-tr-1-2-1',
+      type: 'multiple_choice',
+      prompt: 'What does "Bir" mean in Turkish?',
+      audioText: 'Bir',
+      options: [
+        { id: 'tr-opt-2-1', text: 'One', imageEmoji: '1️⃣' },
+        { id: 'tr-opt-2-2', text: 'Two', imageEmoji: '2️⃣' },
+        { id: 'tr-opt-2-3', text: 'Three', imageEmoji: '3️⃣' },
+        { id: 'tr-opt-2-4', text: 'Zero', imageEmoji: '0️⃣' },
+      ],
+      correctAnswerId: 'tr-opt-2-1',
+      hint: 'Use "bir" when counting or ordering something.',
+    },
+    {
+      id: 'ex-tr-1-2-2',
+      type: 'word_bank',
+      prompt: 'Translate: "How much does it cost?"',
+      audioText: 'Ne kadar tutuyor?',
+      correctSentence: ['Ne', 'kadar', 'tutuyor?'],
+      wordBankPool: ['Ne', 'kadar', 'tutuyor?', 'kaç', 'fiyat', 'para', 'ucuz'],
+      hint: '"Ne kadar" means "how much" in Turkish.',
+    },
+    {
+      id: 'ex-tr-1-2-3',
+      type: 'match_pairs',
+      prompt: 'Match Turkish numbers with English',
+      pairs: [
+        { id: 'tr-mp1', left: 'Bir', right: 'One' },
+        { id: 'tr-mp2', left: 'İki', right: 'Two' },
+        { id: 'tr-mp3', left: 'Üç', right: 'Three' },
+        { id: 'tr-mp4', left: 'Dört', right: 'Four' },
+      ],
+    },
+    {
+      id: 'ex-tr-1-2-4',
+      type: 'listening',
+      prompt: 'Listen and choose the correct option:',
+      audioText: 'Beş lira, lütfen',
+      options: [
+        { id: 'tr-lo1', text: 'Beş lira, lütfen' },
+        { id: 'tr-lo2', text: 'Altı lira, teşekkür ederim' },
+        { id: 'tr-lo3', text: 'Yedi lira, hoşça kalın' },
+      ],
+      correctAnswerId: 'tr-lo1',
+      hint: '"Beş" means five in Turkish.',
+    },
+    {
+      id: 'ex-tr-1-2-5',
+      type: 'speaking',
+      prompt: 'Practice saying in Turkish: "Bir kahve, lütfen"',
+      audioText: 'Bir kahve, lütfen',
+      hint: 'Pronounce: "One coffee, please" - ordering a basic item at a café!',
+    },
+  ],
 };
