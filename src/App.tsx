@@ -16,11 +16,11 @@ import { StreakModal } from './components/StreakModal';
 import { RefillHeartsModal } from './components/RefillHeartsModal';
 import { LessonEngine } from './components/LessonEngine';
 
-const STORAGE_KEY = 'duo_app_user_state_v1';
+const STORAGE_KEY = 'flor_app_user_state_v1';
 
 const DEFAULT_USER_STATE: UserState = {
-  name: 'Duo Learner',
-  avatar: '🦉',
+  name: 'Language Learner',
+  avatar: '🌍',
   currentLanguage: 'es',
   xp: 140,
   gems: 280,
@@ -81,7 +81,7 @@ export default function App() {
   }, [userState]);
 
   useEffect(() => {
-    document.title = 'Duolingo';
+    document.title = 'Flor | Language gamification';
   }, []);
 
   // Language Change

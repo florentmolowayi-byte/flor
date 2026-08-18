@@ -30,11 +30,11 @@ export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp })
   const langObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
 
   useEffect(() => {
-    // Initial welcome message from Duo
+    // Initial welcome message from the language coach
     const initialMsg: ChatMessage = {
       id: 'welcome_1',
       sender: 'duo',
-      text: `¡Hola! I am Duo 🦉! Let’s practice chatting in ${langObj.name}! Send me a message, ask a question, or introduce yourself!`,
+      text: `¡Hola! I’m your language coach 🌍! Let’s practice chatting in ${langObj.name}! Send me a message, ask a question, or introduce yourself!`,
       tip: 'Practicing conversations earns you +10 XP per turn!',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
@@ -79,7 +79,7 @@ export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp })
       const duoReply: ChatMessage = {
         id: `duo_${Date.now()}`,
         sender: 'duo',
-        text: data.reply || `¡Excelente trabajo! Keep practicing ${langObj.name}! 🦉🔥`,
+        text: data.reply || `¡Excelente trabajo! Keep practicing ${langObj.name}! 🌍✨`,
         correction: data.correction,
         tip: data.tip,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -93,7 +93,7 @@ export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp })
       const fallbackMsg: ChatMessage = {
         id: `duo_${Date.now()}`,
         sender: 'duo',
-        text: `¡Muy bien! You said "${userMsgText}". Practice builds fluency every single day! 🦉⚡`,
+        text: `¡Muy bien! You said "${userMsgText}". Practice builds fluency every single day! 🌍⚡`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, fallbackMsg]);
@@ -109,15 +109,15 @@ export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp })
       <div className="bg-purple-600 text-white rounded-3xl p-4 shadow-lg flex items-center justify-between shrink-0 mb-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-purple-700 flex items-center justify-center text-2xl shadow-inner">
-            🦉
+            🌍
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h3 className="font-extrabold text-base">Duo AI Tutor Chat</h3>
+              <h3 className="font-extrabold text-base">Language Coach Chat</h3>
               <Sparkles className="w-4 h-4 text-purple-200" />
             </div>
             <p className="text-xs text-purple-100 font-medium">
-              Practicing {langObj.name} ({langObj.flag}) with Duo
+              Practicing {langObj.name} ({langObj.flag}) with your coach
             </p>
           </div>
         </div>
@@ -145,7 +145,7 @@ export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp })
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-black uppercase opacity-70">
-                  {m.sender === 'user' ? 'You' : 'Duo Owl'}
+                  {m.sender === 'user' ? 'You' : 'Coach'}
                 </span>
                 {m.sender === 'duo' && (
                   <button
@@ -187,7 +187,7 @@ export const DuoChatView: React.FC<DuoChatViewProps> = ({ userState, onEarnXp })
 
         {loading && (
           <div className="flex items-center gap-2 text-slate-400 text-xs font-bold pl-12 animate-pulse">
-            🦉 Duo is thinking in {langObj.name}...
+            🌍 Coach is thinking in {langObj.name}...
           </div>
         )}
         <div ref={chatEndRef} />

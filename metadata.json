@@ -1,5 +1,5 @@
 {
-  "name": "Duolingo Gamified Language Learning",
+  "name": "Duolingo",
   "description": "An interactive, gamified language learning experience featuring streaks, leagues, leaderboards, interactive skill tree, audio quizzes, mascot reactions, and gem store.",
   "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

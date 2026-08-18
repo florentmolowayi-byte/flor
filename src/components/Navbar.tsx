@@ -32,7 +32,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex items-center justify-between shadow-xs">
-      {/* Left: Language Selector */}
+      {/* Left: Brand */}
+      <div className="flex items-center gap-3">
+        <img src="/flor-logo.svg" alt="Flor logo" className="w-9 h-9 rounded-xl shadow-sm" />
+        <div className="flex flex-col">
+          <span className="text-sm font-black tracking-wide text-slate-900 dark:text-slate-100">FLOR</span>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400">Language gamification</span>
+        </div>
+      </div>
+
       <div className="relative">
         <button
           id="btn-language-selector"

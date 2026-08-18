@@ -1,4 +1,4 @@
-export type LanguageId = 'es' | 'fr' | 'de' | 'ja' | 'it' | 'zh';
+export type LanguageId = 'es' | 'fr' | 'de' | 'ja' | 'it' | 'zh' | 'tr';
 
 export interface Language {
   id: LanguageId;

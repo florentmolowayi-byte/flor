@@ -7,6 +7,7 @@ const langMap: Record<LanguageId, string> = {
   ja: 'ja-JP',
   it: 'it-IT',
   zh: 'zh-CN',
+  tr: 'tr-TR',
 };
 
 export function speakText(text: string, langId: LanguageId = 'es', rate: number = 0.9) {
