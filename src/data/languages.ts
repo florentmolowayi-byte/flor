@@ -2,6 +2,58 @@ import { Language } from '../types';
 
 export const LANGUAGES: Language[] = [
   {
+    id: 'en',
+    name: 'English',
+    nativeName: 'English',
+    flag: '🇬🇧',
+    description: 'Build everyday English confidence with practical phrases and conversations.',
+    color: '#1CB0F6',
+    units: [
+      {
+        id: 'unit-en-1',
+        number: 1,
+        title: 'Unit 1: Everyday English Basics',
+        description: 'Learn greetings, simple questions, and useful daily phrases.',
+        color: '#1CB0F6',
+        nodes: [
+          {
+            id: 'en-1-1',
+            title: 'Greetings 1',
+            type: 'lesson',
+            totalSteps: 5,
+            xpReward: 15,
+            gemReward: 10,
+            unlocked: true,
+            completed: false,
+            stars: 0,
+          },
+          {
+            id: 'en-1-2',
+            title: 'Daily Basics',
+            type: 'lesson',
+            totalSteps: 5,
+            xpReward: 15,
+            gemReward: 10,
+            unlocked: true,
+            completed: false,
+            stars: 0,
+          },
+          {
+            id: 'en-1-checkpoint',
+            title: 'English Checkpoint',
+            type: 'checkpoint',
+            totalSteps: 6,
+            xpReward: 40,
+            gemReward: 100,
+            unlocked: false,
+            completed: false,
+            stars: 0,
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: 'es',
     name: 'Spanish',
     nativeName: 'Español',

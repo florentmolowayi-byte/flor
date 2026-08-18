@@ -14,7 +14,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'leaderboard', label: 'Leagues', icon: Trophy, color: 'text-amber-500' },
     { id: 'quests', label: 'Quests', icon: Target, color: 'text-blue-500' },
     { id: 'shop', label: 'Shop', icon: ShoppingBag, color: 'text-pink-500' },
-    { id: 'chat', label: 'Language Coach', icon: Sparkles, color: 'text-purple-500' },
+    { id: 'chat', label: 'Language AI', icon: Sparkles, color: 'text-purple-500' },
     { id: 'profile', label: 'Profile', icon: User, color: 'text-indigo-500' },
   ];
 

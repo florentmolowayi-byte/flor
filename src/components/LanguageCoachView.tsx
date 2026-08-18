@@ -34,7 +34,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
     const initialMsg: ChatMessage = {
       id: 'welcome_1',
       sender: 'duo',
-      text: `¡Hola! I’m your language coach 🌍! Let’s practice chatting in ${langObj.name}! Send me a message, ask a question, or introduce yourself!`,
+      text: `¡Hola! I’m your Language AI 🌍! Let’s practice chatting in ${langObj.name}! Send me a message, ask a question, or introduce yourself!`,
       tip: 'Practicing conversations earns you +10 XP per turn!',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
@@ -113,11 +113,11 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h3 className="font-extrabold text-base">Language Coach Chat</h3>
+              <h3 className="font-extrabold text-base">Language AI Chat</h3>
               <Sparkles className="w-4 h-4 text-purple-200" />
             </div>
             <p className="text-xs text-purple-100 font-medium">
-              Practicing {langObj.name} ({langObj.flag}) with your coach
+              Practicing {langObj.name} ({langObj.flag}) with Language AI
             </p>
           </div>
         </div>
@@ -145,7 +145,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-black uppercase opacity-70">
-                  {m.sender === 'user' ? 'You' : 'Coach'}
+                  {m.sender === 'user' ? 'You' : 'AI'}
                 </span>
                 {m.sender === 'duo' && (
                   <button
@@ -187,7 +187,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
 
         {loading && (
           <div className="flex items-center gap-2 text-slate-400 text-xs font-bold pl-12 animate-pulse">
-            🌍 Coach is thinking in {langObj.name}...
+            🌍 Language AI is thinking in {langObj.name}...
           </div>
         )}
         <div ref={chatEndRef} />
