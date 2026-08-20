@@ -68,6 +68,16 @@ export const PathView: React.FC<PathViewProps> = ({
                 Grammar: <span className="font-black">{unit.grammar}</span>
               </p>
             )}
+            {unit.verbs && (
+              <p className="text-xs font-bold text-white/90">
+                Verbs: <span className="font-black">{unit.verbs}</span>
+              </p>
+            )}
+            {unit.pronunciation && (
+              <p className="text-xs font-bold text-white/90">
+                Pronunciation: <span className="font-black">{unit.pronunciation}</span>
+              </p>
+            )}
           </div>
 
           {/* Winding Path Nodes */}

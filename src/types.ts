@@ -16,6 +16,8 @@ export interface Unit {
   title: string;
   description: string;
   grammar?: string;
+  verbs?: string;
+  pronunciation?: string;
   color: string;
   nodes: PathNode[];
 }
