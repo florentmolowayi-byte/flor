@@ -18,11 +18,12 @@ import { LessonEngine } from './components/LessonEngine';
 
 const STORAGE_KEY = 'flor_app_user_state_v2';
 const LEGACY_STORAGE_KEY = 'flor_app_user_state_v1';
+const ENGLISH_DEFAULT_MIGRATION_KEY = 'flor_english_default_migrated_v1';
 
 const DEFAULT_USER_STATE: UserState = {
   name: 'Language Learner',
   avatar: '🌍',
-  currentLanguage: 'tr',
+  currentLanguage: 'en',
   xp: 140,
   gems: 280,
   hearts: 5,
@@ -56,13 +57,18 @@ export default function App() {
   const [userState, setUserState] = useState<UserState>(() => {
     try {
       const rawSaved = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
+      const shouldSetEnglishDefault = localStorage.getItem(ENGLISH_DEFAULT_MIGRATION_KEY) !== '1';
       if (rawSaved) {
         const parsed = JSON.parse(rawSaved) as Partial<UserState>;
         const validLanguageIds = new Set(LANGUAGES.map((language) => language.id));
         if (parsed && typeof parsed === 'object') {
           const selectedLanguage = typeof parsed.currentLanguage === 'string' ? parsed.currentLanguage : null;
           if (selectedLanguage && validLanguageIds.has(selectedLanguage as LanguageId)) {
-            return { ...DEFAULT_USER_STATE, ...parsed, currentLanguage: selectedLanguage as LanguageId };
+            return {
+              ...DEFAULT_USER_STATE,
+              ...parsed,
+              currentLanguage: shouldSetEnglishDefault ? 'en' : selectedLanguage as LanguageId,
+            };
           }
         }
       }
@@ -85,6 +91,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+      localStorage.setItem(ENGLISH_DEFAULT_MIGRATION_KEY, '1');
     } catch {
       // ignore
     }

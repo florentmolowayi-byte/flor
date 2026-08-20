@@ -1104,3 +1104,100 @@ Object.assign(
     )
   )
 );
+
+const EXTENDED_ENGLISH_TOPICS: string[] = [
+  'introductions and people',
+  'food and drinks',
+  'home and family',
+  'daily routines',
+  'shopping',
+  'travel',
+  'directions and places',
+  'weather and seasons',
+  'hobbies and free time',
+  'health and wellness',
+  'work and careers',
+  'past experiences',
+  'future plans',
+  'technology',
+  'opinions and comparisons',
+  'nature and the environment',
+  'culture and celebrations',
+  'conversations',
+  'English fluency',
+];
+
+const createExtendedEnglishExercises = (unitNumber: number, lessonNumber: number, topic: string): Exercise[] => {
+  const id = `en-${unitNumber}-${lessonNumber}`;
+  const sentence = lessonNumber === 1
+    ? `Today we are learning about ${topic}.`
+    : `What do you think about ${topic}?`;
+
+  return [
+    {
+      id: `ex-${id}-1`,
+      type: 'multiple_choice',
+      prompt: `Choose the correct meaning: "${sentence}"`,
+      audioText: sentence,
+      options: [
+        { id: `opt-${id}-1`, text: sentence, translation: sentence },
+        { id: `opt-${id}-2`, text: 'I went to the station yesterday.' },
+        { id: `opt-${id}-3`, text: 'Please open the window.' },
+      ],
+      correctAnswerId: `opt-${id}-1`,
+      hint: 'Listen for the topic phrase and the time expression in the sentence.',
+    },
+    {
+      id: `ex-${id}-2`,
+      type: 'word_bank',
+      prompt: 'Build the sentence: "I enjoy this topic."',
+      audioText: 'I enjoy this topic.',
+      correctSentence: ['I', 'enjoy', 'this', 'topic.'],
+      wordBankPool: ['I', 'enjoy', 'this', 'topic.', 'Tomorrow', 'not', 'very'],
+      hint: 'Start with the subject, then add the verb and object.',
+    },
+    {
+      id: `ex-${id}-3`,
+      type: 'match_pairs',
+      prompt: 'Match the useful English words',
+      pairs: [
+        { id: `pair-${id}-1`, left: 'Today', right: 'This day' },
+        { id: `pair-${id}-2`, left: 'Tomorrow', right: 'The next day' },
+        { id: `pair-${id}-3`, left: 'Because', right: 'For the reason that' },
+        { id: `pair-${id}-4`, left: 'I think', right: 'In my opinion' },
+      ],
+    },
+    {
+      id: `ex-${id}-4`,
+      type: 'listening',
+      prompt: 'Listen and choose the phrase you hear:',
+      audioText: 'We can talk about this together.',
+      options: [
+        { id: `listen-${id}-1`, text: 'We can talk about this together.' },
+        { id: `listen-${id}-2`, text: 'I will call you next week.' },
+        { id: `listen-${id}-3`, text: 'The weather is cold today.' },
+      ],
+      correctAnswerId: `listen-${id}-1`,
+    },
+    {
+      id: `ex-${id}-5`,
+      type: 'speaking',
+      prompt: 'Say this English sentence aloud:',
+      audioText: 'We can talk about this together.',
+      hint: 'Speak clearly and connect the words naturally.',
+    },
+  ];
+};
+
+Object.assign(
+  EXERCISES_BANK,
+  Object.fromEntries(
+    EXTENDED_ENGLISH_TOPICS.flatMap((topic, index) => {
+      const unitNumber = index + 2;
+      return [1, 2, 3].map((lessonNumber) => [
+        `en-${unitNumber}-${lessonNumber === 3 ? 'checkpoint' : lessonNumber}`,
+        createExtendedEnglishExercises(unitNumber, lessonNumber, topic),
+      ]);
+    })
+  )
+);
