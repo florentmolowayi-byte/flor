@@ -268,7 +268,7 @@ export default function App() {
   };
 
   const currentLanguageObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
-  const activeExercises = EXERCISES_BANK[activeLessonId || 'es-1-1'] || EXERCISES_BANK['es-1-1'];
+  const activeExercises = EXERCISES_BANK[activeLessonId || 'en-1-1'] || EXERCISES_BANK['en-1-1'];
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased font-sans">

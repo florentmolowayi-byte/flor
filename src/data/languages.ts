@@ -1,6 +1,6 @@
 import { Language } from '../types';
 
-export const LANGUAGES: Language[] = [
+const ALL_LANGUAGES: Language[] = [
   {
     id: 'en',
     name: 'English',
@@ -606,3 +606,5 @@ export const LANGUAGES: Language[] = [
     ],
   },
 ];
+
+export const LANGUAGES: Language[] = ALL_LANGUAGES.filter((language) => language.id === 'en');

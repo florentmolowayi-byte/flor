@@ -1105,75 +1105,71 @@ Object.assign(
   )
 );
 
-const EXTENDED_ENGLISH_TOPICS: string[] = [
-  'introductions and people',
-  'food and drinks',
-  'home and family',
-  'daily routines',
-  'shopping',
-  'travel',
-  'directions and places',
-  'weather and seasons',
-  'hobbies and free time',
-  'health and wellness',
-  'work and careers',
-  'past experiences',
-  'future plans',
-  'technology',
-  'opinions and comparisons',
-  'nature and the environment',
-  'culture and celebrations',
-  'conversations',
-  'English fluency',
-];
+const EXTENDED_ENGLISH_LESSONS = [
+  { topic: 'introductions and people', sentence: 'My name is Maya and I am from Canada.', answer: 'My name is Maya and I am from Canada.', words: ['My', 'name', 'is', 'Maya', 'and', 'I', 'am', 'from', 'Canada.'], pairs: [['name', 'What someone is called'], ['country', 'A nation'], ['friend', 'A person you like']] },
+  { topic: 'food and drinks', sentence: 'I would like a sandwich and a glass of water.', answer: 'I would like a sandwich and a glass of water.', words: ['I', 'would', 'like', 'a', 'sandwich', 'and', 'water.'], pairs: [['menu', 'A list of food'], ['bill', 'Money owed at a restaurant'], ['thirsty', 'Needing a drink']] },
+  { topic: 'home and family', sentence: 'There are three bedrooms in my house.', answer: 'There are three bedrooms in my house.', words: ['There', 'are', 'three', 'bedrooms', 'in', 'my', 'house.'], pairs: [['kitchen', 'A room for cooking'], ['parent', 'A mother or father'], ['quiet', 'Making little noise']] },
+  { topic: 'daily routines', sentence: 'I wake up at seven and take the bus to work.', answer: 'I wake up at seven and take the bus to work.', words: ['I', 'wake', 'up', 'at', 'seven', 'and', 'take', 'the', 'bus.'], pairs: [['early', 'Before the usual time'], ['usually', 'Most of the time'], ['schedule', 'A plan of times']] },
+  { topic: 'shopping', sentence: 'Do you have this shirt in a larger size?', answer: 'Do you have this shirt in a larger size?', words: ['Do', 'you', 'have', 'this', 'shirt', 'in', 'a', 'larger', 'size?'], pairs: [['cheap', 'Low in price'], ['cashier', 'A person who takes payment'], ['receipt', 'Proof of purchase']] },
+  { topic: 'travel', sentence: 'Our flight leaves from gate twelve at noon.', answer: 'Our flight leaves from gate twelve at noon.', words: ['Our', 'flight', 'leaves', 'from', 'gate', 'twelve', 'at', 'noon.'], pairs: [['luggage', 'Bags for a trip'], ['ticket', 'Proof of travel'], ['arrival', 'The act of reaching a place']] },
+  { topic: 'directions and places', sentence: 'The library is next to the park.', answer: 'The library is next to the park.', words: ['The', 'library', 'is', 'next', 'to', 'the', 'park.'], pairs: [['corner', 'Where two streets meet'], ['across', 'On the other side'], ['straight', 'Without turning']] },
+  { topic: 'weather and seasons', sentence: 'It will be sunny but cold tomorrow.', answer: 'It will be sunny but cold tomorrow.', words: ['It', 'will', 'be', 'sunny', 'but', 'cold', 'tomorrow.'], pairs: [['forecast', 'A prediction about weather'], ['cloudy', 'Full of clouds'], ['season', 'A part of the year']] },
+  { topic: 'hobbies and free time', sentence: 'I enjoy reading novels on the weekend.', answer: 'I enjoy reading novels on the weekend.', words: ['I', 'enjoy', 'reading', 'novels', 'on', 'the', 'weekend.'], pairs: [['hobby', 'An activity you enjoy'], ['practice', 'To do something repeatedly'], ['free time', 'Time without work']] },
+  { topic: 'health and wellness', sentence: 'I have a headache and need to rest.', answer: 'I have a headache and need to rest.', words: ['I', 'have', 'a', 'headache', 'and', 'need', 'to', 'rest.'], pairs: [['symptom', 'A sign of illness'], ['medicine', 'Something used to treat illness'], ['healthy', 'In good physical condition']] },
+  { topic: 'work and careers', sentence: 'She works as an engineer for a small company.', answer: 'She works as an engineer for a small company.', words: ['She', 'works', 'as', 'an', 'engineer', 'for', 'a', 'company.'], pairs: [['meeting', 'A planned work discussion'], ['salary', 'Money earned for work'], ['skill', 'An ability to do something']] },
+  { topic: 'past experiences', sentence: 'We visited the museum last Saturday.', answer: 'We visited the museum last Saturday.', words: ['We', 'visited', 'the', 'museum', 'last', 'Saturday.'], pairs: [['yesterday', 'The day before today'], ['memory', 'Something remembered'], ['visited', 'Went to see a place']] },
+  { topic: 'future plans', sentence: 'I am going to study abroad next year.', answer: 'I am going to study abroad next year.', words: ['I', 'am', 'going', 'to', 'study', 'abroad', 'next', 'year.'], pairs: [['plan', 'Something you intend to do'], ['hope', 'A positive expectation'], ['soon', 'In a short time']] },
+  { topic: 'technology', sentence: 'I use my phone to check the weather.', answer: 'I use my phone to check the weather.', words: ['I', 'use', 'my', 'phone', 'to', 'check', 'the', 'weather.'], pairs: [['password', 'Secret text for access'], ['screen', 'The display of a device'], ['download', 'Copy from the internet']] },
+  { topic: 'opinions and comparisons', sentence: 'This book is more interesting than that one.', answer: 'This book is more interesting than that one.', words: ['This', 'book', 'is', 'more', 'interesting', 'than', 'that', 'one.'], pairs: [['opinion', 'What you think'], ['similar', 'Almost the same'], ['different', 'Not the same']] },
+  { topic: 'nature and the environment', sentence: 'We should protect forests and keep rivers clean.', answer: 'We should protect forests and keep rivers clean.', words: ['We', 'should', 'protect', 'forests', 'and', 'keep', 'rivers', 'clean.'], pairs: [['recycle', 'Use something again'], ['forest', 'A large area of trees'], ['pollution', 'Harmful waste in nature']] },
+  { topic: 'culture and celebrations', sentence: 'My family cooks together during the holiday.', answer: 'My family cooks together during the holiday.', words: ['My', 'family', 'cooks', 'together', 'during', 'the', 'holiday.'], pairs: [['tradition', 'A custom passed down'], ['celebrate', 'Mark a special event'], ['guest', 'Someone invited to an event']] },
+  { topic: 'conversations', sentence: 'That sounds interesting. Tell me more about it.', answer: 'That sounds interesting. Tell me more about it.', words: ['That', 'sounds', 'interesting.', 'Tell', 'me', 'more', 'about', 'it.'], pairs: [['actually', 'In fact'], ['perhaps', 'Maybe'], ['exactly', 'Precisely']] },
+  { topic: 'English fluency', sentence: 'I can explain my ideas clearly in English.', answer: 'I can explain my ideas clearly in English.', words: ['I', 'can', 'explain', 'my', 'ideas', 'clearly', 'in', 'English.'], pairs: [['explain', 'Make something clear'], ['improve', 'Make better'], ['confident', 'Sure of yourself']] },
+] as const;
 
-const createExtendedEnglishExercises = (unitNumber: number, lessonNumber: number, topic: string): Exercise[] => {
+const createExtendedEnglishExercises = (unitNumber: number, lessonNumber: number, lesson: typeof EXTENDED_ENGLISH_LESSONS[number]): Exercise[] => {
   const id = `en-${unitNumber}-${lessonNumber}`;
-  const sentence = lessonNumber === 1
-    ? `Today we are learning about ${topic}.`
-    : `What do you think about ${topic}?`;
+  const sentence = lesson.sentence;
+  const alternate = lessonNumber === 1
+    ? `What is one useful word about ${lesson.topic}?`
+    : `Which sentence is about ${lesson.topic}?`;
 
   return [
     {
       id: `ex-${id}-1`,
       type: 'multiple_choice',
-      prompt: `Choose the correct meaning: "${sentence}"`,
+      prompt: `Choose the correct sentence about ${lesson.topic}:`,
       audioText: sentence,
       options: [
         { id: `opt-${id}-1`, text: sentence, translation: sentence },
-        { id: `opt-${id}-2`, text: 'I went to the station yesterday.' },
+        { id: `opt-${id}-2`, text: alternate },
         { id: `opt-${id}-3`, text: 'Please open the window.' },
       ],
       correctAnswerId: `opt-${id}-1`,
-      hint: 'Listen for the topic phrase and the time expression in the sentence.',
+      hint: `This lesson focuses on ${lesson.topic}.`,
     },
     {
       id: `ex-${id}-2`,
       type: 'word_bank',
-      prompt: 'Build the sentence: "I enjoy this topic."',
-      audioText: 'I enjoy this topic.',
-      correctSentence: ['I', 'enjoy', 'this', 'topic.'],
-      wordBankPool: ['I', 'enjoy', 'this', 'topic.', 'Tomorrow', 'not', 'very'],
-      hint: 'Start with the subject, then add the verb and object.',
+      prompt: `Build the sentence: "${lesson.answer}"`,
+      audioText: lesson.answer,
+      correctSentence: [...lesson.words],
+      wordBankPool: [...lesson.words, 'yesterday', 'not', 'very'],
+      hint: 'Start with the subject, then build the sentence in natural English order.',
     },
     {
       id: `ex-${id}-3`,
       type: 'match_pairs',
-      prompt: 'Match the useful English words',
-      pairs: [
-        { id: `pair-${id}-1`, left: 'Today', right: 'This day' },
-        { id: `pair-${id}-2`, left: 'Tomorrow', right: 'The next day' },
-        { id: `pair-${id}-3`, left: 'Because', right: 'For the reason that' },
-        { id: `pair-${id}-4`, left: 'I think', right: 'In my opinion' },
-      ],
+      prompt: `Match the ${lesson.topic} words`,
+      pairs: lesson.pairs.map(([left, right], index) => ({ id: `pair-${id}-${index + 1}`, left, right })),
     },
     {
       id: `ex-${id}-4`,
       type: 'listening',
       prompt: 'Listen and choose the phrase you hear:',
-      audioText: 'We can talk about this together.',
+      audioText: lesson.answer,
       options: [
-        { id: `listen-${id}-1`, text: 'We can talk about this together.' },
+        { id: `listen-${id}-1`, text: lesson.answer },
         { id: `listen-${id}-2`, text: 'I will call you next week.' },
         { id: `listen-${id}-3`, text: 'The weather is cold today.' },
       ],
@@ -1183,8 +1179,8 @@ const createExtendedEnglishExercises = (unitNumber: number, lessonNumber: number
       id: `ex-${id}-5`,
       type: 'speaking',
       prompt: 'Say this English sentence aloud:',
-      audioText: 'We can talk about this together.',
-      hint: 'Speak clearly and connect the words naturally.',
+      audioText: lesson.answer,
+      hint: `Speak clearly while practicing ${lesson.topic} vocabulary.`,
     },
   ];
 };
@@ -1192,11 +1188,11 @@ const createExtendedEnglishExercises = (unitNumber: number, lessonNumber: number
 Object.assign(
   EXERCISES_BANK,
   Object.fromEntries(
-    EXTENDED_ENGLISH_TOPICS.flatMap((topic, index) => {
+    EXTENDED_ENGLISH_LESSONS.flatMap((lesson, index) => {
       const unitNumber = index + 2;
       return [1, 2, 3].map((lessonNumber) => [
         `en-${unitNumber}-${lessonNumber === 3 ? 'checkpoint' : lessonNumber}`,
-        createExtendedEnglishExercises(unitNumber, lessonNumber, topic),
+        createExtendedEnglishExercises(unitNumber, lessonNumber, lesson),
       ]);
     })
   )

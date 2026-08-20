@@ -28,7 +28,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
     weeklyXp: userState.leagueWeeklyXp,
     isUser: true,
     streak: userState.streak,
-    status: 'Learning Spanish',
+    status: 'Learning English',
   };
 
   const allCompetitors = [...competitors.filter((c) => !c.isUser), userCompetitor].sort(
