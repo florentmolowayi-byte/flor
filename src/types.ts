@@ -15,6 +15,7 @@ export interface Unit {
   number: number;
   title: string;
   description: string;
+  grammar?: string;
   color: string;
   nodes: PathNode[];
 }

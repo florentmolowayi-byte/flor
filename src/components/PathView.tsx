@@ -63,6 +63,11 @@ export const PathView: React.FC<PathViewProps> = ({
             </div>
             <h3 className="text-xl font-black">{unit.title.split(':')[1] || unit.title}</h3>
             <p className="text-xs font-medium opacity-90">{unit.description}</p>
+            {unit.grammar && (
+              <p className="text-xs font-bold text-white/90">
+                Grammar: <span className="font-black">{unit.grammar}</span>
+              </p>
+            )}
           </div>
 
           {/* Winding Path Nodes */}
