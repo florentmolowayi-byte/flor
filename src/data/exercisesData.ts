@@ -1101,6 +1101,97 @@ Object.assign(
   )
 );
 
+const EXTENDED_FRENCH_LESSONS = [
+  { topic: 'la famille', sentences: ['Ma sœur habite à Lyon.', 'Mon père travaille dans une école.', 'Nous aimons passer du temps ensemble.'], pairs: [['sœur', 'Sister'], ['père', 'Father'], ['ensemble', 'Together']] },
+  { topic: 'la nourriture', sentences: ['Je voudrais une baguette, s’il vous plaît.', 'Nous buvons du café après le repas.', 'La soupe est chaude et délicieuse.'], pairs: [['baguette', 'French bread'], ['repas', 'Meal'], ['délicieux', 'Delicious']] },
+  { topic: 'la maison', sentences: ['Il y a une table dans la cuisine.', 'Ma chambre est près du salon.', 'Nous ouvrons les fenêtres le matin.'], pairs: [['cuisine', 'Kitchen'], ['chambre', 'Bedroom'], ['fenêtre', 'Window']] },
+  { topic: 'les routines', sentences: ['Je me lève à sept heures.', 'Elle prend le métro pour aller au travail.', 'Nous rentrons à la maison le soir.'], pairs: [['se lever', 'Get up'], ['métro', 'Subway'], ['rentrer', 'Return home']] },
+  { topic: 'les achats', sentences: ['Cette robe est trop grande pour moi.', 'Je cherche une chemise bleue.', 'Combien coûte ce pantalon ?'], pairs: [['robe', 'Dress'], ['chemise', 'Shirt'], ['coûter', 'Cost']] },
+  { topic: 'les voyages', sentences: ['Notre train part à midi.', 'J’ai réservé une chambre à l’hôtel.', 'Nous arrivons à Paris demain.'], pairs: [['train', 'Train'], ['réserver', 'Book'], ['arriver', 'Arrive']] },
+  { topic: 'les directions', sentences: ['Tournez à gauche après la banque.', 'La gare est en face du musée.', 'Continuez tout droit, s’il vous plaît.'], pairs: [['gauche', 'Left'], ['gare', 'Station'], ['tout droit', 'Straight ahead']] },
+  { topic: 'la météo', sentences: ['Il fait beau aujourd’hui.', 'Demain, il va pleuvoir.', 'En hiver, les nuits sont longues.'], pairs: [['beau', 'Nice weather'], ['pleuvoir', 'Rain'], ['hiver', 'Winter']] },
+  { topic: 'les loisirs', sentences: ['J’aime écouter de la musique.', 'Nous jouons au tennis le samedi.', 'Elle lit un roman pendant son temps libre.'], pairs: [['écouter', 'Listen'], ['jouer', 'Play'], ['roman', 'Novel']] },
+  { topic: 'la santé', sentences: ['J’ai mal à la tête depuis ce matin.', 'Le médecin conseille de se reposer.', 'Buvez beaucoup d’eau chaque jour.'], pairs: [['mal à la tête', 'Headache'], ['médecin', 'Doctor'], ['se reposer', 'Rest']] },
+  { topic: 'le travail', sentences: ['Je travaille dans un petit bureau.', 'Elle apprend un nouveau métier.', 'Nous voulons réussir ensemble.'], pairs: [['bureau', 'Office'], ['métier', 'Job'], ['réussir', 'Succeed']] },
+  { topic: 'les expériences passées', sentences: ['Hier, j’ai visité un château.', 'Nous avons vu un film français.', 'Ils sont allés au marché samedi.'], pairs: [['hier', 'Yesterday'], ['château', 'Castle'], ['marché', 'Market']] },
+  { topic: 'les projets futurs', sentences: ['Je vais étudier le français demain.', 'Nous allons voyager en été.', 'Elle va commencer un nouveau cours.'], pairs: [['étudier', 'Study'], ['voyager', 'Travel'], ['commencer', 'Begin']] },
+  { topic: 'la technologie', sentences: ['J’utilise mon téléphone pour travailler.', 'Il regarde un film sur son ordinateur.', 'Nous téléchargeons une nouvelle application.'], pairs: [['téléphone', 'Phone'], ['ordinateur', 'Computer'], ['application', 'App']] },
+  { topic: 'les opinions', sentences: ['Je pense que ce livre est intéressant.', 'Cette ville est plus calme que Paris.', 'À mon avis, cette idée est meilleure.'], pairs: [['penser', 'Think'], ['calme', 'Quiet'], ['meilleur', 'Better']] },
+  { topic: 'la nature', sentences: ['Nous devons protéger la forêt.', 'Je recycle le papier et le verre.', 'La rivière est propre aujourd’hui.'], pairs: [['protéger', 'Protect'], ['recycler', 'Recycle'], ['rivière', 'River']] },
+  { topic: 'les traditions', sentences: ['Nous célébrons la fête en famille.', 'Ma grand-mère prépare un gâteau spécial.', 'Tout le monde danse pendant la soirée.'], pairs: [['fête', 'Celebration'], ['grand-mère', 'Grandmother'], ['soirée', 'Evening party']] },
+  { topic: 'les conversations', sentences: ['Pouvez-vous expliquer cette phrase ?', 'Je suis d’accord avec votre idée.', 'Qu’est-ce que vous en pensez ?'], pairs: [['expliquer', 'Explain'], ['d’accord', 'Agree'], ['penser', 'Think']] },
+  { topic: 'la fluidité française', sentences: ['Je parle français avec confiance.', 'Je comprends mieux chaque semaine.', 'Je peux écrire une conversation simple.'], pairs: [['confiance', 'Confidence'], ['comprendre', 'Understand'], ['écrire', 'Write']] },
+] as const;
+
+const createExtendedFrenchExercises = (unitNumber: number, lessonNumber: number, lesson: typeof EXTENDED_FRENCH_LESSONS[number]): Exercise[] => {
+  const id = `fr-${unitNumber}-${lessonNumber}`;
+  const sentence = lesson.sentences[lessonNumber - 1];
+  const words = sentence.split(' ');
+
+  return [
+    {
+      id: `ex-${id}-1`,
+      type: 'multiple_choice',
+      prompt: `Choose the sentence about ${lesson.topic}:`,
+      audioText: sentence,
+      options: [
+        { id: `opt-${id}-1`, text: sentence, translation: sentence },
+        { id: `opt-${id}-2`, text: 'Je vais à la gare demain.' },
+        { id: `opt-${id}-3`, text: 'Il fait froid ce soir.' },
+      ],
+      correctAnswerId: `opt-${id}-1`,
+      hint: `This lesson practices ${lesson.topic}.`,
+    },
+    {
+      id: `ex-${id}-2`,
+      type: 'word_bank',
+      prompt: `Build this French sentence: "${sentence}"`,
+      audioText: sentence,
+      correctSentence: [...words],
+      wordBankPool: [...words, 'demain', 'très', 'pas'],
+      hint: 'Place the words in natural French sentence order.',
+    },
+    {
+      id: `ex-${id}-3`,
+      type: 'match_pairs',
+      prompt: `Match the ${lesson.topic} words`,
+      pairs: lesson.pairs.map(([left, right], index) => ({ id: `pair-${id}-${index + 1}`, left, right })),
+    },
+    {
+      id: `ex-${id}-4`,
+      type: 'listening',
+      prompt: 'Listen and choose the phrase you hear:',
+      audioText: sentence,
+      options: [
+        { id: `listen-${id}-1`, text: sentence },
+        { id: `listen-${id}-2`, text: 'Je vais acheter un nouveau livre.' },
+        { id: `listen-${id}-3`, text: 'Nous mangeons au restaurant ce soir.' },
+      ],
+      correctAnswerId: `listen-${id}-1`,
+    },
+    {
+      id: `ex-${id}-5`,
+      type: 'speaking',
+      prompt: 'Say this French sentence aloud:',
+      audioText: sentence,
+      hint: `Speak slowly and practice the ${lesson.topic} vocabulary.`,
+    },
+  ];
+};
+
+Object.assign(
+  EXERCISES_BANK,
+  Object.fromEntries(
+    EXTENDED_FRENCH_LESSONS.flatMap((lesson, index) => {
+      const unitNumber = index + 2;
+      return [1, 2, 3].map((lessonNumber) => [
+        `fr-${unitNumber}-${lessonNumber === 3 ? 'checkpoint' : lessonNumber}`,
+        createExtendedFrenchExercises(unitNumber, lessonNumber, lesson),
+      ]);
+    })
+  )
+);
+
 EXERCISES_BANK['pt-1-1'] = [
   {
     id: 'ex-pt-1-1-1',
