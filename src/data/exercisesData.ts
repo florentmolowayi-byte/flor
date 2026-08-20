@@ -9,12 +9,12 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       prompt: 'Select the correct translation for "Hello"',
       audioText: 'Hola',
       options: [
-        { id: 'opt-1', text: 'Hola', translation: 'Hello', imageEmoji: '👋' },
-        { id: 'opt-2', text: 'Gracias', translation: 'Thank you', imageEmoji: '🙏' },
-        { id: 'opt-3', text: 'Por favor', translation: 'Please', imageEmoji: '✨' },
+        { id: 'opt-1', text: 'Gracias', translation: 'Thank you', imageEmoji: '🙏' },
+        { id: 'opt-2', text: 'Por favor', translation: 'Please', imageEmoji: '✨' },
+        { id: 'opt-3', text: 'Hola', translation: 'Hello', imageEmoji: '👋' },
         { id: 'opt-4', text: 'Adiós', translation: 'Goodbye', imageEmoji: '🚶' },
       ],
-      correctAnswerId: 'opt-1',
+      correctAnswerId: 'opt-3',
       hint: '"Hola" is the most common friendly hello in Spanish!',
     },
     {
@@ -44,11 +44,11 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       prompt: 'Listen to the audio and select what you hear:',
       audioText: 'Buenos días, ¿cómo estás?',
       options: [
-        { id: 'l1', text: 'Buenos días, ¿cómo estás?' },
-        { id: 'l2', text: 'Buenas noches, adiós' },
-        { id: 'l3', text: 'Muchas gracias, por favor' },
+        { id: 'l1', text: 'Buenas noches, adiós' },
+        { id: 'l2', text: 'Muchas gracias, por favor' },
+        { id: 'l3', text: 'Buenos días, ¿cómo estás?' },
       ],
-      correctAnswerId: 'l1',
+      correctAnswerId: 'l3',
       hint: 'The phrase starts with "Buenos días" (Good morning).',
     },
     {
@@ -68,12 +68,12 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       prompt: 'What does "Por favor" mean?',
       audioText: 'Por favor',
       options: [
-        { id: 'opt-2-1', text: 'Please', imageEmoji: '🤲' },
-        { id: 'opt-2-2', text: 'Good morning', imageEmoji: '🌅' },
-        { id: 'opt-2-3', text: 'Excuse me', imageEmoji: '🙋‍♂️' },
-        { id: 'opt-2-4', text: 'Welcome', imageEmoji: '🏡' },
+        { id: 'opt-2-1', text: 'Good morning', imageEmoji: '🌅' },
+        { id: 'opt-2-2', text: 'Excuse me', imageEmoji: '🙋‍♂️' },
+        { id: 'opt-2-3', text: 'Welcome', imageEmoji: '🏡' },
+        { id: 'opt-2-4', text: 'Please', imageEmoji: '🤲' },
       ],
-      correctAnswerId: 'opt-2-1',
+      correctAnswerId: 'opt-2-4',
       hint: 'Use "por favor" whenever requesting something politely.',
     },
     {
@@ -102,11 +102,11 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       prompt: 'Listen and choose the matching phrase:',
       audioText: 'De nada, mi amigo',
       options: [
-        { id: 'lo1', text: 'De nada, mi amigo' },
-        { id: 'lo2', text: 'Hola, mi amigo' },
-        { id: 'lo3', text: 'Buenas tardes, señor' },
+        { id: 'lo1', text: 'Hola, mi amigo' },
+        { id: 'lo2', text: 'Buenas tardes, señor' },
+        { id: 'lo3', text: 'De nada, mi amigo' },
       ],
-      correctAnswerId: 'lo1',
+      correctAnswerId: 'lo3',
     },
     {
       id: 'ex-es-1-2-5',
@@ -1014,3 +1014,93 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
     },
   ],
 };
+
+const EXTENDED_TURKISH_TOPICS: Array<[string, string]> = [
+  ['sabah rutinleri', 'Sabah rutinleri'],
+  ['ev ve mahalle', 'Ev ve mahalle'],
+  ['hava durumu', 'Hava durumu'],
+  ['alışveriş ve kıyafetler', 'Alışveriş ve kıyafetler'],
+  ['geçmiş deneyimler', 'Geçmiş deneyimler'],
+  ['gelecek planları', 'Gelecek planları'],
+  ['şehir hayatı', 'Şehir hayatı'],
+  ['doğa ve açık hava', 'Doğa ve açık hava'],
+  ['medya ve teknoloji', 'Medya ve teknoloji'],
+  ['fikirler ve karşılaştırmalar', 'Fikirler ve karşılaştırmalar'],
+  ['günlük konuşmalar', 'Günlük konuşmalar'],
+  ['seyahat hikayeleri', 'Seyahat hikayeleri'],
+  ['kültür ve gelenekler', 'Kültür ve gelenekler'],
+  ['haberler ve toplum', 'Haberler ve toplum'],
+  ['akıcı konuşma tekrarı', 'Akıcı konuşma tekrarı'],
+];
+
+const createExtendedTurkishExercises = (unitNumber: number, lessonNumber: number, topic: string): Exercise[] => {
+  const id = `tr-${unitNumber}-${lessonNumber}`;
+  const phrase = lessonNumber === 1 ? `Bugün ${topic} hakkında konuşuyoruz.` : `${topic} hakkında ne düşünüyorsun?`;
+
+  return [
+    {
+      id: `ex-${id}-1`,
+      type: 'multiple_choice',
+      prompt: `What does this Turkish sentence mean? "${phrase}"`,
+      audioText: phrase,
+      options: [
+        { id: `opt-${id}-1`, text: `We are talking about ${topic} today.`, translation: phrase },
+        { id: `opt-${id}-2`, text: 'I am going home tomorrow.' },
+        { id: `opt-${id}-3`, text: 'Where is the train station?' },
+      ],
+      correctAnswerId: `opt-${id}-1`,
+      hint: 'Bugün means “today”, hakkında means “about”, and konuşuyoruz means “we are talking”.',
+    },
+    {
+      id: `ex-${id}-2`,
+      type: 'word_bank',
+      prompt: 'Build the Turkish sentence: "I like this topic."',
+      audioText: `Bu konuyu seviyorum.`,
+      correctSentence: ['Bu', 'konuyu', 'seviyorum.'],
+      wordBankPool: ['Bu', 'konuyu', 'seviyorum.', 'Yarın', 'çok', 'değil.'],
+      hint: 'In Turkish, the object ending -yu comes before the verb.',
+    },
+    {
+      id: `ex-${id}-3`,
+      type: 'match_pairs',
+      prompt: 'Match the Turkish conversation words',
+      pairs: [
+        { id: `pair-${id}-1`, left: 'Bugün', right: 'Today' },
+        { id: `pair-${id}-2`, left: 'Yarın', right: 'Tomorrow' },
+        { id: `pair-${id}-3`, left: 'Neden?', right: 'Why?' },
+        { id: `pair-${id}-4`, left: 'Bence', right: 'In my opinion' },
+      ],
+    },
+    {
+      id: `ex-${id}-4`,
+      type: 'listening',
+      prompt: 'Listen and choose the phrase you hear:',
+      audioText: `Bu konu hakkında konuşabiliriz.`,
+      options: [
+        { id: `listen-${id}-1`, text: 'Bu konu hakkında konuşabiliriz.' },
+        { id: `listen-${id}-2`, text: 'Bu kitabı yarın okuyacağım.' },
+        { id: `listen-${id}-3`, text: 'Bugün hava çok soğuk.' },
+      ],
+      correctAnswerId: `listen-${id}-1`,
+    },
+    {
+      id: `ex-${id}-5`,
+      type: 'speaking',
+      prompt: 'Say this Turkish sentence aloud:',
+      audioText: `Bu konu hakkında konuşabiliriz.`,
+      hint: 'Speak slowly and keep the vowel sounds clear.',
+    },
+  ];
+};
+
+Object.assign(
+  EXERCISES_BANK,
+  Object.fromEntries(
+    EXTENDED_TURKISH_TOPICS.flatMap(([topic]) =>
+      [1, 2, 3].map((lessonNumber) => {
+        const unitNumber = EXTENDED_TURKISH_TOPICS.findIndex(([currentTopic]) => currentTopic === topic) + 6;
+        return [`tr-${unitNumber}-${lessonNumber === 3 ? 'checkpoint' : lessonNumber}`, createExtendedTurkishExercises(unitNumber, lessonNumber, topic)];
+      })
+    )
+  )
+);
