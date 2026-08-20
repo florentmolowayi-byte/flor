@@ -702,4 +702,4 @@ const ALL_LANGUAGES: Language[] = [
   },
 ];
 
-export const LANGUAGES: Language[] = ALL_LANGUAGES.filter((language) => ['tr', 'fr', 'es', 'pt'].includes(language.id));
+export const LANGUAGES: Language[] = ALL_LANGUAGES.filter((language) => ['en', 'tr', 'fr', 'es', 'pt'].includes(language.id));
