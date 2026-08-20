@@ -1125,6 +1125,7 @@ const EXTENDED_ENGLISH_LESSONS = [
   { topic: 'culture and celebrations', sentence: 'My family cooks together during the holiday.', answer: 'My family cooks together during the holiday.', words: ['My', 'family', 'cooks', 'together', 'during', 'the', 'holiday.'], pairs: [['tradition', 'A custom passed down'], ['celebrate', 'Mark a special event'], ['guest', 'Someone invited to an event']] },
   { topic: 'conversations', sentence: 'That sounds interesting. Tell me more about it.', answer: 'That sounds interesting. Tell me more about it.', words: ['That', 'sounds', 'interesting.', 'Tell', 'me', 'more', 'about', 'it.'], pairs: [['actually', 'In fact'], ['perhaps', 'Maybe'], ['exactly', 'Precisely']] },
   { topic: 'English fluency', sentence: 'I can explain my ideas clearly in English.', answer: 'I can explain my ideas clearly in English.', words: ['I', 'can', 'explain', 'my', 'ideas', 'clearly', 'in', 'English.'], pairs: [['explain', 'Make something clear'], ['improve', 'Make better'], ['confident', 'Sure of yourself']] },
+  { topic: 'common English verbs', sentence: 'I go, went, and have gone to the store.', answer: 'I go, went, and have gone to the store.', words: ['I', 'go,', 'went,', 'and', 'have', 'gone', 'to', 'the', 'store.'], pairs: [['go - went - gone', 'Travel to a place'], ['make - made - made', 'Create something'], ['take - took - taken', 'Move something with you']] },
 ] as const;
 
 const createExtendedEnglishExercises = (unitNumber: number, lessonNumber: number, lesson: typeof EXTENDED_ENGLISH_LESSONS[number]): Exercise[] => {

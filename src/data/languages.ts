@@ -74,6 +74,7 @@ const ALL_LANGUAGES: Language[] = [
         ['Unit 18: Culture & Celebrations', 'Talk about traditions, holidays, and memorable celebrations.', 'Past continuous', 'celebrate, cook, dance, remember', 'tradition /truh-DISH-un/ · holiday /HOL-uh-day/', 'Special Days', 'Traditions'],
         ['Unit 19: Conversations', 'Build longer conversations with useful connectors and responses.', 'Question tags and conversation connectors', 'ask, answer, explain, continue', 'conversation /kon-ver-SAY-shun/ · actually /AK-choo-uh-lee/', 'Keeping a Conversation', 'Conversation Connectors'],
         ['Unit 20: English Fluency Review', 'Bring your vocabulary and grammar together in a final review.', 'Mixed grammar review', 'speak, listen, read, write', 'fluency /FLOO-en-see/ · clearly /KLEER-lee/', 'Mixed Review', 'Fluency Challenge'],
+        ['Unit 21: Verb Foundations', 'Build strong English sentences with common regular and irregular verbs.', 'Verb forms: base, past, and past participle', 'be, do, have, go, make, take', 'verb /VERB/ · irregular /ih-REG-yuh-ler/', 'Common Verb Forms', 'Verb Practice'],
       ].map(([title, description, grammar, verbs, pronunciation, lessonOne, lessonTwo], index) => {
         const number = index + 2;
         return {
