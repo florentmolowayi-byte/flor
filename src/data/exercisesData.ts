@@ -1101,6 +1101,162 @@ Object.assign(
   )
 );
 
+Object.assign(EXERCISES_BANK, {
+  'en-1-1': [
+    {
+      id: 'ex-en-1-1-1',
+      type: 'multiple_choice',
+      prompt: 'Choose the English greeting:',
+      audioText: 'Hello, my name is Alex.',
+      options: [
+        { id: 'en-start-1', text: 'Hello, my name is Alex.' },
+        { id: 'en-start-2', text: 'Good night, see you tomorrow.' },
+        { id: 'en-start-3', text: 'Where is the train station?' },
+      ],
+      correctAnswerId: 'en-start-1',
+    },
+    {
+      id: 'ex-en-1-1-2',
+      type: 'word_bank',
+      prompt: 'Build: "Nice to meet you."',
+      audioText: 'Nice to meet you.',
+      correctSentence: ['Nice', 'to', 'meet', 'you.'],
+      wordBankPool: ['Nice', 'to', 'meet', 'you.', 'Good', 'morning'],
+    },
+    {
+      id: 'ex-en-1-1-3',
+      type: 'match_pairs',
+      prompt: 'Match the English greetings',
+      pairs: [
+        { id: 'en-greet-1', left: 'Hello', right: 'A friendly greeting' },
+        { id: 'en-greet-2', left: 'Good morning', right: 'A greeting before noon' },
+        { id: 'en-greet-3', left: 'Goodbye', right: 'A parting phrase' },
+      ],
+    },
+    {
+      id: 'ex-en-1-1-4',
+      type: 'listening',
+      prompt: 'Listen and choose what you hear:',
+      audioText: 'Good morning, how are you?',
+      options: [
+        { id: 'en-listen-1', text: 'Good morning, how are you?' },
+        { id: 'en-listen-2', text: 'Good evening, thank you.' },
+        { id: 'en-listen-3', text: 'See you next week.' },
+      ],
+      correctAnswerId: 'en-listen-1',
+    },
+    {
+      id: 'ex-en-1-1-5',
+      type: 'speaking',
+      prompt: 'Say this English sentence aloud:',
+      audioText: 'Hello, my name is Alex.',
+      hint: 'Speak clearly and stress the first syllable in Hello.',
+    },
+  ],
+  'en-1-2': [
+    {
+      id: 'ex-en-1-2-1',
+      type: 'multiple_choice',
+      prompt: 'Choose the correct daily phrase:',
+      audioText: 'I drink water every day.',
+      options: [
+        { id: 'en-daily-1', text: 'I drink water every day.' },
+        { id: 'en-daily-2', text: 'I visited a museum yesterday.' },
+        { id: 'en-daily-3', text: 'I will travel next month.' },
+      ],
+      correctAnswerId: 'en-daily-1',
+    },
+    {
+      id: 'ex-en-1-2-2',
+      type: 'word_bank',
+      prompt: 'Build: "Please open the door."',
+      audioText: 'Please open the door.',
+      correctSentence: ['Please', 'open', 'the', 'door.'],
+      wordBankPool: ['Please', 'open', 'the', 'door.', 'close', 'window'],
+    },
+    {
+      id: 'ex-en-1-2-3',
+      type: 'match_pairs',
+      prompt: 'Match useful daily words',
+      pairs: [
+        { id: 'en-daily-pair-1', left: 'Please', right: 'A polite request' },
+        { id: 'en-daily-pair-2', left: 'Thank you', right: 'A polite response' },
+        { id: 'en-daily-pair-3', left: 'Sorry', right: 'An apology' },
+      ],
+    },
+    {
+      id: 'ex-en-1-2-4',
+      type: 'listening',
+      prompt: 'Listen and choose what you hear:',
+      audioText: 'Please sit here.',
+      options: [
+        { id: 'en-daily-listen-1', text: 'Please sit here.' },
+        { id: 'en-daily-listen-2', text: 'Please call me later.' },
+        { id: 'en-daily-listen-3', text: 'Please write your name.' },
+      ],
+      correctAnswerId: 'en-daily-listen-1',
+    },
+    {
+      id: 'ex-en-1-2-5',
+      type: 'speaking',
+      prompt: 'Say this English sentence aloud:',
+      audioText: 'Please open the door.',
+      hint: 'Keep the vowel in Please long and clear.',
+    },
+  ],
+  'en-1-checkpoint': [
+    {
+      id: 'ex-en-1-checkpoint-1',
+      type: 'multiple_choice',
+      prompt: 'Choose the correct introduction:',
+      audioText: 'My name is Sam. Nice to meet you.',
+      options: [
+        { id: 'en-check-1', text: 'My name is Sam. Nice to meet you.' },
+        { id: 'en-check-2', text: 'The weather is cold today.' },
+        { id: 'en-check-3', text: 'I would like some coffee.' },
+      ],
+      correctAnswerId: 'en-check-1',
+    },
+    {
+      id: 'ex-en-1-checkpoint-2',
+      type: 'word_bank',
+      prompt: 'Build: "How are you today?"',
+      audioText: 'How are you today?',
+      correctSentence: ['How', 'are', 'you', 'today?'],
+      wordBankPool: ['How', 'are', 'you', 'today?', 'Where', 'is', 'my'],
+    },
+    {
+      id: 'ex-en-1-checkpoint-3',
+      type: 'match_pairs',
+      prompt: 'Match the checkpoint phrases',
+      pairs: [
+        { id: 'en-check-pair-1', left: 'My name is...', right: 'An introduction' },
+        { id: 'en-check-pair-2', left: 'How are you?', right: 'A friendly question' },
+        { id: 'en-check-pair-3', left: 'See you later', right: 'A goodbye phrase' },
+      ],
+    },
+    {
+      id: 'ex-en-1-checkpoint-4',
+      type: 'listening',
+      prompt: 'Listen and choose what you hear:',
+      audioText: 'See you tomorrow.',
+      options: [
+        { id: 'en-check-listen-1', text: 'See you tomorrow.' },
+        { id: 'en-check-listen-2', text: 'See you at the station.' },
+        { id: 'en-check-listen-3', text: 'See you on Monday.' },
+      ],
+      correctAnswerId: 'en-check-listen-1',
+    },
+    {
+      id: 'ex-en-1-checkpoint-5',
+      type: 'speaking',
+      prompt: 'Say this English sentence aloud:',
+      audioText: 'Nice to meet you.',
+      hint: 'Link the words Nice to naturally when speaking.',
+    },
+  ],
+});
+
 const EXTENDED_FRENCH_LESSONS = [
   { topic: 'la famille', sentences: ['Ma sœur habite à Lyon.', 'Mon père travaille dans une école.', 'Nous aimons passer du temps ensemble.'], pairs: [['sœur', 'Sister'], ['père', 'Father'], ['ensemble', 'Together']] },
   { topic: 'la nourriture', sentences: ['Je voudrais une baguette, s’il vous plaît.', 'Nous buvons du café après le repas.', 'La soupe est chaude et délicieuse.'], pairs: [['baguette', 'French bread'], ['repas', 'Meal'], ['délicieux', 'Delicious']] },
