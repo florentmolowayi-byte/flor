@@ -612,6 +612,56 @@ const ALL_LANGUAGES: Language[] = [
       }),
     ],
   },
+  {
+    id: 'es',
+    name: 'Spanish',
+    nativeName: 'Español',
+    flag: '🇪🇸',
+    description: 'Learn practical Spanish greetings, polite phrases, and everyday conversations.',
+    color: '#F59E0B',
+    units: [
+      {
+        id: 'unit-es-1',
+        number: 1,
+        title: 'Unit 1: Spanish Essentials',
+        description: 'Build a foundation with greetings, polite words, and daily expressions.',
+        grammar: 'Subject pronouns and ser',
+        verbs: 'ser, tener, hablar, llamarse',
+        pronunciation: 'hola /OH-la/ · gracias /GRAH-see-as/',
+        color: '#F59E0B',
+        nodes: [
+          { id: 'es-1-1', title: 'Greetings', type: 'lesson', totalSteps: 5, xpReward: 15, gemReward: 10, unlocked: true, completed: false, stars: 0 },
+          { id: 'es-1-2', title: 'Polite Basics', type: 'lesson', totalSteps: 5, xpReward: 15, gemReward: 10, unlocked: false, completed: false, stars: 0 },
+          { id: 'es-1-3', title: 'Time Greetings', type: 'lesson', totalSteps: 5, xpReward: 15, gemReward: 10, unlocked: false, completed: false, stars: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'pt',
+    name: 'Portuguese',
+    nativeName: 'Português',
+    flag: '🇧🇷',
+    description: 'Start Portuguese with friendly greetings, useful phrases, and everyday vocabulary.',
+    color: '#16A34A',
+    units: [
+      {
+        id: 'unit-pt-1',
+        number: 1,
+        title: 'Unit 1: Portuguese Essentials',
+        description: 'Learn greetings, introductions, and polite Portuguese for daily life.',
+        grammar: 'Subject pronouns and ser',
+        verbs: 'ser, ter, falar, chamar-se',
+        pronunciation: 'olá /oh-LAH/ · obrigado /oh-bree-GAH-doo/',
+        color: '#16A34A',
+        nodes: [
+          { id: 'pt-1-1', title: 'Greetings', type: 'lesson', totalSteps: 5, xpReward: 15, gemReward: 10, unlocked: true, completed: false, stars: 0 },
+          { id: 'pt-1-2', title: 'Introductions', type: 'lesson', totalSteps: 5, xpReward: 15, gemReward: 10, unlocked: false, completed: false, stars: 0 },
+          { id: 'pt-1-checkpoint', title: 'Portuguese Checkpoint', type: 'checkpoint', totalSteps: 6, xpReward: 40, gemReward: 100, unlocked: false, completed: false, stars: 0 },
+        ],
+      },
+    ],
+  },
 ];
 
-export const LANGUAGES: Language[] = ALL_LANGUAGES.filter((language) => language.id === 'en');
+export const LANGUAGES: Language[] = ALL_LANGUAGES.filter((language) => ['tr', 'fr', 'es', 'pt'].includes(language.id));

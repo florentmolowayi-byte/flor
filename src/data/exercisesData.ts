@@ -1105,6 +1105,71 @@ Object.assign(
   )
 );
 
+EXERCISES_BANK['pt-1-1'] = [
+  {
+    id: 'ex-pt-1-1-1',
+    type: 'multiple_choice',
+    prompt: 'How do you say “Hello” in Portuguese?',
+    audioText: 'Olá',
+    options: [
+      { id: 'pt-opt-1', text: 'Olá', translation: 'Hello' },
+      { id: 'pt-opt-2', text: 'Obrigado', translation: 'Thank you' },
+      { id: 'pt-opt-3', text: 'Tchau', translation: 'Goodbye' },
+    ],
+    correctAnswerId: 'pt-opt-1',
+  },
+  {
+    id: 'ex-pt-1-1-2',
+    type: 'word_bank',
+    prompt: 'Build: “My name is Ana.”',
+    audioText: 'Meu nome é Ana.',
+    correctSentence: ['Meu', 'nome', 'é', 'Ana.'],
+    wordBankPool: ['Meu', 'nome', 'é', 'Ana.', 'Olá', 'obrigado'],
+  },
+  {
+    id: 'ex-pt-1-1-3',
+    type: 'match_pairs',
+    prompt: 'Match the Portuguese greetings',
+    pairs: [
+      { id: 'pt-pair-1', left: 'Olá', right: 'Hello' },
+      { id: 'pt-pair-2', left: 'Obrigado', right: 'Thank you' },
+      { id: 'pt-pair-3', left: 'Por favor', right: 'Please' },
+      { id: 'pt-pair-4', left: 'Tchau', right: 'Goodbye' },
+    ],
+  },
+  {
+    id: 'ex-pt-1-1-4',
+    type: 'listening',
+    prompt: 'Listen and choose what you hear:',
+    audioText: 'Bom dia, como você está?',
+    options: [
+      { id: 'pt-listen-1', text: 'Bom dia, como você está?' },
+      { id: 'pt-listen-2', text: 'Boa noite, até amanhã.' },
+      { id: 'pt-listen-3', text: 'Muito obrigado, senhor.' },
+    ],
+    correctAnswerId: 'pt-listen-1',
+  },
+  {
+    id: 'ex-pt-1-1-5',
+    type: 'speaking',
+    prompt: 'Say “Olá, meu nome é Ana.” aloud.',
+    audioText: 'Olá, meu nome é Ana.',
+    hint: 'Keep the final vowel in Olá clear and open.',
+  },
+];
+
+Object.assign(EXERCISES_BANK, {
+  'fr-1-2': EXERCISES_BANK['fr-1-1'],
+  'fr-1-checkpoint': EXERCISES_BANK['fr-1-1'],
+  'tr-1-checkpoint': EXERCISES_BANK['tr-1-1'],
+  'tr-2-checkpoint': EXERCISES_BANK['tr-2-2'],
+  'tr-3-checkpoint': EXERCISES_BANK['tr-3-2'],
+  'tr-4-checkpoint': EXERCISES_BANK['tr-4-2'],
+  'tr-5-checkpoint': EXERCISES_BANK['tr-5-2'],
+  'pt-1-2': EXERCISES_BANK['pt-1-1'],
+  'pt-1-checkpoint': EXERCISES_BANK['pt-1-1'],
+});
+
 const EXTENDED_ENGLISH_LESSONS = [
   { topic: 'introductions and people', sentence: 'My name is Maya and I am from Canada.', answer: 'My name is Maya and I am from Canada.', words: ['My', 'name', 'is', 'Maya', 'and', 'I', 'am', 'from', 'Canada.'], pairs: [['name', 'What someone is called'], ['country', 'A nation'], ['friend', 'A person you like']] },
   { topic: 'food and drinks', sentence: 'I would like a sandwich and a glass of water.', answer: 'I would like a sandwich and a glass of water.', words: ['I', 'would', 'like', 'a', 'sandwich', 'and', 'water.'], pairs: [['menu', 'A list of food'], ['bill', 'Money owed at a restaurant'], ['thirsty', 'Needing a drink']] },
