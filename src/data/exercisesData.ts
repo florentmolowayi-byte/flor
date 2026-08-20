@@ -1015,69 +1015,65 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
   ],
 };
 
-const EXTENDED_TURKISH_TOPICS: Array<[string, string]> = [
-  ['sabah rutinleri', 'Sabah rutinleri'],
-  ['ev ve mahalle', 'Ev ve mahalle'],
-  ['hava durumu', 'Hava durumu'],
-  ['alışveriş ve kıyafetler', 'Alışveriş ve kıyafetler'],
-  ['geçmiş deneyimler', 'Geçmiş deneyimler'],
-  ['gelecek planları', 'Gelecek planları'],
-  ['şehir hayatı', 'Şehir hayatı'],
-  ['doğa ve açık hava', 'Doğa ve açık hava'],
-  ['medya ve teknoloji', 'Medya ve teknoloji'],
-  ['fikirler ve karşılaştırmalar', 'Fikirler ve karşılaştırmalar'],
-  ['günlük konuşmalar', 'Günlük konuşmalar'],
-  ['seyahat hikayeleri', 'Seyahat hikayeleri'],
-  ['kültür ve gelenekler', 'Kültür ve gelenekler'],
-  ['haberler ve toplum', 'Haberler ve toplum'],
-  ['akıcı konuşma tekrarı', 'Akıcı konuşma tekrarı'],
-];
+const EXTENDED_TURKISH_LESSONS = [
+  { topic: 'sabah rutinleri', sentences: ['Her sabah saat yedide uyanırım.', 'Kahvaltıdan sonra işe giderim.', 'Hafta sonu geç kalkmayı severim.'], pairs: [['uyanmak', 'Wake up'], ['kahvaltı', 'Breakfast'], ['çalışmak', 'Work']] },
+  { topic: 'ev ve mahalle', sentences: ['Evimin yanında küçük bir park var.', 'Salonda büyük bir koltuk bulunuyor.', 'Mahallemizde güzel bir kütüphane var.'], pairs: [['salon', 'Living room'], ['mahalle', 'Neighborhood'], ['kütüphane', 'Library']] },
+  { topic: 'hava durumu', sentences: ['Bugün hava güneşli ve sıcak.', 'Yarın yağmur yağacak gibi görünüyor.', 'Kışın burada hava çok soğuk olur.'], pairs: [['güneşli', 'Sunny'], ['yağmur', 'Rain'], ['kış', 'Winter']] },
+  { topic: 'alışveriş ve kıyafetler', sentences: ['Bu gömleğin daha büyük bedeni var mı?', 'Kırmızı elbiseyi denemek istiyorum.', 'Bu ayakkabılar çok rahat görünüyor.'], pairs: [['gömlek', 'Shirt'], ['beden', 'Size'], ['ayakkabı', 'Shoe']] },
+  { topic: 'geçmiş deneyimler', sentences: ['Dün arkadaşlarımla sinemaya gittim.', 'Geçen yaz İzmirde yüzdük.', 'Çocukken her gün bisiklete binerdim.'], pairs: [['dün', 'Yesterday'], ['geçen yaz', 'Last summer'], ['çocukken', 'When I was a child']] },
+  { topic: 'gelecek planları', sentences: ['Yarın yeni bir kitap okuyacağım.', 'Bu yaz ailemle tatile gideceğiz.', 'Gelecekte Türkçeyi akıcı konuşmak istiyorum.'], pairs: [['yarın', 'Tomorrow'], ['tatil', 'Holiday'], ['gelecek', 'Future']] },
+  { topic: 'şehir hayatı', sentences: ['Belediye yeni bir otobüs hattı açtı.', 'Şehir merkezinde çok fazla trafik var.', 'Postane bankanın karşısında bulunuyor.'], pairs: [['belediye', 'Municipality'], ['trafik', 'Traffic'], ['postane', 'Post office']] },
+  { topic: 'doğa ve açık hava', sentences: ['Hafta sonu ormanda yürüyüş yapacağız.', 'Dağın tepesinden manzara çok güzel.', 'Temiz bir çevre için plastik kullanmamalıyız.'], pairs: [['orman', 'Forest'], ['dağ', 'Mountain'], ['çevre', 'Environment']] },
+  { topic: 'medya ve teknoloji', sentences: ['Telefonumda yeni bir uygulama kullanıyorum.', 'Bu filmi internetten izleyebiliriz.', 'Her gün haberleri çevrim içi okuyorum.'], pairs: [['uygulama', 'Application'], ['film', 'Film'], ['haber', 'News']] },
+  { topic: 'fikirler ve karşılaştırmalar', sentences: ['Bence bu restoran diğerinden daha iyi.', 'İstanbul Ankaradan daha kalabalık.', 'Bu kitabın sonu çok ilginçti.'], pairs: [['bence', 'In my opinion'], ['daha iyi', 'Better'], ['ilginç', 'Interesting']] },
+  { topic: 'günlük konuşmalar', sentences: ['Bence bugün güzel bir gün olacak.', 'Bu konu hakkında sen ne düşünüyorsun?', 'Katılıyorum ama başka bir fikrim var.'], pairs: [['düşünmek', 'Think'], ['katılmak', 'Agree'], ['fikir', 'Idea']] },
+  { topic: 'seyahat hikayeleri', sentences: ['Geçen yıl Kapadokyayı ziyaret ettim.', 'Otobüsümüz yolda bir saat bekledi.', 'Seyahat sırasında yeni arkadaşlar edindim.'], pairs: [['ziyaret etmek', 'Visit'], ['beklemek', 'Wait'], ['seyahat', 'Travel']] },
+  { topic: 'kültür ve gelenekler', sentences: ['Bayramda ailemizi ziyaret ederiz.', 'Türk kahvesi misafirlere ikram edilir.', 'Düğünde herkes birlikte dans etti.'], pairs: [['bayram', 'Festival holiday'], ['ikram etmek', 'Offer to a guest'], ['düğün', 'Wedding']] },
+  { topic: 'haberler ve toplum', sentences: ['Bu sabah önemli bir haber okudum.', 'Şehrimizde yeni bir okul yapılacak.', 'İnsanlar mahalle toplantısında konuştu.'], pairs: [['haber', 'News'], ['okul', 'School'], ['toplantı', 'Meeting']] },
+  { topic: 'akıcı konuşma tekrarı', sentences: ['Türkçe konuşurken artık daha rahatım.', 'Yeni kelimeleri cümle içinde kullanıyorum.', 'Her gün pratik yaparak ilerliyorum.'], pairs: [['rahat', 'Comfortable'], ['kelime', 'Word'], ['ilerlemek', 'Improve / progress']] },
+] as const;
 
-const createExtendedTurkishExercises = (unitNumber: number, lessonNumber: number, topic: string): Exercise[] => {
+const createExtendedTurkishExercises = (unitNumber: number, lessonNumber: number, lesson: typeof EXTENDED_TURKISH_LESSONS[number]): Exercise[] => {
   const id = `tr-${unitNumber}-${lessonNumber}`;
-  const phrase = lessonNumber === 1 ? `Bugün ${topic} hakkında konuşuyoruz.` : `${topic} hakkında ne düşünüyorsun?`;
+  const sentence = lesson.sentences[lessonNumber - 1];
+  const words = sentence.split(' ');
 
   return [
     {
       id: `ex-${id}-1`,
       type: 'multiple_choice',
-      prompt: `What does this Turkish sentence mean? "${phrase}"`,
-      audioText: phrase,
+      prompt: `Choose the English meaning of this Turkish sentence: "${sentence}"`,
+      audioText: sentence,
       options: [
-        { id: `opt-${id}-1`, text: `We are talking about ${topic} today.`, translation: phrase },
+        { id: `opt-${id}-1`, text: `A sentence about ${lesson.topic}.`, translation: sentence },
         { id: `opt-${id}-2`, text: 'I am going home tomorrow.' },
         { id: `opt-${id}-3`, text: 'Where is the train station?' },
       ],
       correctAnswerId: `opt-${id}-1`,
-      hint: 'Bugün means “today”, hakkında means “about”, and konuşuyoruz means “we are talking”.',
+      hint: `This lesson practices ${lesson.topic}.`,
     },
     {
       id: `ex-${id}-2`,
       type: 'word_bank',
-      prompt: 'Build the Turkish sentence: "I like this topic."',
-      audioText: `Bu konuyu seviyorum.`,
-      correctSentence: ['Bu', 'konuyu', 'seviyorum.'],
-      wordBankPool: ['Bu', 'konuyu', 'seviyorum.', 'Yarın', 'çok', 'değil.'],
-      hint: 'In Turkish, the object ending -yu comes before the verb.',
+      prompt: `Build this Turkish sentence: "${sentence}"`,
+      audioText: sentence,
+      correctSentence: [...words],
+      wordBankPool: [...words, 'bugün', 'çok', 'değil.'],
+      hint: 'Put the words in the natural Turkish sentence order.',
     },
     {
       id: `ex-${id}-3`,
       type: 'match_pairs',
-      prompt: 'Match the Turkish conversation words',
-      pairs: [
-        { id: `pair-${id}-1`, left: 'Bugün', right: 'Today' },
-        { id: `pair-${id}-2`, left: 'Yarın', right: 'Tomorrow' },
-        { id: `pair-${id}-3`, left: 'Neden?', right: 'Why?' },
-        { id: `pair-${id}-4`, left: 'Bence', right: 'In my opinion' },
-      ],
+      prompt: `Match the ${lesson.topic} words`,
+      pairs: lesson.pairs.map(([left, right], index) => ({ id: `pair-${id}-${index + 1}`, left, right })),
     },
     {
       id: `ex-${id}-4`,
       type: 'listening',
       prompt: 'Listen and choose the phrase you hear:',
-      audioText: `Bu konu hakkında konuşabiliriz.`,
+      audioText: sentence,
       options: [
-        { id: `listen-${id}-1`, text: 'Bu konu hakkında konuşabiliriz.' },
+        { id: `listen-${id}-1`, text: sentence },
         { id: `listen-${id}-2`, text: 'Bu kitabı yarın okuyacağım.' },
         { id: `listen-${id}-3`, text: 'Bugün hava çok soğuk.' },
       ],
@@ -1087,8 +1083,8 @@ const createExtendedTurkishExercises = (unitNumber: number, lessonNumber: number
       id: `ex-${id}-5`,
       type: 'speaking',
       prompt: 'Say this Turkish sentence aloud:',
-      audioText: `Bu konu hakkında konuşabiliriz.`,
-      hint: 'Speak slowly and keep the vowel sounds clear.',
+      audioText: sentence,
+      hint: `Speak slowly and practice the ${lesson.topic} vocabulary.`,
     },
   ];
 };
@@ -1096,10 +1092,10 @@ const createExtendedTurkishExercises = (unitNumber: number, lessonNumber: number
 Object.assign(
   EXERCISES_BANK,
   Object.fromEntries(
-    EXTENDED_TURKISH_TOPICS.flatMap(([topic]) =>
+    EXTENDED_TURKISH_LESSONS.flatMap((lesson, index) =>
       [1, 2, 3].map((lessonNumber) => {
-        const unitNumber = EXTENDED_TURKISH_TOPICS.findIndex(([currentTopic]) => currentTopic === topic) + 6;
-        return [`tr-${unitNumber}-${lessonNumber === 3 ? 'checkpoint' : lessonNumber}`, createExtendedTurkishExercises(unitNumber, lessonNumber, topic)];
+        const unitNumber = index + 6;
+        return [`tr-${unitNumber}-${lessonNumber === 3 ? 'checkpoint' : lessonNumber}`, createExtendedTurkishExercises(unitNumber, lessonNumber, lesson)];
       })
     )
   )
