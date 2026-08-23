@@ -146,13 +146,15 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     if (currentEx.type === 'multiple_choice' || currentEx.type === 'listening') {
       isCorrect = userAnswerId === currentEx.correctAnswerId;
     } else if (currentEx.type === 'word_bank') {
-      const formattedUser = wordBankSelected.join(' ').trim();
-      const formattedCorrect = currentEx.correctSentence?.join(' ').trim();
+      const normalizeSentence = (words: string[]) =>
+        words.join(' ').normalize('NFC').replace(/\s+/g, ' ').trim();
+      const formattedUser = normalizeSentence(wordBankSelected);
+      const formattedCorrect = normalizeSentence(currentEx.correctSentence || []);
       isCorrect = formattedUser === formattedCorrect;
     } else if (currentEx.type === 'match_pairs') {
       isCorrect = matchedPairIds.length === (currentEx.pairs?.length || 0);
     } else if (currentEx.type === 'speaking') {
-      isCorrect = recordedSuccess || true; // simulate success on speech attempt
+      isCorrect = recordedSuccess;
     }
 
     if (isCorrect) {
