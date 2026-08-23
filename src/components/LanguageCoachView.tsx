@@ -75,6 +75,9 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
       });
 
       const data = await res.json();
+      if (!res.ok || typeof data.reply !== 'string' || !data.reply.trim()) {
+        throw new Error(data.error || 'The language AI returned an invalid response.');
+      }
 
       const duoReply: ChatMessage = {
         id: `duo_${Date.now()}`,

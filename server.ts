@@ -33,6 +33,10 @@ app.post("/api/duo-chat", async (req, res) => {
   try {
     const { language, userMessage, history } = req.body;
 
+    if (typeof userMessage !== "string" || !userMessage.trim()) {
+      return res.status(400).json({ error: "A message is required." });
+    }
+
     const genAI = getGenAI();
     if (!genAI) {
       // Fallback response if GEMINI_API_KEY is not configured
@@ -81,14 +85,15 @@ Format your response as JSON with this exact structure:
       };
     }
 
+    if (!parsedData || typeof parsedData.reply !== "string" || !parsedData.reply.trim()) {
+      return res.status(502).json({ error: "The AI returned an invalid response." });
+    }
+
     res.json(parsedData);
   } catch (err: any) {
     console.error("Duo Chat Error:", err);
-    res.json({
-      reply: `¡Muy bien! Excellent attempt! Duo is proud of your practice session! 🦉⚡`,
-      correction: null,
-      tip: "Consistently practicing every day keeps your flame burning bright!",
-      xpEarned: 10
+    res.status(502).json({
+      error: "The language AI is temporarily unavailable. Please try again.",
     });
   }
 });
