@@ -30,6 +30,10 @@ app.get("/api/health", (req, res) => {
 
 // AI Duo Conversation Partner endpoint
 app.post("/api/duo-chat", async (req, res) => {
+  const targetLanguage = typeof req.body?.language === "string" && req.body.language.trim()
+    ? req.body.language.trim()
+    : "English";
+
   try {
     const { language, userMessage, history } = req.body;
 
@@ -41,14 +45,13 @@ app.post("/api/duo-chat", async (req, res) => {
     if (!genAI) {
       // Fallback response if GEMINI_API_KEY is not configured
       return res.json({
-        reply: `Great question about ${language || "your target language"}! I received: "${userMessage}". Add a GEMINI_API_KEY to get a full AI answer in ${language || "your target language"}.`,
+        reply: `I received your ${targetLanguage} message: "${userMessage}". I can practice with you, but the AI service needs to be configured for full answers.`,
         correction: null,
         tip: "Practice speaking full sentences to gain extra XP!",
         xpEarned: 10
       });
     }
 
-    const targetLanguage = typeof language === "string" && language.trim() ? language.trim() : "English";
     const systemPrompt = `You are Duo, the friendly, playful green owl mascot from Duolingo!
   You are helping the user practice ${targetLanguage}.
   Answer the user's actual question first. Respond in a friendly, concise, encouraging manner (1-3 sentences in ${targetLanguage} with an English translation in parentheses if helpful).
@@ -93,8 +96,11 @@ Format your response as JSON with this exact structure:
     res.json(parsedData);
   } catch (err: any) {
     console.error("Duo Chat Error:", err);
-    res.status(502).json({
-      error: "The language AI is temporarily unavailable. Please try again.",
+    res.json({
+      reply: `I received your question in ${targetLanguage}: "${req.body.userMessage}". The AI service is temporarily unavailable, but you can keep practicing while it reconnects.`,
+      correction: null,
+      tip: `Try writing a complete sentence in ${targetLanguage}.`,
+      xpEarned: 10,
     });
   }
 });

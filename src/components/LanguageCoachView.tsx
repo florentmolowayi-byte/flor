@@ -94,7 +94,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
       const duoReply: ChatMessage = {
         id: `duo_${Date.now()}`,
         sender: 'duo',
-        text: data.reply || `¡Excelente trabajo! Keep practicing ${langObj.name}! 🌍✨`,
+        text: data.reply || `Great work! Keep practicing ${langObj.name}!`,
         correction: data.correction,
         tip: data.tip,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -108,7 +108,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
       const fallbackMsg: ChatMessage = {
         id: `duo_${Date.now()}`,
         sender: 'duo',
-        text: `I could not connect to the ${langObj.name} AI right now. Your question was: "${userMsgText}". Please try again in a moment.`,
+        text: `I received your ${langObj.name} question: "${userMsgText}". The coach is reconnecting, so please send it again in a moment.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, fallbackMsg]);
