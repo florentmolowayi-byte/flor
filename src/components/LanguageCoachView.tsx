@@ -21,6 +21,18 @@ interface ChatMessage {
   timestamp: string;
 }
 
+const WELCOME_MESSAGES: Partial<Record<LanguageId, string>> = {
+  en: 'Hello! I am your Language AI. Let\'s practice chatting in English! Send me a message, ask me a question, or introduce yourself.',
+  fr: 'Bonjour ! Je suis votre IA de langue. Pratiquons le français ! Envoyez-moi un message ou posez-moi une question.',
+  de: 'Hallo! Ich bin deine Sprach-KI. Lass uns Deutsch üben! Schreib mir eine Nachricht oder stelle mir eine Frage.',
+  it: 'Ciao! Sono la tua IA per le lingue. Pratichiamo l\'italiano! Scrivimi un messaggio o fammi una domanda.',
+  ja: 'こんにちは！私はあなたの語学AIです。日本語で会話を練習しましょう。メッセージや質問を送ってください。',
+  es: '¡Hola! Soy tu IA de idiomas. ¡Practiquemos español! Envíame un mensaje o hazme una pregunta.',
+  pt: 'Olá! Sou a sua IA de idiomas. Vamos praticar português! Envie uma mensagem ou faça uma pergunta.',
+  tr: 'Merhaba! Ben senin dil yapay zekânım. Türkçe pratik yapalım! Bana bir mesaj gönder veya soru sor.',
+  zh: '你好！我是你的语言 AI。让我们练习中文对话吧！给我发消息或提问。',
+};
+
 export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState, onEarnXp }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
@@ -34,7 +46,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
     const initialMsg: ChatMessage = {
       id: 'welcome_1',
       sender: 'duo',
-      text: `¡Hola! I’m your Language AI 🌍! Let’s practice chatting in ${langObj.name}! Send me a message, ask a question, or introduce yourself!`,
+      text: WELCOME_MESSAGES[userState.currentLanguage] || `Hello! Let\'s practice chatting in ${langObj.name}. Send me a message or ask me a question!`,
       tip: 'Practicing conversations earns you +10 XP per turn!',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
@@ -96,7 +108,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
       const fallbackMsg: ChatMessage = {
         id: `duo_${Date.now()}`,
         sender: 'duo',
-        text: `¡Muy bien! You said "${userMsgText}". Practice builds fluency every single day! 🌍⚡`,
+        text: `I could not connect to the ${langObj.name} AI right now. Your question was: "${userMsgText}". Please try again in a moment.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, fallbackMsg]);

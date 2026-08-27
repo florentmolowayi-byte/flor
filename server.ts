@@ -41,16 +41,17 @@ app.post("/api/duo-chat", async (req, res) => {
     if (!genAI) {
       // Fallback response if GEMINI_API_KEY is not configured
       return res.json({
-        reply: `¡Excelente! You said "${userMessage}". Keep up the great streak in ${language || 'Spanish'}! 🦉🔥`,
+        reply: `Great question about ${language || "your target language"}! I received: "${userMessage}". Add a GEMINI_API_KEY to get a full AI answer in ${language || "your target language"}.`,
         correction: null,
         tip: "Practice speaking full sentences to gain extra XP!",
         xpEarned: 10
       });
     }
 
+    const targetLanguage = typeof language === "string" && language.trim() ? language.trim() : "English";
     const systemPrompt = `You are Duo, the friendly, playful green owl mascot from Duolingo!
-You are helping the user practice ${language || 'Spanish'}.
-Respond in a friendly, concise, encouraging manner (1-3 sentences in ${language || 'Spanish'} with English translation in parentheses if helpful).
+  You are helping the user practice ${targetLanguage}.
+  Answer the user's actual question first. Respond in a friendly, concise, encouraging manner (1-3 sentences in ${targetLanguage} with an English translation in parentheses if helpful).
 If the user's message contained a grammar or vocabulary mistake, gently provide a correction.
 Also provide a short 1-line grammar or vocabulary tip.
 
@@ -78,7 +79,7 @@ Format your response as JSON with this exact structure:
       parsedData = JSON.parse(responseText);
     } catch {
       parsedData = {
-        reply: `¡Fantástico! You said: "${userMessage}". Keep practicing ${language || 'Spanish'}! 🦉✨`,
+        reply: `Thanks for your question about ${targetLanguage}: "${userMessage}". Keep practicing!`,
         correction: null,
         tip: "Keep up your daily streak to stay at the top of the leaderboard!",
         xpEarned: 10
