@@ -15,8 +15,8 @@ app.use(express.json());
 let aiClient: GoogleGenAI | null = null;
 function getGenAI() {
   if (!aiClient) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (apiKey) {
+    const apiKey = process.env.GEMINI_API_KEY?.trim();
+    if (apiKey && apiKey !== "MY_GEMINI_API_KEY") {
       aiClient = new GoogleGenAI({ apiKey });
     }
   }
@@ -30,6 +30,48 @@ function detectRequestedLanguage(message: string): string | null {
   ];
   const normalizedMessage = message.toLowerCase();
   return languageNames.find((name) => normalizedMessage.includes(name.toLowerCase())) || null;
+}
+
+function getOfflineCoachReply(language: string, message: string) {
+  const replies: Record<string, { reply: string; tip: string }> = {
+    English: {
+      reply: `Hi! Great to meet you. You wrote: "${message}". Let's practice English together.`,
+      tip: "Try: Hello, my name is ...",
+    },
+    French: {
+      reply: `Bonjour ! Ravi de te rencontrer. Tu as écrit : "${message}". Pratiquons le français ensemble.`,
+      tip: "Essaie : Bonjour, je m'appelle ...",
+    },
+    German: {
+      reply: `Hallo! Schön, dich kennenzulernen. Du hast geschrieben: "${message}". Üben wir gemeinsam Deutsch.`,
+      tip: "Versuche: Hallo, ich heiße ...",
+    },
+    Italian: {
+      reply: `Ciao! Piacere di conoscerti. Hai scritto: "${message}". Pratichiamo l'italiano insieme.`,
+      tip: "Prova: Ciao, mi chiamo ...",
+    },
+    Japanese: {
+      reply: `こんにちは！お会いできてうれしいです。「${message}」と書きましたね。一緒に日本語を練習しましょう。`,
+      tip: "試してみましょう：こんにちは、私は ... です。",
+    },
+    Spanish: {
+      reply: `¡Hola! Mucho gusto. Escribiste: "${message}". Practiquemos español juntos.`,
+      tip: "Prueba: Hola, me llamo ...",
+    },
+    Portuguese: {
+      reply: `Olá! Prazer em conhecer você. Você escreveu: "${message}". Vamos praticar português juntos.`,
+      tip: "Tente: Olá, meu nome é ...",
+    },
+    Turkish: {
+      reply: `Merhaba! Tanıştığımıza memnun oldum. Şunu yazdın: "${message}". Birlikte Türkçe pratik yapalım.`,
+      tip: "Şunu deneyin: Merhaba, benim adım ...",
+    },
+    Chinese: {
+      reply: `你好！很高兴认识你。你写的是：“${message}”。让我们一起练习中文吧。`,
+      tip: "试试：你好，我叫……",
+    },
+  };
+  return replies[language] || replies.English;
 }
 
 // API Health Check
@@ -47,7 +89,7 @@ app.post("/api/duo-chat", async (req, res) => {
     : "English");
 
   try {
-    const { language, userMessage, history } = req.body;
+    const { userMessage, history } = req.body;
 
     if (typeof userMessage !== "string" || !userMessage.trim()) {
       return res.status(400).json({ error: "A message is required." });
@@ -55,11 +97,11 @@ app.post("/api/duo-chat", async (req, res) => {
 
     const genAI = getGenAI();
     if (!genAI) {
-      // Fallback response if GEMINI_API_KEY is not configured
+      const offlineReply = getOfflineCoachReply(targetLanguage, userMessage);
       return res.json({
-        reply: `I received your ${targetLanguage} message: "${userMessage}". I can practice with you, but the AI service needs to be configured for full answers.`,
+        reply: offlineReply.reply,
         correction: null,
-        tip: "Practice speaking full sentences to gain extra XP!",
+        tip: `${offlineReply.tip} (Offline practice mode)`,
         xpEarned: 10
       });
     }
@@ -81,7 +123,7 @@ Format your response as JSON with this exact structure:
     const promptText = `${systemPrompt}\n\nRecent conversation history: ${JSON.stringify(history || [])}\nUser says: "${userMessage}"`;
 
     const response = await genAI.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.6-flash",
       contents: promptText,
       config: {
         responseMimeType: "application/json"
@@ -108,10 +150,11 @@ Format your response as JSON with this exact structure:
     res.json(parsedData);
   } catch (err: any) {
     console.error("Duo Chat Error:", err);
+    const offlineReply = getOfflineCoachReply(targetLanguage, req.body.userMessage);
     res.json({
-      reply: `I received your question in ${targetLanguage}: "${req.body.userMessage}". The AI service is temporarily unavailable, but you can keep practicing while it reconnects.`,
+      reply: offlineReply.reply,
       correction: null,
-      tip: `Try writing a complete sentence in ${targetLanguage}.`,
+      tip: `${offlineReply.tip} (Offline practice mode)`,
       xpEarned: 10,
     });
   }
