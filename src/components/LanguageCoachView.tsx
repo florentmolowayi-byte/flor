@@ -49,9 +49,10 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
+  const [chatLanguageId, setChatLanguageId] = useState<LanguageId>(userState.currentLanguage);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const langObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
+  const langObj = LANGUAGES.find((l) => l.id === chatLanguageId) || LANGUAGES[0];
 
   const getRequestedLanguage = (message: string) => {
     const normalizedMessage = message.toLocaleLowerCase();
@@ -65,12 +66,12 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
     const initialMsg: ChatMessage = {
       id: 'welcome_1',
       sender: 'duo',
-      text: WELCOME_MESSAGES[userState.currentLanguage] || `Hello! Let\'s practice chatting in ${langObj.name}. Send me a message or ask me a question!`,
+      text: WELCOME_MESSAGES[chatLanguageId] || `Hello! Let\'s practice chatting in ${langObj.name}. Send me a message or ask me a question!`,
       tip: 'Practicing conversations earns you +10 XP per turn!',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     setMessages([initialMsg]);
-  }, [userState.currentLanguage, langObj.name]);
+  }, [chatLanguageId, langObj.name]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -125,7 +126,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
 
       setMessages((prev) => [...prev, duoReply]);
       soundManager.playCorrect();
-      speakText(duoReply.text, userState.currentLanguage);
+      speakText(duoReply.text, chatLanguageId);
       onEarnXp(10);
     } catch (err) {
       const fallbackMsg: ChatMessage = {
@@ -159,6 +160,18 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
             </p>
           </div>
         </div>
+        <select
+          value={chatLanguageId}
+          onChange={(e) => setChatLanguageId(e.target.value as LanguageId)}
+          className="bg-purple-700 text-white border border-purple-400 rounded-xl px-2 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-white/70 cursor-pointer"
+          aria-label="Choose chat language"
+        >
+          {LANGUAGES.map((language) => (
+            <option key={language.id} value={language.id} className="text-slate-900">
+              {language.flag} {language.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Messages Scroll Area */}
@@ -187,7 +200,7 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
                 </span>
                 {m.sender === 'duo' && (
                   <button
-                    onClick={() => speakText(m.text, userState.currentLanguage)}
+                    onClick={() => speakText(m.text, chatLanguageId)}
                     className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors cursor-pointer"
                     title="Pronounce"
                   >
