@@ -23,6 +23,15 @@ function getGenAI() {
   return aiClient;
 }
 
+function detectRequestedLanguage(message: string): string | null {
+  const languageNames = [
+    "English", "French", "German", "Italian", "Japanese",
+    "Spanish", "Portuguese", "Turkish", "Chinese",
+  ];
+  const normalizedMessage = message.toLowerCase();
+  return languageNames.find((name) => normalizedMessage.includes(name.toLowerCase())) || null;
+}
+
 // API Health Check
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
@@ -30,9 +39,12 @@ app.get("/api/health", (req, res) => {
 
 // AI Duo Conversation Partner endpoint
 app.post("/api/duo-chat", async (req, res) => {
-  const targetLanguage = typeof req.body?.language === "string" && req.body.language.trim()
+  const requestedLanguage = typeof req.body?.userMessage === "string"
+    ? detectRequestedLanguage(req.body.userMessage)
+    : null;
+  const targetLanguage = requestedLanguage || (typeof req.body?.language === "string" && req.body.language.trim()
     ? req.body.language.trim()
-    : "English";
+    : "English");
 
   try {
     const { language, userMessage, history } = req.body;

@@ -33,6 +33,18 @@ const WELCOME_MESSAGES: Partial<Record<LanguageId, string>> = {
   zh: '你好！我是你的语言 AI。让我们练习中文对话吧！给我发消息或提问。',
 };
 
+const REQUESTED_LANGUAGES: Array<{ id: LanguageId; names: string[] }> = [
+  { id: 'en', names: ['english'] },
+  { id: 'fr', names: ['french', 'français'] },
+  { id: 'de', names: ['german', 'deutsch'] },
+  { id: 'it', names: ['italian', 'italiano'] },
+  { id: 'ja', names: ['japanese', '日本語'] },
+  { id: 'es', names: ['spanish', 'español'] },
+  { id: 'pt', names: ['portuguese', 'português'] },
+  { id: 'tr', names: ['turkish', 'türkçe'] },
+  { id: 'zh', names: ['chinese', '中文'] },
+];
+
 export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState, onEarnXp }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
@@ -40,6 +52,13 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const langObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
+
+  const getRequestedLanguage = (message: string) => {
+    const normalizedMessage = message.toLocaleLowerCase();
+    return REQUESTED_LANGUAGES.find((language) =>
+      language.names.some((name) => normalizedMessage.includes(name.toLocaleLowerCase()))
+    );
+  };
 
   useEffect(() => {
     // Initial welcome message from the language coach
@@ -76,11 +95,15 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
     setLoading(true);
 
     try {
+      const requestedLanguage = getRequestedLanguage(userMsgText);
+      const responseLanguage = requestedLanguage
+        ? LANGUAGES.find((language) => language.id === requestedLanguage.id) || langObj
+        : langObj;
       const res = await fetch('/api/duo-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          language: langObj.name,
+          language: responseLanguage.name,
           userMessage: userMsgText,
           history: messages.map((m) => ({ sender: m.sender, text: m.text })),
         }),
