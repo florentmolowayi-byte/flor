@@ -54,12 +54,9 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
 
   const langObj = LANGUAGES.find((l) => l.id === chatLanguageId) || LANGUAGES[0];
 
-  const getRequestedLanguage = (message: string) => {
-    const normalizedMessage = message.toLocaleLowerCase();
-    return REQUESTED_LANGUAGES.find((language) =>
-      language.names.some((name) => normalizedMessage.includes(name.toLocaleLowerCase()))
-    );
-  };
+  useEffect(() => {
+    setChatLanguageId(userState.currentLanguage);
+  }, [userState.currentLanguage]);
 
   useEffect(() => {
     // Initial welcome message from the language coach
@@ -96,15 +93,11 @@ export const LanguageCoachView: React.FC<LanguageCoachViewProps> = ({ userState,
     setLoading(true);
 
     try {
-      const requestedLanguage = getRequestedLanguage(userMsgText);
-      const responseLanguage = requestedLanguage
-        ? LANGUAGES.find((language) => language.id === requestedLanguage.id) || langObj
-        : langObj;
       const res = await fetch('/api/duo-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          language: responseLanguage.name,
+          language: langObj.name,
           userMessage: userMsgText,
           history: messages.map((m) => ({ sender: m.sender, text: m.text })),
         }),

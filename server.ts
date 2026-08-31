@@ -32,6 +32,20 @@ function detectRequestedLanguage(message: string): string | null {
   return languageNames.find((name) => normalizedMessage.includes(name.toLowerCase())) || null;
 }
 
+function normalizeHistory(history: unknown) {
+  if (!Array.isArray(history)) return [];
+
+  return history
+    .filter((item): item is { sender: string; text: string } =>
+      Boolean(item) && typeof item === "object" && typeof (item as { sender?: unknown }).sender === "string" && typeof (item as { text?: unknown }).text === "string"
+    )
+    .slice(-12)
+    .map((item) => ({
+      role: item.sender === "user" ? "user" : "model",
+      text: item.text,
+    }));
+}
+
 function getOfflineCoachReply(language: string, message: string) {
   const replies: Record<string, { reply: string; tip: string }> = {
     English: {
@@ -106,27 +120,28 @@ app.post("/api/duo-chat", async (req, res) => {
       });
     }
 
-    const systemPrompt = `You are Duo, the friendly, playful green owl mascot from Duolingo!
-  You are helping the user practice ${targetLanguage}.
-  Answer the user's actual question first. Respond in a friendly, concise, encouraging manner (1-3 sentences in ${targetLanguage} with an English translation in parentheses if helpful).
-If the user's message contained a grammar or vocabulary mistake, gently provide a correction.
-Also provide a short 1-line grammar or vocabulary tip.
+    const systemPrompt = `You are Duo, a warm and knowledgeable language conversation partner.
+The user is asking you questions in English and wants a real, accurate conversation. Answer the user's actual question directly before offering language-learning guidance. Be natural, specific, and detailed enough to be useful; do not repeat a generic greeting or simply quote the user's message.
+The practice language is ${targetLanguage}. Keep the main answer in ${targetLanguage}, but use English when the user asks in English or when it makes an explanation clearer. Match the user's tone and question. Ask a relevant follow-up question only when it genuinely helps continue the conversation.
+If the user's message contains a grammar or vocabulary mistake in ${targetLanguage}, gently provide a correction. Otherwise, set correction to null.
+Also provide one short, relevant learning tip. Do not invent facts; say when you are uncertain.
 
 Format your response as JSON with this exact structure:
 {
-  "reply": "Duo's response in target language (with brief English hint)",
+  "reply": "A direct, natural, useful answer to the user's question",
   "correction": "Optional correction if there was a mistake, or null",
   "tip": "Short helpful learning tip",
   "xpEarned": 10
 }`;
 
-    const promptText = `${systemPrompt}\n\nRecent conversation history: ${JSON.stringify(history || [])}\nUser says: "${userMessage}"`;
+    const promptText = `${systemPrompt}\n\nRecent conversation history: ${JSON.stringify(normalizeHistory(history))}\n\nUser says: ${JSON.stringify(userMessage)}`;
 
     const response = await genAI.models.generateContent({
       model: "gemini-3.6-flash",
       contents: promptText,
       config: {
-        responseMimeType: "application/json"
+        responseMimeType: "application/json",
+        temperature: 0.7,
       }
     });
 
@@ -135,12 +150,7 @@ Format your response as JSON with this exact structure:
     try {
       parsedData = JSON.parse(responseText);
     } catch {
-      parsedData = {
-        reply: `Thanks for your question about ${targetLanguage}: "${userMessage}". Keep practicing!`,
-        correction: null,
-        tip: "Keep up your daily streak to stay at the top of the leaderboard!",
-        xpEarned: 10
-      };
+      return res.status(502).json({ error: "The AI returned an unreadable response." });
     }
 
     if (!parsedData || typeof parsedData.reply !== "string" || !parsedData.reply.trim()) {
@@ -150,13 +160,7 @@ Format your response as JSON with this exact structure:
     res.json(parsedData);
   } catch (err: any) {
     console.error("Duo Chat Error:", err);
-    const offlineReply = getOfflineCoachReply(targetLanguage, req.body.userMessage);
-    res.json({
-      reply: offlineReply.reply,
-      correction: null,
-      tip: `${offlineReply.tip} (Offline practice mode)`,
-      xpEarned: 10,
-    });
+    res.status(502).json({ error: "The language AI is temporarily unavailable. Please try again shortly." });
   }
 });
 
