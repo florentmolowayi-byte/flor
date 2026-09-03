@@ -111,10 +111,6 @@ export default function App() {
 
   // Node Clicked on Skill Path
   const handleSelectNode = (nodeId: string) => {
-    if (userState.hearts <= 0) {
-      setShowHeartsModal(true);
-      return;
-    }
     setActiveLessonId(nodeId);
   };
 
@@ -369,7 +365,7 @@ export default function App() {
           onRefillWithGems={handleRefillWithGems}
           onStartPractice={() => {
             setShowHeartsModal(false);
-            handleSelectNode(`${userState.currentLanguage}-1-1`);
+            setActiveLessonId(`${userState.currentLanguage}-1-1`);
           }}
         />
       )}
