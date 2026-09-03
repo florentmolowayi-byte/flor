@@ -12,10 +12,9 @@ import {
   Flame,
   Award,
   ArrowRight,
-  HelpCircle,
   Zap,
 } from 'lucide-react';
-import { Exercise, DuoMascotMood, UserState, LanguageId } from '../types';
+import { Exercise, DuoMascotMood, UserState, LanguageId, Option } from '../types';
 import { CoachMascot } from './CoachMascot';
 import { soundManager } from '../utils/audio';
 import { speakText } from '../utils/speech';
@@ -30,6 +29,15 @@ interface LessonEngineProps {
   onQuit: () => void;
 }
 
+const shuffleOptions = (options: Option[]) => {
+  const shuffled = [...options];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+  return shuffled;
+};
+
 export const LessonEngine: React.FC<LessonEngineProps> = ({
   lessonTitle,
   exercises,
@@ -41,6 +49,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswerId, setUserAnswerId] = useState<string | null>(null);
+  const [shuffledOptions, setShuffledOptions] = useState<Option[]>([]);
   const [wordBankSelected, setWordBankSelected] = useState<string[]>([]);
   const [wordBankAvailable, setWordBankAvailable] = useState<string[]>([]);
 
@@ -58,7 +67,6 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   const [duoMood, setDuoMood] = useState<DuoMascotMood>('idle');
   const [combo, setCombo] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
-  const [showHint, setShowHint] = useState(false);
   const [isLessonFinished, setIsLessonFinished] = useState(false);
 
   const currentEx = exercises[currentIndex];
@@ -76,9 +84,9 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
       setSelectedRight(null);
     }
     setUserAnswerId(null);
+    setShuffledOptions(shuffleOptions(currentEx?.options || []));
     setStatus('idle');
     setDuoMood('idle');
-    setShowHint(false);
     setIsRecording(false);
     setRecordedSuccess(false);
 
@@ -293,27 +301,13 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
                     {currentEx.prompt}
                   </h3>
 
-                  {/* Hint Toggle */}
-                  {currentEx.hint && (
-                    <button
-                      onClick={() => setShowHint(!showHint)}
-                      className="mt-2 text-xs font-bold text-slate-400 hover:text-emerald-500 flex items-center gap-1 transition-colors cursor-pointer"
-                    >
-                      <HelpCircle className="w-3.5 h-3.5" /> {showHint ? 'Hide Hint' : 'Need a hint?'}
-                    </button>
-                  )}
-                  {showHint && currentEx.hint && (
-                    <p className="mt-2 text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
-                      💡 {currentEx.hint}
-                    </p>
-                  )}
                 </div>
               </div>
 
               {/* 1. Multiple Choice & Listening Options */}
               {(currentEx.type === 'multiple_choice' || currentEx.type === 'listening') && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  {currentEx.options?.map((opt) => {
+                  {shuffledOptions.map((opt) => {
                     const isSelected = userAnswerId === opt.id;
                     return (
                       <button
@@ -333,9 +327,6 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
                         {opt.imageEmoji && <span className="text-3xl">{opt.imageEmoji}</span>}
                         <div>
                           <span className="text-base sm:text-lg block leading-snug">{opt.text}</span>
-                          {opt.translation && (
-                            <span className="text-xs font-medium text-slate-400">{opt.translation}</span>
-                          )}
                         </div>
                       </button>
                     );

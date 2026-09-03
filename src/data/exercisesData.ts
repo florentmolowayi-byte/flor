@@ -440,7 +440,7 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
     {
       id: 'ex-tr-1-1-1',
       type: 'multiple_choice',
-      prompt: 'Select the correct translation for "Merhaba"',
+      prompt: 'Merhaba: which Turkish word belongs to this greeting?',
       audioText: 'Merhaba',
       options: [
         { id: 'tr-opt-1', text: 'Merhaba', translation: 'Hello', imageEmoji: '👋' },
