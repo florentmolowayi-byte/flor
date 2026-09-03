@@ -26,6 +26,17 @@ export const PathView: React.FC<PathViewProps> = ({
   nextLesson,
   onLessonSelected,
 }) => {
+  const lessonNodes = language.units.flatMap((unit) => unit.nodes.filter((node) => node.type === 'lesson'));
+  const completedLessons = lessonNodes.filter((node) => userState.completedNodes[node.id] > 0).length;
+  const completedExercises = learningProfile?.exerciseHistory || [];
+  const correctExercises = completedExercises.filter((exercise) => exercise.correct).length;
+  const accuracy = completedExercises.length > 0 ? Math.round((correctExercises / completedExercises.length) * 100) : 0;
+  const weakestSkills = learningProfile
+    ? Object.values(learningProfile.skillProficiencies)
+        .sort((first, second) => first.proficiency - second.proficiency)
+        .slice(0, 3)
+    : [];
+
   return (
     <div className="max-w-xl mx-auto py-6 px-4 pb-24 space-y-10">
       {nextLesson && (
@@ -49,6 +60,34 @@ export const PathView: React.FC<PathViewProps> = ({
           >
             Continue learning
           </button>
+          <div className="grid grid-cols-3 gap-2 border-t border-white/15 pt-4 text-center">
+            <div>
+              <p className="text-lg font-black">{completedLessons}/{lessonNodes.length}</p>
+              <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Level progress</p>
+            </div>
+            <div>
+              <p className="text-lg font-black">{accuracy}%</p>
+              <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Accuracy</p>
+            </div>
+            <div>
+              <p className="text-lg font-black">{learningProfile?.exerciseHistory.length || 0}</p>
+              <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Answers tracked</p>
+            </div>
+          </div>
+          {weakestSkills.length > 0 && (
+            <div className="space-y-2 border-t border-white/15 pt-4">
+              <p className="text-xs font-black uppercase tracking-wider text-slate-400">Skills needing practice</p>
+              {weakestSkills.map((skill) => (
+                <div key={skill.skill} className="flex items-center gap-2 text-xs">
+                  <span className="w-24 capitalize text-slate-300">{skill.skill}</span>
+                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-full rounded-full bg-amber-300" style={{ width: `${skill.proficiency}%` }} />
+                  </div>
+                  <span className="w-8 text-right font-bold text-slate-300">{Math.round(skill.proficiency)}%</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
