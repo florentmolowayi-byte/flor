@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import {
@@ -39,6 +39,15 @@ const shuffleOptions = (options: Option[]) => {
   return shuffled;
 };
 
+const shuffleValues = <T,>(values: T[]) => {
+  const shuffled = [...values];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+  return shuffled;
+};
+
 export const LessonEngine: React.FC<LessonEngineProps> = ({
   lessonTitle,
   exercises,
@@ -50,8 +59,11 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   onExerciseCompleted,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [retryNonce, setRetryNonce] = useState(0);
   const [userAnswerId, setUserAnswerId] = useState<string | null>(null);
   const [shuffledOptions, setShuffledOptions] = useState<Option[]>([]);
+  const [shuffledPairs, setShuffledPairs] = useState<typeof exercises[number]['pairs']>([]);
+  const [shuffledRightPairs, setShuffledRightPairs] = useState<typeof exercises[number]['pairs']>([]);
   const [wordBankSelected, setWordBankSelected] = useState<string[]>([]);
   const [wordBankAvailable, setWordBankAvailable] = useState<string[]>([]);
 
@@ -63,6 +75,10 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   // Speaking state
   const [isRecording, setIsRecording] = useState(false);
   const [recordedSuccess, setRecordedSuccess] = useState(false);
+  const [recordingError, setRecordingError] = useState<string | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordingStreamRef = useRef<MediaStream | null>(null);
+  const recordingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Feedback banner state
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
@@ -78,10 +94,12 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   // Initialize word bank pool when exercise changes
   useEffect(() => {
     if (currentEx?.type === 'word_bank' && currentEx.wordBankPool) {
-      setWordBankAvailable([...currentEx.wordBankPool]);
+      setWordBankAvailable(shuffleValues(currentEx.wordBankPool));
       setWordBankSelected([]);
     }
     if (currentEx?.type === 'match_pairs') {
+      setShuffledPairs(shuffleValues(currentEx.pairs || []));
+      setShuffledRightPairs(shuffleValues(currentEx.pairs || []));
       setMatchedPairIds([]);
       setSelectedLeft(null);
       setSelectedRight(null);
@@ -93,12 +111,13 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     setDuoMood('idle');
     setIsRecording(false);
     setRecordedSuccess(false);
+    setRecordingError(null);
 
     // Auto-play TTS for audio exercises
     if (currentEx?.audioText && (currentEx.type === 'listening' || currentEx.type === 'speaking')) {
       speakText(currentEx.audioText, languageId);
     }
-  }, [currentIndex, currentEx, languageId]);
+  }, [currentIndex, currentEx, languageId, retryNonce]);
 
   // Handle Match Pairs Selection
   const handleSelectLeftPair = (leftWord: string) => {
@@ -190,6 +209,10 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   // Move to next exercise or finish
   const handleContinue = () => {
     soundManager.playClick();
+    if (status === 'incorrect') {
+      setRetryNonce((nonce) => nonce + 1);
+      return;
+    }
     if (currentIndex + 1 < exercises.length) {
       setCurrentIndex((i) => i + 1);
     } else {
@@ -218,18 +241,59 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     }, 3500);
   };
 
-  // Simulated Speech Recording
-  const handleToggleRecord = () => {
-    soundManager.playClick();
-    setIsRecording(true);
-    setTimeout(() => {
-      setIsRecording(false);
-      setRecordedSuccess(true);
-      speakText(currentEx.audioText || 'Excelente', languageId);
-      setStatus('correct');
-      setDuoMood('happy');
-    }, 1800);
+  const stopRecordingStream = () => {
+    if (recordingTimerRef.current) {
+      clearTimeout(recordingTimerRef.current);
+      recordingTimerRef.current = null;
+    }
+    recordingStreamRef.current?.getTracks().forEach((track) => track.stop());
+    recordingStreamRef.current = null;
+    mediaRecorderRef.current = null;
   };
+
+  // Record a real microphone sample when the browser supports it.
+  const handleToggleRecord = async () => {
+    if (isRecording) {
+      mediaRecorderRef.current?.stop();
+      return;
+    }
+
+    soundManager.playClick();
+    setRecordingError(null);
+
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+      setRecordingError('Microphone recording is not supported in this browser.');
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      recordingStreamRef.current = stream;
+      mediaRecorderRef.current = recorder;
+      setIsRecording(true);
+
+      recorder.onstop = () => {
+        stopRecordingStream();
+        setIsRecording(false);
+        setRecordedSuccess(true);
+        setStatus('correct');
+        setDuoMood('happy');
+      };
+      recorder.onerror = () => {
+        stopRecordingStream();
+        setIsRecording(false);
+        setRecordingError('Recording failed. Please try again.');
+      };
+      recorder.start();
+      recordingTimerRef.current = setTimeout(() => recorder.stop(), 3000);
+    } catch {
+      stopRecordingStream();
+      setRecordingError('Microphone access was blocked. Allow microphone access and try again.');
+    }
+  };
+
+  useEffect(() => () => stopRecordingStream(), []);
 
   return (
     <div className="fixed inset-0 z-50 bg-white dark:bg-slate-900 flex flex-col justify-between overflow-hidden">
@@ -387,7 +451,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
                 <div className="grid grid-cols-2 gap-4 pt-2">
                   {/* Left Column */}
                   <div className="space-y-2.5">
-                    {currentEx.pairs.map((p) => {
+                    {shuffledPairs.map((p) => {
                       const isMatched = matchedPairIds.includes(p.id);
                       const isSelected = selectedLeft === p.left;
                       return (
@@ -411,7 +475,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
 
                   {/* Right Column */}
                   <div className="space-y-2.5">
-                    {currentEx.pairs.map((p) => {
+                    {shuffledRightPairs.map((p) => {
                       const isMatched = matchedPairIds.includes(p.id);
                       const isSelected = selectedRight === p.right;
                       return (
@@ -439,6 +503,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
               {currentEx.type === 'speaking' && (
                 <div className="flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-slate-200 dark:border-slate-700 space-y-4">
                   <motion.button
+                    disabled={status !== 'idle'}
                     animate={isRecording ? { scale: [1, 1.15, 1] } : {}}
                     transition={{ repeat: Infinity, duration: 1 }}
                     onClick={handleToggleRecord}
@@ -459,6 +524,11 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
                       ? 'Great pronunciation! Your coach understood you perfectly!'
                       : 'Tap mic and pronounce the phrase above.'}
                   </p>
+                  {recordingError && (
+                    <p className="text-xs font-bold text-rose-600 dark:text-rose-400 text-center">
+                      {recordingError}
+                    </p>
+                  )}
                 </div>
               )}
             </motion.div>
