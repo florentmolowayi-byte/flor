@@ -132,8 +132,7 @@ export default function App() {
 
       const updatedNodes = { ...prev.completedNodes };
       if (activeLessonId) {
-        const stars = accuracy >= 90 ? 3 : accuracy >= 60 ? 2 : 1;
-        updatedNodes[activeLessonId] = Math.max(updatedNodes[activeLessonId] || 0, stars);
+        updatedNodes[activeLessonId] = 3;
       }
 
       return {
