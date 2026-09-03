@@ -246,8 +246,8 @@ function isPrerequisitesMet(
  * Determine difficulty level based on progression
  */
 function determineDifficulty(node: PathNode, unitIndex: number): 'beginner' | 'intermediate' | 'advanced' {
-  if (unitIndex < 2) return 'beginner';
-  if (unitIndex < 5) return 'intermediate';
+  if (unitIndex === 0) return 'beginner';
+  if (unitIndex < 3) return 'intermediate';
   return 'advanced';
 }
 

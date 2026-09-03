@@ -51,6 +51,10 @@ export const PathView: React.FC<PathViewProps> = ({
             </div>
             <span className="text-xs font-bold text-slate-300 whitespace-nowrap">{nextLesson.estimatedDuration} min</span>
           </div>
+          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wide">
+            <span className="rounded-full bg-amber-300 px-2.5 py-1 text-slate-950">{nextLesson.difficulty}</span>
+            <span className="text-slate-400">Next level selected from your progress</span>
+          </div>
           {learningProfile && learningProfile.focusAreas.length > 0 && (
             <p className="text-xs font-bold text-amber-300">
               Focus: {learningProfile.focusAreas.slice(0, 2).join(' and ')}

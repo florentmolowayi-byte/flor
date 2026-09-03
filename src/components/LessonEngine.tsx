@@ -243,6 +243,17 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     }, 3500);
   };
 
+  const completeSpeakingExercise = () => {
+    if (status !== 'idle') return;
+    const completedCorrectCount = Math.min(exercises.length, correctCountRef.current + 1);
+    correctCountRef.current = completedCorrectCount;
+    setCorrectCount(completedCorrectCount);
+    onExerciseCompleted?.(currentEx, true, Date.now() - exerciseStartedAt);
+    setRecordedSuccess(true);
+    setStatus('correct');
+    setDuoMood('happy');
+  };
+
   const stopRecordingStream = () => {
     if (recordingTimerRef.current) {
       clearTimeout(recordingTimerRef.current);
@@ -278,9 +289,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
       recorder.onstop = () => {
         stopRecordingStream();
         setIsRecording(false);
-        setRecordedSuccess(true);
-        setStatus('correct');
-        setDuoMood('happy');
+        completeSpeakingExercise();
       };
       recorder.onerror = () => {
         stopRecordingStream();
@@ -558,7 +567,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
               <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 p-3.5 rounded-2xl flex flex-col items-center">
                 <Zap className="w-6 h-6 text-amber-500 mb-1" />
                 <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Total XP</span>
-                <span className="text-lg font-black text-amber-600 dark:text-amber-400">+20 XP</span>
+                <span className="text-lg font-black text-amber-600 dark:text-amber-400">+{userState.doubleXpTimer > Date.now() ? 40 : 20} XP</span>
               </div>
 
               <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 p-3.5 rounded-2xl flex flex-col items-center">
@@ -567,12 +576,15 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
                 <span className="text-lg font-black text-emerald-600 dark:text-emerald-400">
                   {Math.round((correctCount / exercises.length) * 100)}%
                 </span>
+                <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">
+                  {correctCount}/{exercises.length} marks
+                </span>
               </div>
 
               <div className="bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-300 dark:border-cyan-800 p-3.5 rounded-2xl flex flex-col items-center">
                 <Sparkles className="w-6 h-6 text-cyan-500 mb-1" />
                 <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Gems</span>
-                <span className="text-lg font-black text-cyan-600 dark:text-cyan-400">+15</span>
+                <span className="text-lg font-black text-cyan-600 dark:text-cyan-400">+15 gems</span>
               </div>
             </div>
           </motion.div>
