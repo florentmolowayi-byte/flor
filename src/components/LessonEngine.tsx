@@ -84,6 +84,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
   const [duoMood, setDuoMood] = useState<DuoMascotMood>('idle');
   const [combo, setCombo] = useState(0);
+  const correctCountRef = useRef(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [isLessonFinished, setIsLessonFinished] = useState(false);
   const [exerciseStartedAt, setExerciseStartedAt] = useState(Date.now());
@@ -195,7 +196,8 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
       setStatus('correct');
       setDuoMood(combo >= 2 ? 'hyped' : 'happy');
       setCombo((c) => c + 1);
-      setCorrectCount((c) => c + 1);
+      correctCountRef.current = Math.min(exercises.length, correctCountRef.current + 1);
+      setCorrectCount(correctCountRef.current);
     } else {
       soundManager.playIncorrect();
       onLoseHeart();
@@ -217,11 +219,11 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
       setCurrentIndex((i) => i + 1);
     } else {
       // Finish Lesson!
-      triggerCompletion();
+      triggerCompletion(correctCountRef.current);
     }
   };
 
-  const triggerCompletion = () => {
+  const triggerCompletion = (completedCorrectCount: number) => {
     setIsLessonFinished(true);
     soundManager.playFanfare();
     confetti({
@@ -230,7 +232,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
       origin: { y: 0.6 },
     });
 
-    const accuracy = Math.round((correctCount / exercises.length) * 100);
+    const accuracy = Math.round((completedCorrectCount / exercises.length) * 100);
     const isDoubleXp = userState.doubleXpTimer > Date.now();
     const baseVal = 20;
     const xpEarned = isDoubleXp ? baseVal * 2 : baseVal;
