@@ -48,6 +48,26 @@ const shuffleValues = <T,>(values: T[]) => {
   return shuffled;
 };
 
+const normalizeSpeech = (value: string) =>
+  value
+    .toLocaleLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+type SpeechRecognitionLike = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
+  start: () => void;
+  stop: () => void;
+};
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
+
 export const LessonEngine: React.FC<LessonEngineProps> = ({
   lessonTitle,
   exercises,
@@ -79,6 +99,8 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordingStreamRef = useRef<MediaStream | null>(null);
   const recordingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const speechRecognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const spokenTranscriptRef = useRef('');
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const voiceCheckTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -273,6 +295,8 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     audioContextRef.current?.close();
     audioContextRef.current = null;
     analyserRef.current = null;
+    speechRecognitionRef.current?.stop();
+    speechRecognitionRef.current = null;
     recordingStreamRef.current?.getTracks().forEach((track) => track.stop());
     recordingStreamRef.current = null;
     mediaRecorderRef.current = null;
@@ -306,7 +330,33 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
       audioContextRef.current = audioContext;
       analyserRef.current = analyser;
       voiceDetectedRef.current = false;
+      spokenTranscriptRef.current = '';
       setIsRecording(true);
+
+      const speechRecognitionWindow = window as Window & {
+        SpeechRecognition?: SpeechRecognitionConstructor;
+        webkitSpeechRecognition?: SpeechRecognitionConstructor;
+      };
+      const SpeechRecognition =
+        speechRecognitionWindow.SpeechRecognition || speechRecognitionWindow.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        stopRecordingStream();
+        setIsRecording(false);
+        setRecordingError('Speech recognition is not supported in this browser. Please use Chrome or Edge.');
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = languageId === 'tr' ? 'tr-TR' : languageId;
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.onresult = (event) => {
+        spokenTranscriptRef.current = Array.from(event.results)
+          .map((result) => result[0]?.transcript || '')
+          .join(' ');
+      };
+      speechRecognitionRef.current = recognition;
+      recognition.start();
 
       voiceCheckTimerRef.current = setInterval(() => {
         analyser.getByteTimeDomainData(audioSamples);
@@ -319,10 +369,16 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
 
       recorder.onstop = () => {
         const didSpeak = voiceDetectedRef.current;
+        const spokenText = normalizeSpeech(spokenTranscriptRef.current);
+        const expectedText = normalizeSpeech(currentEx.audioText || '');
         stopRecordingStream();
         setIsRecording(false);
-        if (didSpeak) {
+        const wordsMatch = expectedText.length > 0 && spokenText.includes(expectedText);
+        if (didSpeak && wordsMatch) {
           completeSpeakingExercise();
+        } else if (didSpeak) {
+          setRecordingError('That did not match the phrase. Listen again and repeat it clearly.');
+          setDuoMood('sad');
         } else {
           setRecordingError('No speech detected. Say the phrase out loud and try again.');
           setDuoMood('sad');
