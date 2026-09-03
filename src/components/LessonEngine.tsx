@@ -648,10 +648,10 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
 
             <div>
               <h2 className="text-3xl font-black text-slate-900 dark:text-slate-100">
-                Lesson Completed!
+                Congratulations!
               </h2>
               <p className="text-sm font-bold text-slate-500 dark:text-slate-400 mt-1">
-                You’re mastering {languageId.toUpperCase()} step by step!
+                You completed this lesson. Your next lesson will open automatically!
               </p>
             </div>
 

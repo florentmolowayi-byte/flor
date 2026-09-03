@@ -235,7 +235,8 @@ function isPrerequisitesMet(
   // Check if all lessons in previous units are completed
   for (let i = 0; i < unitIndex; i++) {
     const prevUnit = language.units[i];
-    const allPrevCompleted = prevUnit.nodes.every((n) => completedNodes[n.id]);
+    const previousLessons = prevUnit.nodes.filter((n) => n.type === 'lesson');
+    const allPrevCompleted = previousLessons.every((n) => completedNodes[n.id]);
     if (!allPrevCompleted) return false;
   }
 
