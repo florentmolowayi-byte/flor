@@ -27,6 +27,7 @@ interface LessonEngineProps {
   onCompleteLesson: (stats: { xpEarned: number; gemsEarned: number; accuracy: number }) => void;
   onLoseHeart: () => void;
   onQuit: () => void;
+  onExerciseCompleted?: (exercise: Exercise, correct: boolean, timeSpent: number) => void;
 }
 
 const shuffleOptions = (options: Option[]) => {
@@ -46,6 +47,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   onCompleteLesson,
   onLoseHeart,
   onQuit,
+  onExerciseCompleted,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswerId, setUserAnswerId] = useState<string | null>(null);
@@ -68,6 +70,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   const [combo, setCombo] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [isLessonFinished, setIsLessonFinished] = useState(false);
+  const [exerciseStartedAt, setExerciseStartedAt] = useState(Date.now());
 
   const currentEx = exercises[currentIndex];
   const progressPercent = Math.round(((currentIndex) / exercises.length) * 100);
@@ -85,6 +88,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     }
     setUserAnswerId(null);
     setShuffledOptions(shuffleOptions(currentEx?.options || []));
+    setExerciseStartedAt(Date.now());
     setStatus('idle');
     setDuoMood('idle');
     setIsRecording(false);
@@ -164,6 +168,8 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     } else if (currentEx.type === 'speaking') {
       isCorrect = recordedSuccess;
     }
+
+    onExerciseCompleted?.(currentEx, isCorrect, Date.now() - exerciseStartedAt);
 
     if (isCorrect) {
       soundManager.playCorrect();

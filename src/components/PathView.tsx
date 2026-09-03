@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Check, Star, Lock, Gift, Zap, Sparkles } from 'lucide-react';
-import { Language, UserState } from '../types';
+import { Language, UserLearningProfile, UserState } from '../types';
+import { LearningPathStep } from '../utils/curriculumSequencingService';
 import { soundManager } from '../utils/audio';
 
 interface PathViewProps {
@@ -10,6 +11,9 @@ interface PathViewProps {
   onSelectNode: (nodeId: string) => void;
   onClaimChest: (nodeId: string, gemAmount: number) => void;
   onStartPractice: () => void;
+  learningProfile?: UserLearningProfile;
+  nextLesson?: LearningPathStep | null;
+  onLessonSelected?: (lessonId: string) => void;
 }
 
 export const PathView: React.FC<PathViewProps> = ({
@@ -18,9 +22,36 @@ export const PathView: React.FC<PathViewProps> = ({
   onSelectNode,
   onClaimChest,
   onStartPractice,
+  learningProfile,
+  nextLesson,
+  onLessonSelected,
 }) => {
   return (
     <div className="max-w-xl mx-auto py-6 px-4 pb-24 space-y-10">
+      {nextLesson && (
+        <div className="bg-slate-900 rounded-3xl p-5 text-white shadow-xl space-y-4">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-black uppercase tracking-wider text-emerald-300">Adaptive next step</p>
+              <h2 className="text-xl font-black mt-1">{nextLesson.title}</h2>
+              <p className="text-sm text-slate-300 mt-1">{nextLesson.rationale}</p>
+            </div>
+            <span className="text-xs font-bold text-slate-300 whitespace-nowrap">{nextLesson.estimatedDuration} min</span>
+          </div>
+          {learningProfile && learningProfile.focusAreas.length > 0 && (
+            <p className="text-xs font-bold text-amber-300">
+              Focus: {learningProfile.focusAreas.slice(0, 2).join(' and ')}
+            </p>
+          )}
+          <button
+            onClick={() => onLessonSelected?.(nextLesson.lessonId)}
+            className="w-full px-4 py-3 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-sm rounded-2xl transition-colors cursor-pointer"
+          >
+            Continue learning
+          </button>
+        </div>
+      )}
+
       {/* Quick Start Floating Header Card */}
       <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-5 text-white shadow-xl flex items-center justify-between relative overflow-hidden">
         <div className="z-10 space-y-1">

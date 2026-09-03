@@ -15,6 +15,8 @@ import { ProfileView } from './components/ProfileView';
 import { StreakModal } from './components/StreakModal';
 import { RefillHeartsModal } from './components/RefillHeartsModal';
 import { LessonEngine } from './components/LessonEngine';
+import { useAdaptiveLearning } from './hooks/useAdaptiveLearning';
+import { getNextLesson } from './utils/curriculumSequencingService';
 
 const STORAGE_KEY = 'flor_app_user_state_v2';
 const LEGACY_STORAGE_KEY = 'flor_app_user_state_v1';
@@ -86,6 +88,7 @@ export default function App() {
   const [competitors, setCompetitors] = useState<Competitor[]>(INITIAL_COMPETITORS);
   const [quests, setQuests] = useState(INITIAL_DAILY_QUESTS);
   const [achievements, setAchievements] = useState(INITIAL_ACHIEVEMENTS);
+  const { learningProfile, recordExerciseCompletion } = useAdaptiveLearning(userState);
 
   // Save userState to localStorage whenever modified
   useEffect(() => {
@@ -268,6 +271,7 @@ export default function App() {
 
   const currentLanguageObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
   const activeExercises = EXERCISES_BANK[activeLessonId || 'en-1-1'] || EXERCISES_BANK['en-1-1'];
+  const nextLesson = getNextLesson(LANGUAGES, userState.currentLanguage, userState.completedNodes, learningProfile);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased font-sans">
@@ -294,6 +298,9 @@ export default function App() {
               onSelectNode={handleSelectNode}
               onClaimChest={handleClaimChest}
               onStartPractice={() => handleSelectNode(`${userState.currentLanguage}-1-1`)}
+              learningProfile={learningProfile}
+              nextLesson={nextLesson}
+              onLessonSelected={handleSelectNode}
             />
           )}
 
@@ -377,6 +384,25 @@ export default function App() {
           onCompleteLesson={handleCompleteLesson}
           onLoseHeart={handleLoseHeart}
           onQuit={() => setActiveLessonId(null)}
+          onExerciseCompleted={(exercise, correct, timeSpent) =>
+            recordExerciseCompletion(
+              exercise.id,
+              exercise.skillTags || [
+                exercise.type === 'listening'
+                  ? 'listening'
+                  : exercise.type === 'speaking'
+                  ? 'speaking'
+                  : exercise.type === 'word_bank'
+                  ? 'grammar'
+                  : exercise.type === 'match_pairs'
+                  ? 'comprehension'
+                  : 'vocabulary',
+              ],
+              correct,
+              timeSpent,
+              exercise.difficulty || 'medium',
+            )
+          }
         />
       )}
     </div>
