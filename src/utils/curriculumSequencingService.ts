@@ -123,7 +123,11 @@ export function getNextLesson(
   });
 
   // Filter out completed lessons (prevent repetition)
-  const uncompletedLessons = allLessons.filter((lesson) => !completedNodes[lesson.node.id]);
+  const uncompletedLessons = allLessons.filter(
+    (lesson) =>
+      !completedNodes[lesson.node.id] &&
+      isPrerequisitesMet(lesson.node, lesson.unit, completedNodes, currentLanguageDef),
+  );
 
   if (uncompletedLessons.length === 0) {
     // All lessons completed - user has finished the curriculum

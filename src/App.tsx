@@ -16,7 +16,7 @@ import { StreakModal } from './components/StreakModal';
 import { RefillHeartsModal } from './components/RefillHeartsModal';
 import { LessonEngine } from './components/LessonEngine';
 import { useAdaptiveLearning } from './hooks/useAdaptiveLearning';
-import { getNextLesson } from './utils/curriculumSequencingService';
+import { getNextLesson, getNextLessonsSequence } from './utils/curriculumSequencingService';
 
 const STORAGE_KEY = 'flor_app_user_state_v2';
 const LEGACY_STORAGE_KEY = 'flor_app_user_state_v1';
@@ -268,6 +268,13 @@ export default function App() {
   const currentLanguageObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
   const activeExercises = EXERCISES_BANK[activeLessonId || 'en-1-1'] || EXERCISES_BANK['en-1-1'];
   const nextLesson = getNextLesson(LANGUAGES, userState.currentLanguage, userState.completedNodes, learningProfile);
+  const upcomingLessons = getNextLessonsSequence(
+    LANGUAGES,
+    userState.currentLanguage,
+    userState.completedNodes,
+    learningProfile,
+    3,
+  );
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased font-sans">
@@ -296,6 +303,7 @@ export default function App() {
               onStartPractice={() => handleSelectNode(`${userState.currentLanguage}-1-1`)}
               learningProfile={learningProfile}
               nextLesson={nextLesson}
+              upcomingLessons={upcomingLessons}
               onLessonSelected={handleSelectNode}
             />
           )}

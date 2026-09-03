@@ -13,6 +13,7 @@ interface PathViewProps {
   onStartPractice: () => void;
   learningProfile?: UserLearningProfile;
   nextLesson?: LearningPathStep | null;
+  upcomingLessons?: LearningPathStep[];
   onLessonSelected?: (lessonId: string) => void;
 }
 
@@ -24,6 +25,7 @@ export const PathView: React.FC<PathViewProps> = ({
   onStartPractice,
   learningProfile,
   nextLesson,
+  upcomingLessons = [],
   onLessonSelected,
 }) => {
   const lessonNodes = language.units.flatMap((unit) => unit.nodes.filter((node) => node.type === 'lesson'));
@@ -85,6 +87,24 @@ export const PathView: React.FC<PathViewProps> = ({
                   </div>
                   <span className="w-8 text-right font-bold text-slate-300">{Math.round(skill.proficiency)}%</span>
                 </div>
+              ))}
+            </div>
+          )}
+          {upcomingLessons.length > 1 && (
+            <div className="space-y-2 border-t border-white/15 pt-4">
+              <p className="text-xs font-black uppercase tracking-wider text-slate-400">Your organized classes</p>
+              {upcomingLessons.slice(1).map((lesson, index) => (
+                <button
+                  key={lesson.lessonId}
+                  onClick={() => onLessonSelected?.(lesson.lessonId)}
+                  className="flex w-full items-center gap-3 rounded-xl bg-white/10 px-3 py-2 text-left hover:bg-white/15 transition-colors cursor-pointer"
+                >
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-xs font-black">
+                    {index + 2}
+                  </span>
+                  <span className="flex-1 text-sm font-bold text-slate-200">{lesson.title}</span>
+                  <span className="text-[10px] font-bold text-slate-400">{lesson.estimatedDuration} min</span>
+                </button>
               ))}
             </div>
           )}
