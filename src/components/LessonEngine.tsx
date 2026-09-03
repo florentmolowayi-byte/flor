@@ -92,6 +92,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   const [correctCount, setCorrectCount] = useState(0);
   const [isLessonFinished, setIsLessonFinished] = useState(false);
   const [exerciseStartedAt, setExerciseStartedAt] = useState(Date.now());
+  const [completionReward, setCompletionReward] = useState({ xp: 20, gems: 15 });
 
   const currentEx = exercises[currentIndex];
   const progressPercent = Math.round(((currentIndex + 1) / exercises.length) * 100);
@@ -238,9 +239,11 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
 
     const accuracy = Math.round((completedCorrectCount / exercises.length) * 100);
     const isDoubleXp = userState.doubleXpTimer > Date.now();
-    const baseVal = 20;
-    const xpEarned = isDoubleXp ? baseVal * 2 : baseVal;
-    const gemsEarned = 15;
+    const baseXp = 20;
+    const accuracyBonusXp = accuracy === 100 ? 10 : accuracy >= 80 ? 5 : 0;
+    const xpEarned = (isDoubleXp ? baseXp * 2 : baseXp) + accuracyBonusXp;
+    const gemsEarned = 15 + (accuracy === 100 ? 10 : accuracy >= 80 ? 5 : 0);
+    setCompletionReward({ xp: xpEarned, gems: gemsEarned });
 
     setTimeout(() => {
       onCompleteLesson({ xpEarned, gemsEarned, accuracy });
@@ -601,7 +604,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
               <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 p-3.5 rounded-2xl flex flex-col items-center">
                 <Zap className="w-6 h-6 text-amber-500 mb-1" />
                 <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Total XP</span>
-                <span className="text-lg font-black text-amber-600 dark:text-amber-400">+{userState.doubleXpTimer > Date.now() ? 40 : 20} XP</span>
+                <span className="text-lg font-black text-amber-600 dark:text-amber-400">+{completionReward.xp} XP</span>
               </div>
 
               <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 p-3.5 rounded-2xl flex flex-col items-center">
@@ -618,7 +621,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
               <div className="bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-300 dark:border-cyan-800 p-3.5 rounded-2xl flex flex-col items-center">
                 <Sparkles className="w-6 h-6 text-cyan-500 mb-1" />
                 <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Gems</span>
-                <span className="text-lg font-black text-cyan-600 dark:text-cyan-400">+15 gems</span>
+                <span className="text-lg font-black text-cyan-600 dark:text-cyan-400">+{completionReward.gems} gems</span>
               </div>
             </div>
           </motion.div>
