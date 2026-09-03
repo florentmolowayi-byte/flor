@@ -124,6 +124,16 @@ export default function App() {
     gemsEarned: number;
     accuracy: number;
   }) => {
+    const completedNodes = activeLessonId
+      ? { ...userState.completedNodes, [activeLessonId]: 3 }
+      : userState.completedNodes;
+    const nextLesson = getNextLesson(
+      LANGUAGES,
+      userState.currentLanguage,
+      completedNodes,
+      learningProfile,
+    );
+
     setUserState((prev) => {
       const newXp = prev.xp + xpEarned;
       const newGems = prev.gems + gemsEarned;
@@ -154,7 +164,7 @@ export default function App() {
       })
     );
 
-    setActiveLessonId(null);
+    setActiveLessonId(nextLesson?.lessonId || null);
   };
 
   // Heart Lost
