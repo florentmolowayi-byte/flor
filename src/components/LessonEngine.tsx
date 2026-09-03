@@ -79,6 +79,10 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordingStreamRef = useRef<MediaStream | null>(null);
   const recordingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const voiceCheckTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const voiceDetectedRef = useRef(false);
 
   // Feedback banner state
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
@@ -259,6 +263,13 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
       clearTimeout(recordingTimerRef.current);
       recordingTimerRef.current = null;
     }
+    if (voiceCheckTimerRef.current) {
+      clearInterval(voiceCheckTimerRef.current);
+      voiceCheckTimerRef.current = null;
+    }
+    audioContextRef.current?.close();
+    audioContextRef.current = null;
+    analyserRef.current = null;
     recordingStreamRef.current?.getTracks().forEach((track) => track.stop());
     recordingStreamRef.current = null;
     mediaRecorderRef.current = null;
@@ -282,14 +293,37 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream);
+      const audioContext = new AudioContext();
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 512;
+      audioContext.createMediaStreamSource(stream).connect(analyser);
+      const audioSamples = new Uint8Array(analyser.fftSize);
       recordingStreamRef.current = stream;
       mediaRecorderRef.current = recorder;
+      audioContextRef.current = audioContext;
+      analyserRef.current = analyser;
+      voiceDetectedRef.current = false;
       setIsRecording(true);
 
+      voiceCheckTimerRef.current = setInterval(() => {
+        analyser.getByteTimeDomainData(audioSamples);
+        const volume = audioSamples.reduce((total, sample) => {
+          const normalizedSample = (sample - 128) / 128;
+          return total + normalizedSample * normalizedSample;
+        }, 0) / audioSamples.length;
+        if (Math.sqrt(volume) > 0.025) voiceDetectedRef.current = true;
+      }, 100);
+
       recorder.onstop = () => {
+        const didSpeak = voiceDetectedRef.current;
         stopRecordingStream();
         setIsRecording(false);
-        completeSpeakingExercise();
+        if (didSpeak) {
+          completeSpeakingExercise();
+        } else {
+          setRecordingError('No speech detected. Say the phrase out loud and try again.');
+          setDuoMood('sad');
+        }
       };
       recorder.onerror = () => {
         stopRecordingStream();
