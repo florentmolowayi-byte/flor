@@ -89,7 +89,7 @@ export const LessonEngine: React.FC<LessonEngineProps> = ({
   const [exerciseStartedAt, setExerciseStartedAt] = useState(Date.now());
 
   const currentEx = exercises[currentIndex];
-  const progressPercent = Math.round(((currentIndex) / exercises.length) * 100);
+  const progressPercent = Math.round(((currentIndex + 1) / exercises.length) * 100);
 
   // Initialize word bank pool when exercise changes
   useEffect(() => {
