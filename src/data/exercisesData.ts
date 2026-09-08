@@ -1,6 +1,107 @@
 import { Exercise, LanguageId } from '../types';
 
 export const EXERCISES_BANK: Record<string, Exercise[]> = {
+  // ENGLISH UNIT 1: Everyday English Basics
+  'en-1-1': [
+    {
+      id: 'ex-en-1-1-1',
+      type: 'multiple_choice',
+      prompt: 'What does "Hello" mean?',
+      audioText: 'Hello',
+      options: [
+        { id: 'en-hello-1', text: 'Goodbye', imageEmoji: '👋' },
+        { id: 'en-hello-2', text: 'Hello', imageEmoji: '😊' },
+        { id: 'en-hello-3', text: 'Thank you', imageEmoji: '🙏' },
+      ],
+      correctAnswerId: 'en-hello-2',
+    },
+    {
+      id: 'ex-en-1-1-2',
+      type: 'word_bank',
+      prompt: 'Build the sentence: "My name is Flor"',
+      audioText: 'My name is Flor',
+      correctSentence: ['My', 'name', 'is', 'Flor.'],
+      wordBankPool: ['My', 'name', 'is', 'Flor.', 'your', 'hello'],
+    },
+    {
+      id: 'ex-en-1-1-3',
+      type: 'match_pairs',
+      prompt: 'Match the everyday phrases',
+      pairs: [
+        { id: 'en-p1', left: 'Hello', right: 'A greeting' },
+        { id: 'en-p2', left: 'Goodbye', right: 'A farewell' },
+        { id: 'en-p3', left: 'Please', right: 'A polite request' },
+        { id: 'en-p4', left: 'Thanks', right: 'Gratitude' },
+      ],
+    },
+    {
+      id: 'ex-en-1-1-4',
+      type: 'listening',
+      prompt: 'Listen and choose what you hear:',
+      audioText: 'Good morning',
+      options: [
+        { id: 'en-listen-1', text: 'Good evening' },
+        { id: 'en-listen-2', text: 'Good morning' },
+        { id: 'en-listen-3', text: 'Goodbye' },
+      ],
+      correctAnswerId: 'en-listen-2',
+    },
+    {
+      id: 'ex-en-1-1-5',
+      type: 'speaking',
+      prompt: 'Say: "Nice to meet you"',
+      audioText: 'Nice to meet you',
+    },
+    {
+      id: 'ex-en-1-1-6',
+      type: 'multiple_choice',
+      prompt: 'Choose the polite way to ask for help',
+      options: [
+        { id: 'en-help-1', text: 'Help me now.' },
+        { id: 'en-help-2', text: 'Please, can you help me?' },
+        { id: 'en-help-3', text: 'You help.' },
+      ],
+      correctAnswerId: 'en-help-2',
+    },
+    {
+      id: 'ex-en-1-1-7',
+      type: 'word_bank',
+      prompt: 'Build the sentence: "How are you?"',
+      audioText: 'How are you?',
+      correctSentence: ['How', 'are', 'you?'],
+      wordBankPool: ['How', 'are', 'you?', 'I', 'am', 'hello'],
+    },
+    {
+      id: 'ex-en-1-1-8',
+      type: 'match_pairs',
+      prompt: 'Match the questions and answers',
+      pairs: [
+        { id: 'en-qa-1', left: 'How are you?', right: 'I am fine.' },
+        { id: 'en-qa-2', left: 'What is your name?', right: 'I am Flor.' },
+        { id: 'en-qa-3', left: 'Where are you from?', right: 'I am from Brazil.' },
+        { id: 'en-qa-4', left: 'See you soon?', right: 'See you!' },
+      ],
+    },
+    {
+      id: 'ex-en-1-1-9',
+      type: 'listening',
+      prompt: 'Listen and choose the correct phrase:',
+      audioText: 'Thank you very much',
+      options: [
+        { id: 'en-thanks-1', text: 'Thank you very much' },
+        { id: 'en-thanks-2', text: 'Please sit down' },
+        { id: 'en-thanks-3', text: 'Nice to meet you' },
+      ],
+      correctAnswerId: 'en-thanks-1',
+    },
+    {
+      id: 'ex-en-1-1-10',
+      type: 'speaking',
+      prompt: 'Say: "Have a great day"',
+      audioText: 'Have a great day',
+    },
+  ],
+
   // SPANISH LESSON 1: Greetings 1
   'es-1-1': [
     {

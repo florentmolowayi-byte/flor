@@ -20,7 +20,7 @@ export const LANGUAGES: Language[] = [
             id: 'en-1-1',
             title: 'Greetings 1',
             type: 'lesson',
-            totalSteps: 5,
+            totalSteps: 10,
             xpReward: 15,
             gemReward: 10,
             unlocked: true,
