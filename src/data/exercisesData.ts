@@ -1,5 +1,102 @@
 import { Exercise, LanguageId } from '../types';
 
+const createEnglishLessonExercises = (lessonId: string, topic: string, sentence: string[]) => [
+  {
+    id: `${lessonId}-review-1`,
+    type: 'multiple_choice' as const,
+    prompt: `Choose the word connected to ${topic}`,
+    options: [
+      { id: `${lessonId}-review-option-1`, text: topic },
+      { id: `${lessonId}-review-option-2`, text: 'Yesterday' },
+      { id: `${lessonId}-review-option-3`, text: 'Perhaps' },
+    ],
+    correctAnswerId: `${lessonId}-review-option-1`,
+  },
+  {
+    id: `${lessonId}-review-2`,
+    type: 'word_bank' as const,
+    prompt: `Build the ${topic} sentence`,
+    correctSentence: sentence,
+    wordBankPool: [...sentence, 'please', 'today'],
+  },
+  {
+    id: `${lessonId}-review-3`,
+    type: 'match_pairs' as const,
+    prompt: `Match the ${topic} phrases`,
+    pairs: [
+      { id: `${lessonId}-review-pair-1`, left: topic, right: 'Main topic' },
+      { id: `${lessonId}-review-pair-2`, left: 'Please', right: 'Polite request' },
+      { id: `${lessonId}-review-pair-3`, left: 'Thanks', right: 'Gratitude' },
+      { id: `${lessonId}-review-pair-4`, left: 'Goodbye', right: 'Farewell' },
+    ],
+  },
+  {
+    id: `${lessonId}-review-4`,
+    type: 'listening' as const,
+    prompt: `Listen for the ${topic} phrase`,
+    audioText: sentence.join(' '),
+    options: [
+      { id: `${lessonId}-review-listen-1`, text: sentence.join(' ') },
+      { id: `${lessonId}-review-listen-2`, text: 'I was there yesterday' },
+      { id: `${lessonId}-review-listen-3`, text: 'See you next week' },
+    ],
+    correctAnswerId: `${lessonId}-review-listen-1`,
+  },
+  {
+    id: `${lessonId}-review-5`,
+    type: 'speaking' as const,
+    prompt: `Say this ${topic} phrase`,
+    audioText: sentence.join(' '),
+  },
+  {
+    id: `${lessonId}-review-6`,
+    type: 'multiple_choice' as const,
+    prompt: `Which phrase is useful for ${topic}?`,
+    options: [
+      { id: `${lessonId}-review-use-1`, text: sentence.join(' ') },
+      { id: `${lessonId}-review-use-2`, text: 'The sky is blue' },
+      { id: `${lessonId}-review-use-3`, text: 'I closed the window' },
+    ],
+    correctAnswerId: `${lessonId}-review-use-1`,
+  },
+  {
+    id: `${lessonId}-review-7`,
+    type: 'word_bank' as const,
+    prompt: `Practice another ${topic} sentence`,
+    correctSentence: ['I', 'practice', topic.toLowerCase(), 'today.'],
+    wordBankPool: ['I', 'practice', topic.toLowerCase(), 'today.', 'never', 'yesterday'],
+  },
+  {
+    id: `${lessonId}-review-8`,
+    type: 'match_pairs' as const,
+    prompt: `Match ${topic} vocabulary`,
+    pairs: [
+      { id: `${lessonId}-review-vocab-1`, left: topic, right: 'Useful vocabulary' },
+      { id: `${lessonId}-review-vocab-2`, left: 'Today', right: 'This day' },
+      { id: `${lessonId}-review-vocab-3`, left: 'Tomorrow', right: 'The next day' },
+      { id: `${lessonId}-review-vocab-4`, left: 'Now', right: 'At this moment' },
+    ],
+  },
+  {
+    id: `${lessonId}-review-9`,
+    type: 'listening' as const,
+    prompt: 'Listen and select the complete sentence',
+    audioText: `I am learning ${topic.toLowerCase()}`,
+    options: [
+      { id: `${lessonId}-review-complete-1`, text: `I am learning ${topic.toLowerCase()}` },
+      { id: `${lessonId}-review-complete-2`, text: `I finished ${topic.toLowerCase()} yesterday` },
+      { id: `${lessonId}-review-complete-3`, text: `I forgot my ${topic.toLowerCase()}` },
+    ],
+    correctAnswerId: `${lessonId}-review-complete-1`,
+  },
+  {
+    id: `${lessonId}-review-10`,
+    type: 'speaking' as const,
+    prompt: `Say: "I am learning ${topic.toLowerCase()}"`,
+    audioText: `I am learning ${topic.toLowerCase()}`,
+  },
+];
+
 export const EXERCISES_BANK: Record<string, Exercise[]> = {
   // ENGLISH UNIT 1: Everyday English Basics
   'en-1-1': [
@@ -101,6 +198,192 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       audioText: 'Have a great day',
     },
   ],
+
+  'en-1-2': [
+    {
+      id: 'ex-en-1-2-1',
+      type: 'multiple_choice',
+      prompt: 'Choose the correct phrase for a morning greeting',
+      audioText: 'Good morning',
+      options: [
+        { id: 'en-daily-1', text: 'Good morning' },
+        { id: 'en-daily-2', text: 'Good night' },
+        { id: 'en-daily-3', text: 'See you tomorrow' },
+      ],
+      correctAnswerId: 'en-daily-1',
+    },
+    {
+      id: 'ex-en-1-2-2',
+      type: 'word_bank',
+      prompt: 'Build the sentence: "I am from London"',
+      audioText: 'I am from London',
+      correctSentence: ['I', 'am', 'from', 'London.'],
+      wordBankPool: ['I', 'am', 'from', 'London.', 'you', 'where'],
+    },
+    {
+      id: 'ex-en-1-2-3',
+      type: 'match_pairs',
+      prompt: 'Match everyday questions and answers',
+      pairs: [
+        { id: 'en-daily-p1', left: 'How old are you?', right: 'I am twenty.' },
+        { id: 'en-daily-p2', left: 'Where do you live?', right: 'I live in London.' },
+        { id: 'en-daily-p3', left: 'What do you do?', right: 'I am a student.' },
+        { id: 'en-daily-p4', left: 'Are you ready?', right: 'Yes, I am.' },
+      ],
+    },
+    {
+      id: 'ex-en-1-2-4',
+      type: 'listening',
+      prompt: 'Listen and choose what you hear:',
+      audioText: 'I live in a small town',
+      options: [
+        { id: 'en-live-1', text: 'I work in a small shop' },
+        { id: 'en-live-2', text: 'I live in a small town' },
+        { id: 'en-live-3', text: 'I study in a big city' },
+      ],
+      correctAnswerId: 'en-live-2',
+    },
+    {
+      id: 'ex-en-1-2-5',
+      type: 'speaking',
+      prompt: 'Say: "I speak English"',
+      audioText: 'I speak English',
+    },
+    ...createEnglishLessonExercises('en-1-2-extra', 'daily English', ['I', 'speak', 'English.']).slice(0, 5),
+  ],
+
+  'en-2-1': [
+    {
+      id: 'ex-en-2-1-1', type: 'multiple_choice', prompt: 'Which word means a meal in the morning?',
+      options: [{ id: 'food-1', text: 'Breakfast' }, { id: 'food-2', text: 'Dinner' }, { id: 'food-3', text: 'Snack' }], correctAnswerId: 'food-1',
+    },
+    {
+      id: 'ex-en-2-1-2', type: 'word_bank', prompt: 'Build the sentence: "I like fresh fruit"',
+      correctSentence: ['I', 'like', 'fresh', 'fruit.'], wordBankPool: ['I', 'like', 'fresh', 'fruit.', 'eat', 'bread'],
+    },
+    {
+      id: 'ex-en-2-1-3', type: 'match_pairs', prompt: 'Match the food words',
+      pairs: [{ id: 'food-p1', left: 'Apple', right: 'Fruit' }, { id: 'food-p2', left: 'Carrot', right: 'Vegetable' }, { id: 'food-p3', left: 'Bread', right: 'Bakery food' }, { id: 'food-p4', left: 'Water', right: 'Drink' }],
+    },
+    {
+      id: 'ex-en-2-1-4', type: 'listening', prompt: 'Listen and choose the order:', audioText: 'A sandwich, please',
+      options: [{ id: 'order-1', text: 'A sandwich, please' }, { id: 'order-2', text: 'A salad, thanks' }, { id: 'order-3', text: 'A coffee, please' }], correctAnswerId: 'order-1',
+    },
+    { id: 'ex-en-2-1-5', type: 'speaking', prompt: 'Say: "I would like some water"', audioText: 'I would like some water' },
+    ...createEnglishLessonExercises('en-2-1-extra', 'food', ['I', 'like', 'fresh', 'food.']).slice(0, 5),
+  ],
+
+  'en-2-2': [
+    {
+      id: 'ex-en-2-2-1', type: 'multiple_choice', prompt: 'Choose the correct word: "The train is ___ the station."',
+      options: [{ id: 'travel-1', text: 'at' }, { id: 'travel-2', text: 'blue' }, { id: 'travel-3', text: 'quickly' }], correctAnswerId: 'travel-1',
+    },
+    {
+      id: 'ex-en-2-2-2', type: 'word_bank', prompt: 'Build the sentence: "Where is the airport?"',
+      correctSentence: ['Where', 'is', 'the', 'airport?'], wordBankPool: ['Where', 'is', 'the', 'airport?', 'train', 'near'],
+    },
+    {
+      id: 'ex-en-2-2-3', type: 'match_pairs', prompt: 'Match travel words',
+      pairs: [{ id: 'travel-p1', left: 'Ticket', right: 'Permission to travel' }, { id: 'travel-p2', left: 'Station', right: 'Transport stop' }, { id: 'travel-p3', left: 'Map', right: 'Shows places' }, { id: 'travel-p4', left: 'Luggage', right: 'Travel bags' }],
+    },
+    {
+      id: 'ex-en-2-2-4', type: 'listening', prompt: 'Listen and choose the direction:', audioText: 'Turn left at the corner',
+      options: [{ id: 'direction-1', text: 'Turn right at the corner' }, { id: 'direction-2', text: 'Turn left at the corner' }, { id: 'direction-3', text: 'Stop at the station' }], correctAnswerId: 'direction-2',
+    },
+    { id: 'ex-en-2-2-5', type: 'speaking', prompt: 'Say: "How can I get to the hotel?"', audioText: 'How can I get to the hotel?' },
+    ...createEnglishLessonExercises('en-2-2-extra', 'travel', ['I', 'need', 'a', 'ticket.']).slice(0, 5),
+  ],
+
+  'en-3-1': [
+    {
+      id: 'ex-en-3-1-1', type: 'multiple_choice', prompt: 'Which word describes yesterday?',
+      options: [{ id: 'time-1', text: 'Past' }, { id: 'time-2', text: 'Future' }, { id: 'time-3', text: 'Later' }], correctAnswerId: 'time-1',
+    },
+    {
+      id: 'ex-en-3-1-2', type: 'word_bank', prompt: 'Build the sentence: "I watched a film yesterday"',
+      correctSentence: ['I', 'watched', 'a', 'film', 'yesterday.'], wordBankPool: ['I', 'watched', 'a', 'film', 'yesterday.', 'read', 'book'],
+    },
+    {
+      id: 'ex-en-3-1-3', type: 'match_pairs', prompt: 'Match present and past verbs',
+      pairs: [{ id: 'past-p1', left: 'go', right: 'went' }, { id: 'past-p2', left: 'eat', right: 'ate' }, { id: 'past-p3', left: 'see', right: 'saw' }, { id: 'past-p4', left: 'make', right: 'made' }],
+    },
+    {
+      id: 'ex-en-3-1-4', type: 'listening', prompt: 'Listen and choose what happened:', audioText: 'She visited her family last weekend',
+      options: [{ id: 'past-listen-1', text: 'She visited her family last weekend' }, { id: 'past-listen-2', text: 'She will visit her family tomorrow' }, { id: 'past-listen-3', text: 'She calls her family every day' }], correctAnswerId: 'past-listen-1',
+    },
+    { id: 'ex-en-3-1-5', type: 'speaking', prompt: 'Say: "I went to the park"', audioText: 'I went to the park' },
+    ...createEnglishLessonExercises('en-3-1-extra', 'past tense', ['I', 'visited', 'the', 'park.']).slice(0, 5),
+  ],
+
+  'en-3-2': [
+    {
+      id: 'ex-en-3-2-1', type: 'multiple_choice', prompt: 'Choose the future form: "I ___ call you tomorrow."',
+      options: [{ id: 'future-1', text: 'will' }, { id: 'future-2', text: 'was' }, { id: 'future-3', text: 'did' }], correctAnswerId: 'future-1',
+    },
+    {
+      id: 'ex-en-3-2-2', type: 'word_bank', prompt: 'Build the sentence: "We will meet next week"',
+      correctSentence: ['We', 'will', 'meet', 'next', 'week.'], wordBankPool: ['We', 'will', 'meet', 'next', 'week.', 'last', 'month'],
+    },
+    {
+      id: 'ex-en-3-2-3', type: 'match_pairs', prompt: 'Match time expressions',
+      pairs: [{ id: 'future-p1', left: 'Yesterday', right: 'The day before today' }, { id: 'future-p2', left: 'Today', right: 'This day' }, { id: 'future-p3', left: 'Tomorrow', right: 'The day after today' }, { id: 'future-p4', left: 'Next week', right: 'The coming week' }],
+    },
+    {
+      id: 'ex-en-3-2-4', type: 'listening', prompt: 'Listen and choose the plan:', audioText: 'We will travel next summer',
+      options: [{ id: 'future-listen-1', text: 'We traveled last summer' }, { id: 'future-listen-2', text: 'We will travel next summer' }, { id: 'future-listen-3', text: 'We travel every summer' }], correctAnswerId: 'future-listen-2',
+    },
+    { id: 'ex-en-3-2-5', type: 'speaking', prompt: 'Say: "I will practice tomorrow"', audioText: 'I will practice tomorrow' },
+    ...createEnglishLessonExercises('en-3-2-extra', 'future plans', ['I', 'will', 'practice', 'tomorrow.']).slice(0, 5),
+  ],
+
+  'en-4-1': [
+    {
+      id: 'ex-en-4-1-1', type: 'multiple_choice', prompt: 'Which phrase gives an opinion?',
+      options: [{ id: 'opinion-1', text: 'I think it is useful.' }, { id: 'opinion-2', text: 'Close the door.' }, { id: 'opinion-3', text: 'Where is it?' }], correctAnswerId: 'opinion-1',
+    },
+    {
+      id: 'ex-en-4-1-2', type: 'word_bank', prompt: 'Build the sentence: "In my opinion, it is interesting"',
+      correctSentence: ['In', 'my', 'opinion,', 'it', 'is', 'interesting.'], wordBankPool: ['In', 'my', 'opinion,', 'it', 'is', 'interesting.', 'boring'],
+    },
+    {
+      id: 'ex-en-4-1-3', type: 'match_pairs', prompt: 'Match opinion phrases',
+      pairs: [{ id: 'opinion-p1', left: 'I think', right: 'My idea is' }, { id: 'opinion-p2', left: 'I agree', right: 'We have the same idea' }, { id: 'opinion-p3', left: 'I disagree', right: 'I have a different idea' }, { id: 'opinion-p4', left: 'Maybe', right: 'Possibly' }],
+    },
+    {
+      id: 'ex-en-4-1-4', type: 'listening', prompt: 'Listen and choose the opinion:', audioText: 'I think this book is helpful',
+      options: [{ id: 'opinion-listen-1', text: 'I think this book is helpful' }, { id: 'opinion-listen-2', text: 'I bought a new book yesterday' }, { id: 'opinion-listen-3', text: 'I left the book at home' }], correctAnswerId: 'opinion-listen-1',
+    },
+    { id: 'ex-en-4-1-5', type: 'speaking', prompt: 'Say: "I agree with you"', audioText: 'I agree with you' },
+    ...createEnglishLessonExercises('en-4-1-extra', 'opinions', ['I', 'think', 'it', 'is', 'useful.']).slice(0, 5),
+  ],
+
+  'en-4-2': [
+    {
+      id: 'ex-en-4-2-1', type: 'multiple_choice', prompt: 'Choose the best way to end a polite email',
+      options: [{ id: 'email-1', text: 'Best wishes' }, { id: 'email-2', text: 'See ya, robot' }, { id: 'email-3', text: 'Give me that' }], correctAnswerId: 'email-1',
+    },
+    {
+      id: 'ex-en-4-2-2', type: 'word_bank', prompt: 'Build the sentence: "Thank you for your message"',
+      correctSentence: ['Thank', 'you', 'for', 'your', 'message.'], wordBankPool: ['Thank', 'you', 'for', 'your', 'message.', 'email', 'today'],
+    },
+    {
+      id: 'ex-en-4-2-3', type: 'match_pairs', prompt: 'Match formal expressions',
+      pairs: [{ id: 'email-p1', left: 'Dear', right: 'Formal greeting' }, { id: 'email-p2', left: 'Could you please', right: 'Polite request' }, { id: 'email-p3', left: 'Thank you', right: 'Expression of gratitude' }, { id: 'email-p4', left: 'Best regards', right: 'Formal closing' }],
+    },
+    {
+      id: 'ex-en-4-2-4', type: 'listening', prompt: 'Listen and choose the request:', audioText: 'Could you send me the document?',
+      options: [{ id: 'email-listen-1', text: 'Could you send me the document?' }, { id: 'email-listen-2', text: 'Did you read the document?' }, { id: 'email-listen-3', text: 'I wrote the document.' }], correctAnswerId: 'email-listen-1',
+    },
+    { id: 'ex-en-4-2-5', type: 'speaking', prompt: 'Say: "Thank you for your help"', audioText: 'Thank you for your help' },
+    ...createEnglishLessonExercises('en-4-2-extra', 'polite communication', ['Thank', 'you', 'for', 'your', 'help.']).slice(0, 5),
+  ],
+
+  'en-5-1': createEnglishLessonExercises('en-5-1', 'work and careers', ['I', 'work', 'with', 'a', 'team.']),
+  'en-6-1': createEnglishLessonExercises('en-6-1', 'health and wellness', ['I', 'feel', 'much', 'better', 'today.']),
+  'en-7-1': createEnglishLessonExercises('en-7-1', 'home and family', ['My', 'family', 'lives', 'nearby.']),
+  'en-8-1': createEnglishLessonExercises('en-8-1', 'shopping and money', ['How', 'much', 'does', 'it', 'cost?']),
+  'en-9-1': createEnglishLessonExercises('en-9-1', 'nature and environment', ['The', 'weather', 'is', 'beautiful', 'today.']),
+  'en-10-1': createEnglishLessonExercises('en-10-1', 'advanced conversation', ['I', 'would', 'like', 'to', 'discuss', 'this.']),
 
   // SPANISH LESSON 1: Greetings 1
   'es-1-1': [
