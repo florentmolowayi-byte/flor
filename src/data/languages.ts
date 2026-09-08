@@ -266,7 +266,7 @@ export const LANGUAGES: Language[] = [
             id: 'tr-1-1',
             title: 'Greetings & Introductions',
             type: 'lesson',
-            totalSteps: 5,
+            totalSteps: 10,
             xpReward: 15,
             gemReward: 10,
             unlocked: true,

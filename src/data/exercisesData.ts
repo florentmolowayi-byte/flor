@@ -593,6 +593,57 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       audioText: 'Çok teşekkür ederim',
       hint: 'Press the microphone button and say "Çok teşekkür ederim" clearly!',
     },
+    {
+      id: 'ex-tr-1-1-6',
+      type: 'multiple_choice',
+      prompt: 'How do you say "Please" in Turkish?',
+      audioText: 'Lütfen',
+      options: [
+        { id: 'tr-please-1', text: 'Lütfen', imageEmoji: '🤲' },
+        { id: 'tr-please-2', text: 'Güle güle', imageEmoji: '👋' },
+        { id: 'tr-please-3', text: 'Nasılsınız?', imageEmoji: '😊' },
+      ],
+      correctAnswerId: 'tr-please-1',
+    },
+    {
+      id: 'ex-tr-1-1-7',
+      type: 'word_bank',
+      prompt: 'Translate: "How are you?"',
+      audioText: 'Nasılsın?',
+      correctSentence: ['Nasılsın?'],
+      wordBankPool: ['Nasılsın?', 'Merhaba', 'Teşekkürler', 'Lütfen'],
+      hint: 'Use "Nasılsın?" when asking one person how they are.',
+    },
+    {
+      id: 'ex-tr-1-1-8',
+      type: 'match_pairs',
+      prompt: 'Match more Turkish greetings',
+      pairs: [
+        { id: 'tr-greet-p1', left: 'Nasılsın?', right: 'How are you?' },
+        { id: 'tr-greet-p2', left: 'İyiyim', right: 'I am fine' },
+        { id: 'tr-greet-p3', left: 'Görüşürüz', right: 'See you' },
+        { id: 'tr-greet-p4', left: 'Hoş geldin', right: 'Welcome' },
+      ],
+    },
+    {
+      id: 'ex-tr-1-1-9',
+      type: 'listening',
+      prompt: 'Listen and choose the phrase you hear:',
+      audioText: 'Benim adım Flor',
+      options: [
+        { id: 'tr-name-1', text: 'Benim adım Flor' },
+        { id: 'tr-name-2', text: 'Ben Türkçe öğreniyorum' },
+        { id: 'tr-name-3', text: 'Görüşürüz, arkadaşım' },
+      ],
+      correctAnswerId: 'tr-name-1',
+    },
+    {
+      id: 'ex-tr-1-1-10',
+      type: 'speaking',
+      prompt: 'Say in Turkish: "I am fine, thank you"',
+      audioText: 'İyiyim, teşekkür ederim',
+      hint: 'Say "İyiyim, teşekkür ederim" clearly.',
+    },
   ],
 
   // TURKISH LESSON 2: Numbers & Shopping
