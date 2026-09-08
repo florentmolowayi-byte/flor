@@ -97,6 +97,43 @@ const createEnglishLessonExercises = (lessonId: string, topic: string, sentence:
   },
 ];
 
+const createFrenchLessonExercises = (lessonId: string, topic: string, sentence: string[]) => [
+  {
+    id: `${lessonId}-1`, type: 'multiple_choice' as const, prompt: `Choose the French phrase for ${topic}`,
+    options: [{ id: `${lessonId}-option-1`, text: sentence.join(' ') }, { id: `${lessonId}-option-2`, text: 'Au revoir' }, { id: `${lessonId}-option-3`, text: 'Peut-être' }], correctAnswerId: `${lessonId}-option-1`,
+  },
+  {
+    id: `${lessonId}-2`, type: 'word_bank' as const, prompt: `Build the French ${topic} sentence`,
+    correctSentence: sentence, wordBankPool: [...sentence, 'bonjour', 'merci'],
+  },
+  {
+    id: `${lessonId}-3`, type: 'match_pairs' as const, prompt: `Match the French ${topic} phrases`,
+    pairs: [{ id: `${lessonId}-pair-1`, left: sentence.join(' '), right: 'Main phrase' }, { id: `${lessonId}-pair-2`, left: 'Bonjour', right: 'Hello' }, { id: `${lessonId}-pair-3`, left: 'Merci', right: 'Thank you' }, { id: `${lessonId}-pair-4`, left: 'Au revoir', right: 'Goodbye' }],
+  },
+  {
+    id: `${lessonId}-4`, type: 'listening' as const, prompt: `Listen for the French ${topic} phrase`, audioText: sentence.join(' '),
+    options: [{ id: `${lessonId}-listen-1`, text: sentence.join(' ') }, { id: `${lessonId}-listen-2`, text: 'Je suis arrivé hier' }, { id: `${lessonId}-listen-3`, text: 'À la semaine prochaine' }], correctAnswerId: `${lessonId}-listen-1`,
+  },
+  { id: `${lessonId}-5`, type: 'speaking' as const, prompt: `Say this French ${topic} phrase`, audioText: sentence.join(' ') },
+  {
+    id: `${lessonId}-6`, type: 'multiple_choice' as const, prompt: `Which French phrase is useful for ${topic}?`,
+    options: [{ id: `${lessonId}-use-1`, text: sentence.join(' ') }, { id: `${lessonId}-use-2`, text: 'La porte est bleue' }, { id: `${lessonId}-use-3`, text: 'Je ferme la fenêtre' }], correctAnswerId: `${lessonId}-use-1`,
+  },
+  {
+    id: `${lessonId}-7`, type: 'word_bank' as const, prompt: `Practice another French ${topic} sentence`,
+    correctSentence: ['Je', 'pratique', topic.toLowerCase(), "aujourd'hui."], wordBankPool: ['Je', 'pratique', topic.toLowerCase(), "aujourd'hui.", 'jamais', 'hier'],
+  },
+  {
+    id: `${lessonId}-8`, type: 'match_pairs' as const, prompt: `Match French ${topic} vocabulary`,
+    pairs: [{ id: `${lessonId}-vocab-1`, left: topic, right: 'Vocabulaire utile' }, { id: `${lessonId}-vocab-2`, left: "Aujourd'hui", right: 'This day' }, { id: `${lessonId}-vocab-3`, left: 'Demain', right: 'The next day' }, { id: `${lessonId}-vocab-4`, left: 'Maintenant', right: 'At this moment' }],
+  },
+  {
+    id: `${lessonId}-9`, type: 'listening' as const, prompt: 'Listen and select the complete French sentence', audioText: `J'apprends ${topic.toLowerCase()}`,
+    options: [{ id: `${lessonId}-complete-1`, text: `J'apprends ${topic.toLowerCase()}` }, { id: `${lessonId}-complete-2`, text: `J'ai étudié ${topic.toLowerCase()} hier` }, { id: `${lessonId}-complete-3`, text: `J'oublie ${topic.toLowerCase()}` }], correctAnswerId: `${lessonId}-complete-1`,
+  },
+  { id: `${lessonId}-10`, type: 'speaking' as const, prompt: `Say: "J'apprends ${topic.toLowerCase()}"`, audioText: `J'apprends ${topic.toLowerCase()}` },
+];
+
 export const EXERCISES_BANK: Record<string, Exercise[]> = {
   // ENGLISH UNIT 1: Everyday English Basics
   'en-1-1': [
@@ -606,7 +643,19 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       prompt: 'Speak in French: "Bonjour et merci!"',
       audioText: 'Bonjour et merci',
     },
+    ...createFrenchLessonExercises('fr-1-1-extra', 'les salutations', ['Bonjour', 'et', 'merci.']).slice(0, 5),
   ],
+
+  'fr-1-2': createFrenchLessonExercises('fr-1-2', 'les bases', ['Je', "m'appelle", 'Flor.']),
+  'fr-2-1': createFrenchLessonExercises('fr-2-1', 'la nourriture', ["J'aime", 'les', 'fruits.']),
+  'fr-3-1': createFrenchLessonExercises('fr-3-1', 'les voyages', ['Où', 'est', "l'aéroport?"]),
+  'fr-4-1': createFrenchLessonExercises('fr-4-1', 'le temps', ["Il", 'fait', 'beau', "aujourd'hui."]),
+  'fr-5-1': createFrenchLessonExercises('fr-5-1', 'le travail', ['Je', 'travaille', 'en', 'équipe.']),
+  'fr-6-1': createFrenchLessonExercises('fr-6-1', 'la santé', ['Je', 'me', 'sens', 'mieux.']),
+  'fr-7-1': createFrenchLessonExercises('fr-7-1', 'la famille', ['Ma', 'famille', 'habite', 'ici.']),
+  'fr-8-1': createFrenchLessonExercises('fr-8-1', 'les achats', ['Combien', 'ça', 'coûte?']),
+  'fr-9-1': createFrenchLessonExercises('fr-9-1', 'la nature', ['La', 'nature', 'est', 'magnifique.']),
+  'fr-10-1': createFrenchLessonExercises('fr-10-1', 'la conversation', ['Je', 'voudrais', 'discuter', 'avec', 'vous.']),
 
   // GERMAN LESSON 1
   'de-1-1': [
