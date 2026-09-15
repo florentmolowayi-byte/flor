@@ -12,6 +12,7 @@ import { ShopView } from './components/ShopView';
 import { QuestsAchievementsView } from './components/QuestsAchievementsView';
 import { LanguageCoachView } from './components/LanguageCoachView';
 import { ProfileView } from './components/ProfileView';
+import { RegistrationModal } from './components/RegistrationModal';
 import { StreakModal } from './components/StreakModal';
 import { RefillHeartsModal } from './components/RefillHeartsModal';
 import { LessonEngine } from './components/LessonEngine';
@@ -21,6 +22,7 @@ import { getNextLesson, getNextLessonsSequence } from './utils/curriculumSequenc
 const STORAGE_KEY = 'flor_app_user_state_v2';
 const LEGACY_STORAGE_KEY = 'flor_app_user_state_v1';
 const ENGLISH_DEFAULT_MIGRATION_KEY = 'flor_english_default_migrated_v1';
+const ACCOUNT_PROFILE_KEY = 'flor_account_profile_v1';
 
 const DEFAULT_USER_STATE: UserState = {
   name: 'Language Learner',
@@ -83,6 +85,15 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('learn');
   const [showStreakModal, setShowStreakModal] = useState(false);
   const [showHeartsModal, setShowHeartsModal] = useState(false);
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [accountEmail, setAccountEmail] = useState(() => {
+    try {
+      const savedProfile = localStorage.getItem(ACCOUNT_PROFILE_KEY);
+      return savedProfile ? (JSON.parse(savedProfile) as { email?: string }).email || '' : '';
+    } catch {
+      return '';
+    }
+  });
   const [activeLessonId, setActiveLessonId] = useState<string | null>(null);
 
   const [competitors, setCompetitors] = useState<Competitor[]>(INITIAL_COMPETITORS);
@@ -107,6 +118,13 @@ export default function App() {
   // Language Change
   const handleSelectLanguage = (id: LanguageId) => {
     setUserState((prev) => ({ ...prev, currentLanguage: id }));
+  };
+
+  const handleRegister = (name: string, email: string) => {
+    setUserState((prev) => ({ ...prev, name }));
+    setAccountEmail(email);
+    localStorage.setItem(ACCOUNT_PROFILE_KEY, JSON.stringify({ email }));
+    setShowRegistrationModal(false);
   };
 
   // Node Clicked on Skill Path
@@ -349,7 +367,12 @@ export default function App() {
           )}
 
           {activeTab === 'profile' && (
-            <ProfileView userState={userState} onOpenShop={() => setActiveTab('shop')} />
+            <ProfileView
+              userState={userState}
+              onOpenShop={() => setActiveTab('shop')}
+              onOpenRegistration={() => setShowRegistrationModal(true)}
+              accountEmail={accountEmail}
+            />
           )}
         </main>
       </div>
@@ -388,9 +411,18 @@ export default function App() {
         />
       )}
 
+      {showRegistrationModal && (
+        <RegistrationModal
+          initialName={userState.name}
+          onClose={() => setShowRegistrationModal(false)}
+          onRegister={handleRegister}
+        />
+      )}
+
       {/* Active Lesson Modal Screen */}
       {activeLessonId && (
         <LessonEngine
+          key={activeLessonId}
           lessonTitle="Language Lesson"
           exercises={activeExercises}
           userState={userState}

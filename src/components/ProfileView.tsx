@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Flame, Trophy, Gem, Award, Shield, BookOpen } from 'lucide-react';
+import { Flame, Trophy, Gem, Award, Shield, UserPlus } from 'lucide-react';
 import { UserState } from '../types';
 import { LANGUAGES } from '../data/languages';
 import { LEAGUES } from '../data/leaderboardData';
@@ -9,9 +9,11 @@ import { CoachMascot } from './CoachMascot';
 interface ProfileViewProps {
   userState: UserState;
   onOpenShop: () => void;
+  onOpenRegistration: () => void;
+  accountEmail: string;
 }
 
-export const ProfileView: React.FC<ProfileViewProps> = ({ userState, onOpenShop }) => {
+export const ProfileView: React.FC<ProfileViewProps> = ({ userState, onOpenShop, onOpenRegistration, accountEmail }) => {
   const currentLangObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
   const league = LEAGUES[userState.leagueId] || LEAGUES.bronze;
 
@@ -37,6 +39,16 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ userState, onOpenShop 
           <p className="text-xs font-bold text-slate-400">
             Learning {currentLangObj.name} • Joined July 2026
           </p>
+          {accountEmail && <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">{accountEmail}</p>}
+
+          <button
+            type="button"
+            onClick={onOpenRegistration}
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-3 py-2 text-xs font-black text-white transition hover:bg-emerald-600"
+          >
+            <UserPlus className="h-3.5 w-3.5" />
+            Register account
+          </button>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
             <span className="px-3 py-1 bg-orange-100 dark:bg-orange-950/60 text-orange-600 dark:text-orange-400 font-extrabold text-xs rounded-full flex items-center gap-1">
