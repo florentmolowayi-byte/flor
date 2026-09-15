@@ -18,6 +18,7 @@ import { RefillHeartsModal } from './components/RefillHeartsModal';
 import { LessonEngine } from './components/LessonEngine';
 import { useAdaptiveLearning } from './hooks/useAdaptiveLearning';
 import { getNextLesson, getNextLessonsSequence } from './utils/curriculumSequencingService';
+import { generatePersonalizedCurriculum } from './utils/curriculumAIService';
 
 const STORAGE_KEY = 'flor_app_user_state_v2';
 const LEGACY_STORAGE_KEY = 'flor_app_user_state_v1';
@@ -100,6 +101,7 @@ export default function App() {
   const [quests, setQuests] = useState(INITIAL_DAILY_QUESTS);
   const [achievements, setAchievements] = useState(INITIAL_ACHIEVEMENTS);
   const { learningProfile, recordExerciseCompletion } = useAdaptiveLearning(userState);
+  const [aiUpcomingLessons, setAiUpcomingLessons] = useState<Awaited<ReturnType<typeof generatePersonalizedCurriculum>> | null>(null);
 
   // Save userState to localStorage whenever modified
   useEffect(() => {
@@ -114,6 +116,24 @@ export default function App() {
   useEffect(() => {
     document.title = '';
   }, []);
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    generatePersonalizedCurriculum(
+      LANGUAGES,
+      userState.currentLanguage,
+      userState.completedNodes,
+      learningProfile,
+      `${Object.values(userState.completedNodes).filter((stars) => stars > 0).length} lessons completed`,
+    ).then((curriculum) => {
+      if (isCurrent) setAiUpcomingLessons(curriculum);
+    });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [userState.currentLanguage, userState.completedNodes, learningProfile]);
 
   // Language Change
   const handleSelectLanguage = (id: LanguageId) => {
@@ -303,6 +323,7 @@ export default function App() {
     learningProfile,
     3,
   );
+  const organizedLessons = aiUpcomingLessons?.upcomingLessons || upcomingLessons;
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased font-sans">
@@ -331,7 +352,7 @@ export default function App() {
               onStartPractice={() => handleSelectNode(`${userState.currentLanguage}-1-1`)}
               learningProfile={learningProfile}
               nextLesson={nextLesson}
-              upcomingLessons={upcomingLessons}
+              upcomingLessons={organizedLessons}
               onLessonSelected={handleSelectNode}
             />
           )}

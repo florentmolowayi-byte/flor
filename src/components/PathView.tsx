@@ -45,7 +45,7 @@ export const PathView: React.FC<PathViewProps> = ({
         <div className="bg-slate-900 rounded-3xl p-5 text-white shadow-xl space-y-4">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-wider text-emerald-300">Adaptive next step</p>
+              <p className="text-xs font-black uppercase tracking-wider text-emerald-300">AI-organized next step</p>
               <h2 className="text-xl font-black mt-1">{nextLesson.title}</h2>
               <p className="text-sm text-slate-300 mt-1">{nextLesson.rationale}</p>
             </div>
@@ -96,7 +96,7 @@ export const PathView: React.FC<PathViewProps> = ({
           )}
           {upcomingLessons.length > 1 && (
             <div className="space-y-2 border-t border-white/15 pt-4">
-              <p className="text-xs font-black uppercase tracking-wider text-slate-400">Your organized classes</p>
+              <p className="text-xs font-black uppercase tracking-wider text-slate-400">All next classes</p>
               {upcomingLessons.slice(1).map((lesson, index) => (
                 <button
                   key={lesson.lessonId}
