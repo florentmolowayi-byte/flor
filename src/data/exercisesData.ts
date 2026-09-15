@@ -134,7 +134,7 @@ const createFrenchLessonExercises = (lessonId: string, topic: string, sentence: 
   { id: `${lessonId}-10`, type: 'speaking' as const, prompt: `Say: "J'apprends ${topic.toLowerCase()}"`, audioText: `J'apprends ${topic.toLowerCase()}` },
 ];
 
-export const EXERCISES_BANK: Record<string, Exercise[]> = {
+const RAW_EXERCISES_BANK: Record<string, Exercise[]> = {
   // ENGLISH UNIT 1: Everyday English Basics
   'en-1-1': [
     {
@@ -233,6 +233,25 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
       type: 'speaking',
       prompt: 'Say: "Have a great day"',
       audioText: 'Have a great day',
+    },
+    {
+      id: 'ex-en-1-1-11',
+      type: 'multiple_choice',
+      prompt: 'Choose the best reply to "Nice to meet you"',
+      options: [
+        { id: 'en-meet-1', text: 'Nice to meet you too.' },
+        { id: 'en-meet-2', text: 'Good night.' },
+        { id: 'en-meet-3', text: 'I am thirsty.' },
+      ],
+      correctAnswerId: 'en-meet-1',
+    },
+    {
+      id: 'ex-en-1-1-12',
+      type: 'word_bank',
+      prompt: 'Build the greeting: "Good to see you"',
+      audioText: 'Good to see you',
+      correctSentence: ['Good', 'to', 'see', 'you.'],
+      wordBankPool: ['Good', 'to', 'see', 'you.', 'Thank', 'hello'],
     },
   ],
 
@@ -1498,3 +1517,33 @@ export const EXERCISES_BANK: Record<string, Exercise[]> = {
     },
   ],
 };
+
+const ensureThirteenExercises = (lessonId: string, exercises: Exercise[]): Exercise[] => {
+  const normalizedExercises = exercises.slice(0, 13);
+  const firstExercise = normalizedExercises[0];
+  const reviewText =
+    firstExercise?.audioText ||
+    firstExercise?.correctSentence?.join(' ') ||
+    firstExercise?.options?.[0]?.text ||
+    firstExercise?.prompt ||
+    'the key phrase';
+
+  while (normalizedExercises.length < 13) {
+    const questionNumber = normalizedExercises.length + 1;
+    normalizedExercises.push({
+      id: `${lessonId}-review-${questionNumber}`,
+      type: 'speaking',
+      prompt: `Review this lesson phrase: "${reviewText}"`,
+      audioText: reviewText,
+    });
+  }
+
+  return normalizedExercises;
+};
+
+export const EXERCISES_BANK: Record<string, Exercise[]> = Object.fromEntries(
+  Object.entries(RAW_EXERCISES_BANK).map(([lessonId, exercises]) => [
+    lessonId,
+    ensureThirteenExercises(lessonId, exercises),
+  ]),
+);
