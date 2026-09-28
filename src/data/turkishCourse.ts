@@ -298,6 +298,113 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
   },
 };
 
+const TURKISH_MATCHING_EXAMPLES: Record<string, Phrase[]> = {
+  'tr-1-1': [
+    { turkish: 'Memnun oldum.', english: 'Nice to meet you.' },
+    { turkish: 'Görüşürüz, iyi günler.', english: 'See you; have a nice day.' },
+  ],
+  'tr-1-2': [
+    { turkish: 'İki çay kaç lira?', english: 'How many lira are two teas?' },
+    { turkish: 'Bu elma beş lira.', english: 'This apple is five lira.' },
+  ],
+  'tr-1-3': [
+    { turkish: 'Çocuk üç çiçek seçti.', english: 'The child chose three flowers.' },
+    { turkish: 'Şu küçük köy çok güzel.', english: 'That small village is very beautiful.' },
+  ],
+  'tr-2-1': [
+    { turkish: 'Bugün nasılsın?', english: 'How are you today?' },
+    { turkish: 'Bu kim?', english: 'Who is this?' },
+  ],
+  'tr-2-2': [
+    { turkish: 'Menüyü alabilir miyim?', english: 'Could I have the menu?' },
+    { turkish: 'Çorba çok sıcak.', english: 'The soup is very hot.' },
+  ],
+  'tr-3-1': [
+    { turkish: 'Annem öğretmen.', english: 'My mother is a teacher.' },
+    { turkish: 'Kardeşim İzmir’de yaşıyor.', english: 'My sibling lives in Izmir.' },
+  ],
+  'tr-3-2': [
+    { turkish: 'Müzik dinlemeyi seviyorum.', english: 'I like listening to music.' },
+    { turkish: 'Hafta sonu futbol oynuyoruz.', english: 'We play football at the weekend.' },
+  ],
+  'tr-4-1': [
+    { turkish: 'Tren saat dokuzda kalkıyor.', english: 'The train leaves at nine.' },
+    { turkish: 'Bir bilet almak istiyorum.', english: 'I want to buy a ticket.' },
+  ],
+  'tr-4-2': [
+    { turkish: 'Banka sağda, market solda.', english: 'The bank is on the right, the market is on the left.' },
+    { turkish: 'Okulun yanında bir park var.', english: 'There is a park next to the school.' },
+  ],
+  'tr-5-1': [
+    { turkish: 'Bugün kendimi daha iyi hissediyorum.', english: 'I feel better today.' },
+    { turkish: 'Eczaneden ilaç almam gerekiyor.', english: 'I need to buy medicine from the pharmacy.' },
+  ],
+  'tr-5-2': [
+    { turkish: 'Kız kardeşim bir okulda çalışıyor.', english: 'My sister works at a school.' },
+    { turkish: 'İş arkadaşım doktor.', english: 'My colleague is a doctor.' },
+  ],
+  'tr-1-checkpoint': [
+    { turkish: 'Günaydın, nasılsınız?', english: 'Good morning, how are you?' },
+    { turkish: 'Üç kahve, lütfen.', english: 'Three coffees, please.' },
+  ],
+  'tr-2-checkpoint': [
+    { turkish: 'Tuvalet nerede?', english: 'Where is the restroom?' },
+    { turkish: 'Su alabilir miyim?', english: 'Could I have some water?' },
+  ],
+  'tr-3-checkpoint': [
+    { turkish: 'Babam yemek yapmayı seviyor.', english: 'My father likes cooking.' },
+    { turkish: 'Arkadaşım kitap okuyor.', english: 'My friend is reading a book.' },
+  ],
+  'tr-4-checkpoint': [
+    { turkish: 'Otobüs durağı karşıda.', english: 'The bus stop is across the street.' },
+    { turkish: 'Lütfen burada durun.', english: 'Please stop here.' },
+  ],
+  'tr-5-checkpoint': [
+    { turkish: 'Doktor bugün çalışmıyor.', english: 'The doctor is not working today.' },
+    { turkish: 'İş arkadaşım çok yardımsever.', english: 'My colleague is very helpful.' },
+  ],
+  'tr-6-1': [
+    { turkish: 'Her sabah kahvaltı yaparım.', english: 'I have breakfast every morning.' },
+    { turkish: 'Şimdi işe gidiyorum.', english: 'I am going to work now.' },
+  ],
+  'tr-6-2': [
+    { turkish: 'Toplantı saat ikide başlıyor.', english: 'The meeting starts at two.' },
+    { turkish: 'Geç kalmayalım.', english: 'Let’s not be late.' },
+  ],
+  'tr-7-1': [
+    { turkish: 'Dün yeni bir müze gezdim.', english: 'I visited a new museum yesterday.' },
+    { turkish: 'Geçen yaz çok kitap okudum.', english: 'I read a lot of books last summer.' },
+  ],
+  'tr-7-2': [
+    { turkish: 'Yarın seni arayacağım.', english: 'I will call you tomorrow.' },
+    { turkish: 'Gelecek ay tatile çıkacağız.', english: 'We will go on holiday next month.' },
+  ],
+  'tr-8-1': [
+    { turkish: 'Telefonum masanın üstünde.', english: 'My phone is on the table.' },
+    { turkish: 'Ayakkabılar kapının önünde.', english: 'The shoes are in front of the door.' },
+  ],
+  'tr-8-2': [
+    { turkish: 'Bu sokak daha sakin.', english: 'This street is quieter.' },
+    { turkish: 'Tren otobüsten daha hızlı.', english: 'The train is faster than the bus.' },
+  ],
+  'tr-9-1': [
+    { turkish: 'Bana yardım edebilir misiniz?', english: 'Could you help me?' },
+    { turkish: 'Biraz dinlenmem gerekiyor.', english: 'I need to rest a little.' },
+  ],
+  'tr-9-2': [
+    { turkish: 'Bence bu iyi bir fikir.', english: 'I think this is a good idea.' },
+    { turkish: 'Evde kalalım çünkü hava soğuk.', english: 'Let’s stay home because the weather is cold.' },
+  ],
+  'tr-10-1': [
+    { turkish: 'Eskiden burada küçük bir dükkân vardı.', english: 'There used to be a small shop here.' },
+    { turkish: 'Her yaz denize giderdik.', english: 'We used to go to the seaside every summer.' },
+  ],
+  'tr-10-2': [
+    { turkish: 'Bu restoranı arkadaşım tavsiye etti.', english: 'My friend recommended this restaurant.' },
+    { turkish: 'Tanıştığımıza çok memnun oldum.', english: 'I was very pleased to meet you.' },
+  ],
+};
+
 const makeLessonExercises = (lessonId: string, lesson: LessonContent): Exercise[] => {
   const [firstPhrase, secondPhrase] = lesson.phrases;
   const options = (prefix: string, correct: string, wrong: string, otherWrong = lesson.grammarDistractor) => [
@@ -338,9 +445,11 @@ const makeLessonExercises = (lessonId: string, lesson: LessonContent): Exercise[
     },
     wordBank(`${lessonId}-q6`, secondPhrase.turkish),
     {
-      id: `${lessonId}-q7`, type: 'match_pairs', prompt: 'Match each Turkish example with its meaning.',
-      pairs: lesson.phrases.map((phrase, index) => ({ id: `${lessonId}-phrase${index + 1}`, left: phrase.turkish, right: phrase.english })),
-      hint: 'Read the whole sentence before matching.',
+      id: `${lessonId}-q7`, type: 'match_pairs', prompt: 'Match each Turkish sentence with its English meaning.',
+      pairs: [...lesson.phrases, ...(TURKISH_MATCHING_EXAMPLES[lessonId] || [])].map((phrase, index) => ({
+        id: `${lessonId}-phrase${index + 1}`, left: phrase.turkish, right: phrase.english,
+      })),
+      hint: 'Match all four Turkish sentences to their English meanings. Look for the subject, time words, and verb endings.',
     },
     {
       id: `${lessonId}-q8`, type: 'multiple_choice', prompt: `Which sentence means: “${secondPhrase.english}”`,
