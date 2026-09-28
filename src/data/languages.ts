@@ -572,7 +572,7 @@ export const LANGUAGES: Language[] = [
         number: 4,
         title: 'Unit 4: A2 — Travel & Directions',
         description: 'Navigate travel, directions, and cultural conversations in Turkish.',
-        grammar: 'Destination endings -e/-a · “by/with” -le/-la · polite commands',
+        grammar: 'Destination endings -a/-e and -ya/-ye · “by/with” -le/-la · polite commands',
         verbs: 'gitmek · dönmek · binmek',
         color: '#E30A17',
         nodes: [

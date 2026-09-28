@@ -27,21 +27,21 @@ export const TURKISH_EXTRA_UNITS: Unit[] = [
   {
     id: 'unit-tr-6', number: 6, title: 'Unit 6: A2 — Everyday Life',
     description: 'Build daily routines, talk about schedules, and use the present continuous.',
-    grammar: 'Present simple (-r) and present continuous (-yor)', verbs: 'kalkmak · çalışmak · buluşmak',
+    grammar: 'Aorist / habitual present (vowel-harmony variants) and present continuous (-yor)', verbs: 'kalkmak · çalışmak · buluşmak',
     pronunciation: 'The ı in -ıyor is a dotless vowel; keep it short and relaxed.', color: '#E30A17',
     nodes: [lessonNode('tr-6-1', 'Daily Routines'), lessonNode('tr-6-2', 'Time & Schedules')],
   },
   {
     id: 'unit-tr-7', number: 7, title: 'Unit 7: A2 — Past & Future',
     description: 'Share what happened and make clear plans for the days ahead.',
-    grammar: 'Past tense (-dı/-di) and future tense (-acak/-ecek)', verbs: 'gitmek · görmek · ziyaret etmek',
+    grammar: 'Past tense (-dı/-di/-du/-dü, -tı/-ti/-tu/-tü) and future tense (-acak/-ecek)', verbs: 'gitmek · görmek · ziyaret etmek',
     pronunciation: 'Suffix vowels follow vowel harmony; listen for the final vowel of the stem.', color: '#C81E3A',
     nodes: [lessonNode('tr-7-1', 'Past Experiences'), lessonNode('tr-7-2', 'Future Plans')],
   },
   {
     id: 'unit-tr-8', number: 8, title: 'Unit 8: A2+ — Home & Description',
     description: 'Use possessive endings, location phrases, and comparisons in context.',
-    grammar: 'Possessive suffixes, locative -de/-da, and daha + adjective', verbs: 'oturmak · almak · yaşamak',
+    grammar: 'Possessive suffixes, locative -da/-de/-ta/-te, and daha + adjective', verbs: 'oturmak · almak · yaşamak',
     pronunciation: 'The final consonant may soften before a vowel suffix: kitap → kitabı.', color: '#B91C3C',
     nodes: [lessonNode('tr-8-1', 'Possessions & Places'), lessonNode('tr-8-2', 'Comparisons')],
   },
@@ -55,7 +55,7 @@ export const TURKISH_EXTRA_UNITS: Unit[] = [
   {
     id: 'unit-tr-10', number: 10, title: 'Unit 10: B1 — Stories & Real Life',
     description: 'Connect ideas, describe past habits, and handle longer everyday conversations.',
-    grammar: 'Past habits (-ardı/-erdi), connectors, and conversation strategies', verbs: 'anlatmak · tanışmak · karar vermek',
+    grammar: 'Past habits (-ardı/-erdi/-ırdı/-irdi/-urdu/-ürdü), connectors, and conversation strategies', verbs: 'anlatmak · tanışmak · karar vermek',
     pronunciation: 'Link words smoothly; Turkish spelling is a reliable guide to pronunciation.', color: '#8F1230',
     nodes: [lessonNode('tr-10-1', 'Stories & Past Habits'), lessonNode('tr-10-2', 'Real-life Conversations')],
   },
@@ -81,7 +81,7 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
     grammarQuestion: 'Which phrase asks the price?', grammarAnswer: 'Bu ne kadar?', grammarDistractor: 'Bu nerede?',
   },
   'tr-1-3': {
-    focus: 'Turkish sounds and vowel harmony', vocabulary: [['ı', 'dotless i'], ['ş', 'sh sound'], ['ç', 'ch sound'], ['ğ', 'lengthens the preceding vowel']],
+    focus: 'Turkish sounds and vowel harmony', vocabulary: [['ı', 'dotless i'], ['ş', 'sh sound'], ['ç', 'ch sound'], ['ğ', 'often lengthens or links adjacent vowels; not a hard g']],
     phrases: [
       { turkish: 'Şu üç küçük çiçek.', english: 'Those three small flowers.' },
       { turkish: 'Türkiye’de Türkçe öğreniyorum.', english: 'I am learning Turkish in Türkiye.' },
@@ -129,7 +129,7 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
     focus: 'Travel and transportation', vocabulary: [['otobüs', 'bus'], ['tren', 'train'], ['bilet', 'ticket'], ['istasyon', 'station']],
     phrases: [
       { turkish: 'İstanbul’a trenle gitmek istiyorum.', english: 'I want to go to Istanbul by train.' },
-      { turkish: 'Ankara bileti saat kaçta kalkıyor?', english: 'What time does the Ankara train leave?' },
+      { turkish: 'Ankara treni saat kaçta kalkıyor?', english: 'What time does the Ankara train leave?' },
     ],
     grammar: 'Add -le/-la to a noun for “by / with”: trenle (by train), otobüsle (by bus).',
     grammarQuestion: 'What does trenle mean?', grammarAnswer: 'by train', grammarDistractor: 'at the train station',
@@ -140,7 +140,7 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
       { turkish: 'Eczane nerede? Sağa mı, sola mı?', english: 'Where is the pharmacy? To the right or left?' },
       { turkish: 'Köşede sola dönün, lütfen.', english: 'Turn left at the corner, please.' },
     ],
-    grammar: 'Use -e/-a for a destination (“to”); polite direction commands often end in -ın/-in.',
+    grammar: 'Use -a/-e (or buffer-y forms -ya/-ye) for a destination; polite commands use -ın/-in/-un/-ün, sometimes with buffer y.',
     grammarQuestion: 'What does sola dönün mean?', grammarAnswer: 'Turn left.', grammarDistractor: 'Go straight.',
   },
   'tr-5-1': {
@@ -210,10 +210,10 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
     focus: 'Daily routines', vocabulary: [['uyanmak', 'to wake up'], ['kahvaltı', 'breakfast'], ['işe gitmek', 'to go to work'], ['dinlenmek', 'to rest']],
     phrases: [
       { turkish: 'Her sabah saat yedide kalkarım.', english: 'I get up at seven every morning.' },
-      { turkish: 'Akşamları kitap okuyorum.', english: 'I am reading a book this evening.' },
+      { turkish: 'Bu akşam kitap okuyorum.', english: 'I am reading a book this evening.' },
     ],
-    grammar: 'Use -r/-ar/-er for habits and -yor for an action happening now.',
-    grammarQuestion: 'Which ending commonly marks a regular habit?', grammarAnswer: '-r / -ar / -er', grammarDistractor: '-miş only',
+    grammar: 'The aorist expresses habits and uses vowel-harmony forms such as -r, -ar/-er, and -ır/-ir/-ur/-ür; -yor often marks an action in progress.',
+    grammarQuestion: 'Which set includes common aorist endings used for habits?', grammarAnswer: '-r, -ar/-er, and -ır/-ir/-ur/-ür', grammarDistractor: '-miş only',
   },
   'tr-6-2': {
     focus: 'Time and schedules', vocabulary: [['saat', 'clock / hour'], ['buluşmak', 'to meet'], ['geç kalmak', 'to be late'], ['öğleden sonra', 'in the afternoon']],
@@ -221,8 +221,8 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
       { turkish: 'Saat üçte buluşuyoruz.', english: 'We are meeting at three o’clock.' },
       { turkish: 'Otobüs saat sekizde kalkıyor.', english: 'The bus leaves at eight.' },
     ],
-    grammar: 'Attach -de/-da to a time to say “at”: üçte (at three), sekizde (at eight).',
-    grammarQuestion: 'How do you usually say “at three o’clock”?', grammarAnswer: 'saat üçte', grammarDistractor: 'saat üçden',
+    grammar: 'Attach the locative suffix -da/-de/-ta/-te to a time to say “at”: üçte (at three), sekizde (at eight).',
+    grammarQuestion: 'How do you usually say “at three o’clock”?', grammarAnswer: 'saat üçte', grammarDistractor: 'saat üçten',
   },
   'tr-7-1': {
     focus: 'Past experiences', vocabulary: [['dün', 'yesterday'], ['geçen hafta', 'last week'], ['sinema', 'cinema'], ['gezmek', 'to visit / travel']],
@@ -231,7 +231,7 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
       { turkish: 'Geçen hafta güzel bir kitap okudum.', english: 'I read a good book last week.' },
     ],
     grammar: 'The definite past uses -dı/-di/-du/-dü or -tı/-ti/-tu/-tü after voiceless consonants.',
-    grammarQuestion: 'Which suffix is in gittim (“I went”)?', grammarAnswer: 'the definite past -di (with consonant harmony)', grammarDistractor: 'the future -ecek',
+    grammarQuestion: 'Which definite-past suffix form appears after t in gittim (“I went”)?', grammarAnswer: '-ti (the -DI suffix after a voiceless consonant)', grammarDistractor: 'the future -ecek',
   },
   'tr-7-2': {
     focus: 'Future plans', vocabulary: [['yarın', 'tomorrow'], ['gelecek hafta', 'next week'], ['plan', 'plan'], ['ziyaret etmek', 'to visit']],
@@ -248,7 +248,7 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
       { turkish: 'Anahtarım çantamda.', english: 'My key is in my bag.' },
       { turkish: 'Kitabım masanın üstünde.', english: 'My book is on the table.' },
     ],
-    grammar: 'Possessive endings show whose item it is; -da/-de marks “in/at/on” depending on context.',
+    grammar: 'Possessive endings show whose item it is; -da/-de/-ta/-te marks “in/at/on” depending on context.',
     grammarQuestion: 'What does the ending -ım/-im often show in anahtarım?', grammarAnswer: 'my key (first-person possession)', grammarDistractor: 'your key (second-person possession)',
   },
   'tr-8-2': {
@@ -257,7 +257,7 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
       { turkish: 'Bu otel diğerinden daha ucuz.', english: 'This hotel is cheaper than the other one.' },
       { turkish: 'İstanbul Ankara’dan daha kalabalık.', english: 'Istanbul is more crowded than Ankara.' },
     ],
-    grammar: 'Make a comparison with daha + adjective; -dan/-den can mark “than” after the comparison word.',
+    grammar: 'Make a comparison with daha + adjective; the comparison standard takes -dan/-den/-tan/-ten before daha: Ankara’dan daha kalabalık.',
     grammarQuestion: 'What does daha güzel mean?', grammarAnswer: 'more beautiful', grammarDistractor: 'the most beautiful',
   },
   'tr-9-1': {
@@ -284,7 +284,7 @@ const TURKISH_LESSONS: Record<string, LessonContent> = {
       { turkish: 'Çocukken yazları köyde yaşardım.', english: 'When I was a child, I used to live in the village in summer.' },
       { turkish: 'Dedem bize her akşam hikâyeler anlatırdı.', english: 'My grandfather used to tell us stories every evening.' },
     ],
-    grammar: 'The -ardı/-erdi pattern describes a repeated or customary action in the past.',
+    grammar: 'The past-habit pattern has vowel-harmony forms such as -ardı/-erdi/-ırdı/-irdi/-urdu/-ürdü.',
     grammarQuestion: 'What does yaşardım suggest in this story?', grammarAnswer: 'I used to live (a past habit)', grammarDistractor: 'I will live (a future plan)',
   },
   'tr-10-2': {
