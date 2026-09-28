@@ -1,4 +1,5 @@
 import { Exercise, LanguageId } from '../types';
+import { TURKISH_EXTRA_EXERCISES } from './turkishCourse';
 
 const createEnglishLessonExercises = (lessonId: string, topic: string, sentence: string[]) => [
   {
@@ -1542,8 +1543,11 @@ const ensureThirteenExercises = (lessonId: string, exercises: Exercise[]): Exerc
 };
 
 export const EXERCISES_BANK: Record<string, Exercise[]> = Object.fromEntries(
-  Object.entries(RAW_EXERCISES_BANK).map(([lessonId, exercises]) => [
-    lessonId,
-    ensureThirteenExercises(lessonId, exercises),
-  ]),
+  [
+    ...Object.entries(RAW_EXERCISES_BANK).map(([lessonId, exercises]) => [
+      lessonId,
+      ensureThirteenExercises(lessonId, exercises),
+    ]),
+    ...Object.entries(TURKISH_EXTRA_EXERCISES),
+  ],
 );

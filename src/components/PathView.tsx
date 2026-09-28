@@ -140,7 +140,7 @@ export const PathView: React.FC<PathViewProps> = ({
       </div>
 
       {/* Units List */}
-      {language.units.map((unit) => (
+      {language.units.map((unit, unitIndex) => (
         <div key={unit.id} className="space-y-6">
           {/* Unit Banner Header */}
           <div
@@ -179,8 +179,15 @@ export const PathView: React.FC<PathViewProps> = ({
             {unit.nodes.map((node, idx) => {
               const stars = userState.completedNodes[node.id] || 0;
               const isCompleted = stars > 0;
-              // Node is unlocked if first node OR previous completed
-              const isUnlocked = idx === 0 || userState.completedNodes[unit.nodes[idx - 1]?.id] !== undefined || isCompleted;
+              const previousUnitsCompleted = language.units
+                .slice(0, unitIndex)
+                .every((previousUnit) =>
+                  previousUnit.nodes
+                    .filter((previousNode) => previousNode.type === 'lesson')
+                    .every((previousNode) => userState.completedNodes[previousNode.id] > 0),
+                );
+              const previousNodeCompleted = idx === 0 || userState.completedNodes[unit.nodes[idx - 1]?.id] > 0;
+              const isUnlocked = isCompleted || (previousUnitsCompleted && previousNodeCompleted);
 
               // Sinusoidal offset calculation for Duolingo snake effect!
               const offsetPx = Math.sin(idx * 1.1) * 65;

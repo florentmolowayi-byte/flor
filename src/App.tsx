@@ -314,6 +314,9 @@ export default function App() {
   };
 
   const currentLanguageObj = LANGUAGES.find((l) => l.id === userState.currentLanguage) || LANGUAGES[0];
+  const activeLessonTitle = currentLanguageObj.units
+    .flatMap((unit) => unit.nodes)
+    .find((node) => node.id === activeLessonId)?.title || 'Language Lesson';
   const activeExercises = EXERCISES_BANK[activeLessonId || 'en-1-1'] || EXERCISES_BANK['en-1-1'];
   const nextLesson = getNextLesson(LANGUAGES, userState.currentLanguage, userState.completedNodes, learningProfile);
   const upcomingLessons = getNextLessonsSequence(
@@ -444,7 +447,7 @@ export default function App() {
       {activeLessonId && (
         <LessonEngine
           key={activeLessonId}
-          lessonTitle="Language Lesson"
+          lessonTitle={activeLessonTitle}
           exercises={activeExercises}
           userState={userState}
           languageId={userState.currentLanguage}
